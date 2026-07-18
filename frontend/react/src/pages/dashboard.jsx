@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { databaseChangelog } from '../utils/changelogData'; 
 import { databaseQuotes } from '../utils/quotes';
 import { typewriterMessages } from '../utils/typewritter';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 import "../../main/dashboard.css";
 
 export default function Dashboard() {
