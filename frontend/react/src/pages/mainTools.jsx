@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 import '/main/base/global-tools.css';
 
 // 1. Impor data dari backend menggunakan nama variabel lokal yang unik agar tidak bentrok
