@@ -1,0 +1,9 @@
+[
+    {
+        "id": 1,
+        "nama_brain": "Kuis",
+        "kategori": "Kuis",
+        "deskripsi": "Ayo mainkan kuis sekarang.",
+        "url": "/games/kuis"
+    }
+]

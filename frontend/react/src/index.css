@@ -1,0 +1,137 @@
+:root {
+  --text: #dfe7f5;
+  --text-h: #f8fbff;
+  --bg: #070b16;
+  --bg-alt: #0f172a;
+  --border: rgba(255, 255, 255, 0.1);
+  --code-bg: rgba(255, 255, 255, 0.08);
+  --accent: #4f8cff;
+  --accent-strong: #2f6df6;
+  --accent-bg: rgba(79, 140, 255, 0.16);
+  --accent-border: rgba(79, 140, 255, 0.35);
+  --social-bg: rgba(255, 255, 255, 0.06);
+  --shadow: rgba(0, 0, 0, 0.28) 0 20px 60px, rgba(0, 0, 0, 0.16) 0 8px 22px;
+
+  --sans: "Segoe UI", Inter, system-ui, Roboto, sans-serif;
+  --heading: "Segoe UI", Inter, system-ui, Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 16px/1.6 var(--sans);
+  letter-spacing: 0.01em;
+  color-scheme: dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  width: 100%;
+  background-color: transparent !important;
+  background: linear-gradient(135deg, #060816 0%, #0f172a 50%, #111827 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0 auto;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--heading);
+  font-weight: 600;
+  color: var(--text-h);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2rem, 2.8vw + 1rem, 3.3rem);
+  margin: 0 0 12px;
+}
+
+h2 {
+  font-size: clamp(1.3rem, 1.2vw + 1rem, 1.8rem);
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+p {
+  margin: 0;
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-strong);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 6px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(79, 140, 255, 0.35);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 140, 255, 0.6);
+}

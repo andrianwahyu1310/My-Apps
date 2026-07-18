@@ -1,0 +1,13 @@
+@import url('../src/utils/css/toasted.css');
+@import url('../src/utils/css/boxAuth.css');
+
+.auth-body-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-sizing: border-box;
+}

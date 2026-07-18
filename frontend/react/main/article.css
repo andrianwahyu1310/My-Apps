@@ -1,0 +1,108 @@
+.body-arc { 
+    font-family: Arial, sans-serif; 
+    background-color: #121212; 
+    color: #fff; 
+    padding-top: 40px;
+    padding-left: 40px; 
+    margin: 0; 
+    background-color: transparent;
+}
+.btn-back { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px; 
+    color: #00f5d4; 
+    text-decoration: none; 
+    font-weight: bold; 
+    margin-bottom: 30px; 
+    transition: opacity 0.2s; 
+}
+.btn-back:hover { opacity: 0.8; }
+
+/* GRID STRUKTUR DAFTAR BERITA */
+.news-grid { 
+    margin: 40px;
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 25px; 
+    margin-top: 20px; 
+}
+
+/* CARD CONTAINER BERITA */
+.news-card { 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 12px; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.news-card:hover { 
+    transform: translateY(-20px); 
+    box-shadow: 0 8px 60px rgba(0, 245, 212, 0.15); 
+    border-color: rgba(0, 245, 212, 0.3); 
+}
+
+.news-img { 
+    width: 100%; 
+    height: 180px; 
+    object-fit: cover; 
+    background-color: #222; 
+
+}
+.news-content { 
+    padding: 10px; 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+}
+.news-date { font-size: 0.75rem; color: #aaa; margin-bottom: 10px; }
+.news-title { 
+    font-size: 1.2rem; 
+    border-bottom: 1px solid grey;
+    margin: 0 0 10px 0; 
+    color: #fff; 
+    line-height: 1.4; 
+    display: -webkit-box;           /* Mengaktifkan mode box fleksibel milik Webkit */
+    -webkit-line-clamp: 3;          /* Batasi teks MAKSIMAL hanya 3 baris saja */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;   /* Mengatur arah potongan secara vertikal */  
+    overflow: hidden;               /* Menyembunyikan teks yang meluap keluar box */
+    text-overflow: ellipsis;        /* Suntikkan tanda (...) di akhir baris ketiga */ 
+}
+.news-desc { 
+    font-size: 0.9rem; 
+    color: #ccc; 
+    line-height: 1.5; 
+    margin: 0 0 20px 0; 
+    flex-grow: 1; 
+    display: -webkit-box;           /* Mengaktifkan mode box fleksibel milik Webkit */
+    -webkit-line-clamp: 3;          /* Batasi teks MAKSIMAL hanya 3 baris saja */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;   /* Mengatur arah potongan secara vertikal */  
+    overflow: hidden;               /* Menyembunyikan teks yang meluap keluar box */
+    text-overflow: ellipsis;        /* Suntikkan tanda (...) di akhir baris ketiga */ 
+}
+.btn-read { 
+    display: inline-block; 
+    color: #001219; 
+    background-color: #00f5d4; 
+    padding: 10px; 
+    text-align: center; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background 0.2s; 
+}
+.btn-read:hover { background-color: #00c7ab; }
+
+/* STATE JIKA ARTIKEL KOSONG */
+.empty-state { 
+    text-align: center; 
+    padding: 50px; 
+    background: rgba(255, 255, 255, 0.02); 
+    border-radius: 12px; 
+    border: 1px dashed rgba(255, 255, 255, 0.1); 
+}

@@ -1,0 +1,100 @@
+[
+    {
+        "id": 1,
+        "nama_alat": "Konversi Suhu",
+        "kategori": "suhu",
+        "deskripsi": "Alat instan untuk menghitung transformasi suhu.",
+        "url": "/tools/konversi_suhu"
+    },
+    {
+        "id": 2,
+        "nama_alat": "Konversi Jarak & Panjang",
+        "kategori": "jarak",
+        "deskripsi": "Mengonversi satuan panjang dan jarak internasional seperti Kilometer, Meter, Mil, dan Sentimeter secara akurat.",
+        "url": "/tools/konversi_jarak"
+    },
+    {
+        "id": 3,
+        "kategori": "berat",
+        "nama_alat": "Konversi Berat",
+        "deskripsi": "Alat bantu hitung transformasi massa untuk satuan Kilogram (kg), Gram (g), Pon (lbs), dan Ons secara presisi.",
+        "url": "/tools/konversi_berat"
+    },
+    {
+        "id": 4,
+        "kategori": "mata-uang",
+        "nama_alat": "Konversi Mata Uang",
+        "deskripsi": "Menghitung nilai tukar Rupiah (IDR) ke mata uang asing seperti USD, JPY, EUR, dan SGD secara instan.",
+        "url": "/tools/konversi_mataUang"
+    },
+    {
+        "id": 5,
+        "kategori": "panjang",
+        "nama_alat": "Konversi Panjang (Mikro & Imperial)",
+        "deskripsi": "Mengonversi satuan ukuran panjang domestik dan sistem imperial seperti Milimeter, Inci, Kaki (Feet), dan Yard.",
+        "url": "konversi_panjang.html"
+    },
+    {
+        "id": 6,
+        "kategori": "luas",
+        "nama_alat": "Konversi Luas Bidang",
+        "deskripsi": "Menghitung transformasi luas area wilayah atau tanah dari Meter Persegi ke Hektar, Are, dan Ekar secara presisi.",
+        "url": "/tools/konversi_luas"
+    },
+    {
+        "id": 7,
+        "kategori": "volume",
+        "nama_alat": "Konversi Volume Kubik",
+        "deskripsi": "Konversi satuan volume berbasis mater kubik m³ atau satuan turunan lainnya ke satuan volume lain seperti liter, sentimeter kubik, atau kilogram.",
+        "url": "/tools/konversi_volumeKubik"
+    },
+    {
+        "id": 8,
+        "kategori": "digital",
+        "nama_alat": "Konversi Volume Liter",
+        "deskripsi": "Menghitung kapasitas penyimpanan dan memori komputer dari skala Byte, Kilobyte, Megabyte, hingga Gigabyte dan Terabyte.",
+        "url": "/tools/konversi_volumeLiter"
+    },
+    {
+        "id": 9,
+        "kategori": "waktu",
+        "nama_alat": "Konversi Satuan Waktu",
+        "deskripsi": "Mengonversi dimensi waktu secara presisi mulai dari Detik, Menit, Jam, Hari, hingga hitungan Minggu.",
+        "url": "/tools/konversi_waktu"
+    },
+    {
+        "id": 10,
+        "kategori": "kecepatan",
+        "nama_alat": "Konversi Kecepatan",
+        "deskripsi": "Mengonversi laju pergerakan dari satuan Kilometer per Jam (km/h), Meter per Detik (m/s), Mil per Jam (mph), hingga Knot.",
+        "url": "/tools/konversi_kecepatan"
+    },
+    {
+        "id": 11,
+        "kategori": "listrik",
+        "nama_alat": "Kalkulator Listrik",
+        "deskripsi": "Menghitung transformasi energi (Joule, Kalori, kWh, BTU) dan daya listrik/mekanis (Watt, kW, Horsepower).",
+        "url": "/tools/kalkulatorListrik"
+    },
+    {
+        "id": 12,
+        "kategori": "tekanan",
+        "nama_alat": "Konversi Tekanan",
+        "deskripsi": "Mengonversi daya tekan mekanis dan fluida dari skala Pascal (Pa), Bar, KiloPascal (kPa), PSI, hingga Atmosfer (atm).",
+        "url": "/tools/konversi_tekanan"
+    },
+    {
+        "id": 13,
+        "kategori": "kalkulator",
+        "nama_alat": "Kalkulator Biasa & Ilmiah",
+        "deskripsi": "Mesin hitung dual-mode terintegrasi untuk operasi aritmatika standar dan fungsi matematika sains (Trigonometri, Akar, Pangkat).",
+        "url": "/tools/kalkulator"
+    },
+    {
+        "id": 14,
+        "kategori": "digital",
+        "nama_alat": "Konversi Data Digital",
+        "deskripsi": "Menghitung kapasitas penyimpanan dan memori komputer dari skala Byte, Kilobyte, Megabyte, hingga Gigabyte dan Terabyte.",
+        "url": "/tools/konversi_digital"
+    }
+]

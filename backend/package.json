@@ -1,0 +1,23 @@
+{
+  "name": "testexpress",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Andrian Wahyu Ramadhan",
+  "license": "ISC",
+  "description": "Ini adalah aplikasi Express.js sederhana untuk mengelola autentikasi pengguna dengan sesi.",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "fs": "^0.0.1-security",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.3"
+  }
+}

@@ -1,0 +1,135 @@
+#root {
+     text-align: left !important;
+}
+
+/* 🌟 TAKTIK PENYELAMATAN BODY: Hapus padding global agar tidak merusak posisi Navbar */
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #121212; 
+    color: #fff; 
+    margin: 0; 
+    padding: 0;
+}
+
+/* 🌟 WADAH UTAMA HALAMAN: Memberikan ruang aman di bawah Navbar setinggi 90px */
+.tools-page-wrapper {
+    padding: 130px 40px 40px 40px; /* Atas 130px (90px navbar + 40px jarak aman) */
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+.btn-back { 
+    display: block; 
+    /* align-items: center;  */
+    /* gap: 8px;  */
+    text-align: left;
+    border: none; 
+    color: #00f5d4; 
+    text-decoration: none; 
+    font-weight: bold; 
+    margin-bottom: 30px; 
+    transition: opacity 0.2s; 
+}
+.btn-back:hover { opacity: 0.8; }
+
+.tools-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 25px; 
+    margin-top: 20px; 
+}
+
+/* CARD CONTAINER TOOLS */
+.tools-card { 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 12px; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    height: 240px; /* Sedikit dinaikkan ke 240px agar konten deskripsi + tombol tidak terlalu sesak */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; 
+}
+.tools-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 8px 40px rgba(0, 245, 212, 0.15); 
+    border-color: rgba(0, 245, 212, 0.3); 
+}
+
+.tools-content { 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+    overflow: hidden; 
+}
+
+.tools-title { 
+    font-size: 1.2rem; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    margin: 0 0 12px 0; 
+    color: #fff; 
+    line-height: 1.4; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 🌟 KALIBRASI RESPONSIF DESKRIPSI */
+.tools-desc { 
+    font-size: 0.9rem; 
+    color: #ccc; 
+    line-height: 1.5; 
+    margin: 0 0 15px 0; 
+    flex-grow: 1; 
+    overflow-y: auto;
+    width: 100%; /* Diubah ke 100% dari 260px agar mengikuti lebar kartu secara fleksibel */
+    height: 75px;  
+    padding-right: 4px; /* Memberikan sedikit ruang di kanan agar text tidak menempel dengan scrollbar */
+    box-sizing: border-box;
+}
+
+.btn-read { 
+    display: inline-block; 
+    color: #001219; 
+    background-color: #00f5d4; 
+    padding: 10px; 
+    text-align: center; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: background 0.2s; 
+    margin-top: auto; 
+}
+.btn-read:hover { background-color: #00c7ab; }
+
+/* STATE JIKA TOOLS KOSONG */
+.empty-state { 
+    text-align: center; 
+    padding: 50px; 
+    background: rgba(255, 255, 255, 0.02); 
+    border-radius: 12px; 
+    border: 1px dashed rgba(255, 255, 255, 0.1); 
+}
+
+/* 🛠️ KUSTOMISASI SCROLLBAR DESKRIPSI */
+.tools-desc::-webkit-scrollbar {
+    width: 5px;
+}
+.tools-desc::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.01); 
+    border-radius: 8px;
+}
+.tools-desc::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px;
+}
+.tools-desc::-webkit-scrollbar-thumb:hover {
+    background: #00f5d4; /* Mengubah warna menjadi cyan tema kita saat kursor mendekat */
+}
+
+.headers {
+    color: #00c7ab;
+    font-size: 3.5rem;
+}

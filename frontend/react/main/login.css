@@ -1,0 +1,23 @@
+@import url('../src/utils/css/toasted.css');
+@import url('../src/utils/css/boxAuth.css');
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    min-height: 100vh; /* Menggunakan min-height agar fleksibel jika konten memanjang */
+    box-sizing: border-box;
+    padding: 0; 
+    margin: 0;
+}
+
+/* ELEMEN SIMBOL PERINGATAN (Bukan Absolute Lagi) */
+span {
+    font-size: 24px;
+    color: var(--accent-color);
+    font-weight: bold;
+    line-height: 1; /* Mencegah span merusak tinggi baris */
+    cursor: default; /* Menunjukkan bahwa ini hanya simbol, bukan elemen interaktif */
+}

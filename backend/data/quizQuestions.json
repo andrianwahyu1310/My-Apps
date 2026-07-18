@@ -1,0 +1,193 @@
+{
+  "matematika": {
+    "mudah": [
+      { "id": 1, "soal": "Berapakah hasil dari 5 + 7 x 2?", "opsi": ["24", "19", "17", "14"], "jawaban": "19" },
+      { "id": 2, "soal": "Berapa jumlah titik sudut pada sebuah kubus?", "opsi": ["4", "6", "8", "12"], "jawaban": "8" }
+    ],
+    "sedang": [
+      { "id": 1, "soal": "Jika 3x + 5 = 20, berapakah nilai dari x?", "opsi": ["3", "4", "5", "6"], "jawaban": "5" }
+    ],
+    "susah": [
+      { "id": 1, "soal": "Berapakah akar kuadrat dari 144 dikali 5?", "opsi": ["60", "50", "72", "64"], "jawaban": "60" }
+    ],
+    "extreme": [
+      { "id": 1, "soal": "Tentukan turunan pertama dari f(x) = 3x² + 4x!", "opsi": ["6x + 4", "3x + 4", "6x", "6x² + 4"], "jawaban": "6x + 4" }
+    ]
+  },
+  "ipa": {
+    "mudah": [
+      { "id": 1, "soal": "Planet manakah yang dikenal sebagai Planet Merah?", "opsi": ["Mars", "Venus", "Yupiter", "Saturnus"], "jawaban": "Mars" },
+      { "id": 2, "soal": "Apakah zat hijau daun yang berfungsi dalam fotosintesis?", "opsi": ["Klorofil", "Stomata", "Kloroplas", "Sitoplasma"], "jawaban": "Klorofil" },
+      { "id": 3, "soal": "Makhluk hidup memiliki ciri utama yaitu....", "opsi": ["Tidak membutuhkan makanan", "Dapat tumbuh dan berkembang", "Tidak bergerak sama sekali", "Tidak bernapas"], "jawaban": "Dapat tumbuh dan berkembang" },
+      { "id": 4, "soal": "Bagian tumbuhan yang berfungsi menyerap air dan zat hara dari dalam tanah adalah....", "opsi": ["Daun", "Bunga", "Akar", "Batang"], "jawaban": "Akar" },
+      { "id": 5,"soal": "Hewan yang berkembang biak dengan cara bertelur disebut....","opsi": ["Vivipar","Ovipar","Ovovivipar","Mamalia"], "jawaban": "Ovipar" },
+      { "id": 6, "soal": "Planet yang menjadi tempat tinggal manusia adalah....", "opsi": [ "Mars", "Venus", "Jupiter", "Bumi" ], "jawaban": "Bumi" },
+      { "id": 7, "soal": "Sumber energi utama bagi kehidupan di Bumi adalah....", "opsi": [ "Bulan", "Matahari", "Angin", "Air" ], "jawaban": "Matahari" },
+      { "id": 8, "soal": "Air yang didinginkan di dalam freezer akan berubah menjadi....", "opsi": ["Uap", "Embun", "Es", "Gas" ], "jawaban": "Es"},
+      { "id": 9, "soal": "Gaya yang menyebabkan buah jatuh dari pohon adalah....", "opsi": [ "Gaya magnet", "Gaya gravitasi", "Gaya listrik", "Gaya gesek" ], "jawaban": "Gaya gravitasi" },
+      { "id": 10, "soal": "Organ tubuh yang berfungsi sebagai indra pendengaran adalah....", "opsi": [ "Mata", "Hidung", "Telinga", "Lidah" ], "jawaban": "Telinga" },
+      { "id": 11, "soal": "Sampah yang mudah terurai secara alami disebut sampah....", "opsi": [ "Plastik", "Kaca", "Organik", "Kaleng" ], "jawaban": "Organik" },
+      { "id": 12, "soal": "Perubahan wujud air menjadi uap karena dipanaskan disebut....", "opsi": [ "Membeku", "Mengembun", "Menguap", "Mencair" ], "jawaban": "Menguap" },
+      { "id": 13, "soal": "Hewan yang bernapas menggunakan insang adalah....", "opsi": [ "Ayam", "Ikan", "Kucing", "Burung" ], "jawaban": "Ikan" },
+      { "id": 14, "soal": "Tumbuhan membuat makanannya sendiri melalui proses....", "opsi": [ "Respirasi", "Fotosintesis", "Evaporasi", "Fermentasi" ], "jawaban": "Fotosintesis" },
+      { "id": 15, "soal": "Benda yang dapat ditarik oleh magnet adalah....", "opsi": [ "Kayu", "Plastik", "Besi", "Kertas" ], "jawaban": "Besi" },
+      { "id": 16, "soal": "Planet yang dikenal sebagai Planet Merah adalah....", "opsi": [ "Venus", "Saturnus", "Mars", "Merkurius" ], "jawaban": "Mars" },
+      { "id": 17, "soal": "Contoh sumber energi yang dapat diperbarui adalah....", "opsi": [ "Batu bara", "Minyak bumi", "Energi matahari", "Gas alam" ], "jawaban": "Energi matahari" },
+      { "id": 19, "soal": "Contoh hewan yang berkembang biak dengan cara melahirkan adalah....", "opsi": ["Ayam", "Ikan", "Kucing", "Katak"], "jawaban": "Kucing" },
+      { "id": 20, "soal": "Planet terbesar di tata surya adalah....", "opsi": ["Bumi", "Mars", "Jupiter", "Saturnus"], "jawaban": "Jupiter" },
+      { "id": 21, "soal": "Energi listrik dapat diubah menjadi energi cahaya pada alat berupa....", "opsi": ["Kipas angin", "Lampu", "Setrika", "Blender"], "jawaban": "Lampu" },
+      { "id": 22, "soal": "Planet yang memiliki cincin paling jelas adalah....", "opsi": ["Venus", "Saturnus", "Mars", "Merkurius"], "jawaban": "Saturnus" }
+    ],
+    "sedang": [
+      { "id": 1, "soal": "Bagian darah yang berfungsi membekukan luka adalah...", "opsi": ["Plasma", "Leukosit", "Eritrosit", "Trombosit"], "jawaban": "Trombosit" },
+      { "id": 2, "soal": "Organ tubuh manusia yang berfungsi memompa darah ke seluruh tubuh adalah....", "opsi": ["Paru-paru", "Jantung", "Ginjal", "Hati"], "jawaban": "Jantung" },
+      { "id": 3, "soal": "Jika gaya yang diberikan pada suatu benda semakin besar, maka benda akan bergerak....", "opsi": ["Semakin lambat", "Semakin cepat", "Tetap diam", "Berputar sendiri"], "jawaban": "Semakin cepat" },
+      { "id": 4, "soal": "Bagian darah yang berfungsi mengangkut oksigen ke seluruh tubuh adalah....", "opsi": ["Plasma darah", "Keping darah", "Sel darah merah", "Sel darah putih"], "jawaban": "Sel darah merah" },
+      { "id": 5, "soal": "Hewan yang mengalami metamorfosis sempurna adalah....", "opsi": ["Belalang", "Kecoa", "Kupu-kupu", "Capung"], "jawaban": "Kupu-kupu" },
+      { "id": 6, "soal": "Lapisan atmosfer yang melindungi Bumi dari radiasi ultraviolet Matahari adalah....", "opsi": ["Troposfer", "Stratosfer", "Mesosfer", "Termosfer"], "jawaban": "Stratosfer" },
+      { "id": 7, "soal": "Rantai makanan selalu diawali oleh makhluk hidup yang berperan sebagai....", "opsi": ["Konsumen", "Produsen", "Pengurai", "Predator"], "jawaban": "Produsen" },
+      { "id": 8, "soal": "Fungsi utama akar pada tumbuhan selain menyerap air adalah....", "opsi": ["Menghasilkan bunga", "Menopang tumbuhan agar tetap berdiri", "Menghasilkan buah", "Tempat fotosintesis"], "jawaban": "Menopang tumbuhan agar tetap berdiri" },
+      { "id": 9, "soal": "Perubahan energi yang terjadi pada kipas angin adalah....", "opsi": ["Energi panas menjadi energi listrik", "Energi listrik menjadi energi gerak", "Energi gerak menjadi energi cahaya", "Energi kimia menjadi energi panas"], "jawaban": "Energi listrik menjadi energi gerak" },
+      { "id": 10, "soal": "Zat hijau daun yang berperan penting dalam proses fotosintesis disebut....", "opsi": ["Hemoglobin", "Klorofil", "Karbohidrat", "Protein"], "jawaban": "Klorofil" },
+      { "id": 11, "soal": "Bagian telinga yang berfungsi menangkap gelombang bunyi adalah....", "opsi": ["Gendang telinga", "Daun telinga", "Rumah siput", "Saraf pendengaran"], "jawaban": "Daun telinga" },
+      { "id": 12, "soal": "Benda akan tenggelam di dalam air jika massa jenis benda....", "opsi": ["Lebih kecil dari massa jenis air", "Sama dengan massa jenis air", "Lebih besar dari massa jenis air", "Tidak memiliki massa"], "jawaban": "Lebih besar dari massa jenis air" },
+      { "id": 13, "soal": "Contoh sumber daya alam yang tidak dapat diperbarui adalah....", "opsi": ["Air", "Angin", "Minyak bumi", "Sinar matahari"], "jawaban": "Minyak bumi" },
+      { "id": 14, "soal": "Organ pernapasan utama pada manusia adalah....", "opsi": ["Jantung", "Paru-paru", "Hati", "Ginjal"], "jawaban": "Paru-paru" },
+      { "id": 15, "soal": "Hubungan antara lebah dan bunga merupakan contoh simbiosis....", "opsi": ["Parasitisme", "Komensalisme", "Mutualisme", "Predasi"], "jawaban": "Mutualisme" },
+      { "id": 11, "soal": "Fungsi utama klorofil pada tumbuhan adalah....", "opsi": ["Menyerap air", "Menyerap cahaya matahari", "Mengangkut makanan", "Menyimpan cadangan makanan"], "jawaban": "Menyerap cahaya matahari" },
+      { "id": 12, "soal": "Hewan yang mengalami metamorfosis tidak sempurna adalah....", "opsi": ["Kupu-kupu", "Nyamuk", "Belalang", "Lalat"], "jawaban": "Belalang" },
+      { "id": 13, "soal": "Bagian jantung yang memompa darah ke seluruh tubuh adalah....", "opsi": ["Serambi kanan", "Serambi kiri", "Bilik kanan", "Bilik kiri"], "jawaban": "Bilik kiri" },
+      { "id": 14, "soal": "Contoh perubahan energi yang terjadi pada setrika listrik adalah....", "opsi": ["Energi listrik menjadi panas", "Energi panas menjadi listrik", "Energi gerak menjadi panas", "Energi cahaya menjadi panas"], "jawaban": "Energi listrik menjadi panas" },
+      { "id": 15, "soal": "Planet yang memiliki julukan Planet Biru adalah....", "opsi": ["Venus", "Mars", "Bumi", "Neptunus"], "jawaban": "Bumi" },
+      { "id": 16, "soal": "Pembuluh darah yang membawa darah keluar dari jantung disebut....", "opsi": ["Vena", "Kapiler", "Arteri", "Venula"], "jawaban": "Arteri" },
+      { "id": 17, "soal": "Jika es dibiarkan di tempat terbuka, maka es akan mengalami proses....", "opsi": ["Menguap", "Membeku", "Mencair", "Menyublim"], "jawaban": "Mencair" },
+      { "id": 18, "soal": "Lapisan atmosfer yang menjadi tempat terbangnya sebagian besar pesawat adalah....", "opsi": ["Troposfer", "Stratosfer", "Mesosfer", "Eksosfer"], "jawaban": "Stratosfer" },
+      { "id": 19, "soal": "Tumbuhan menyerap karbon dioksida dari udara melalui....", "opsi": ["Akar", "Batang", "Stomata", "Bunga"], "jawaban": "Stomata" },
+      { "id": 20, "soal": "Sumber energi yang termasuk energi fosil adalah....", "opsi": ["Angin", "Matahari", "Minyak bumi", "Air"], "jawaban": "Minyak bumi" },
+      { "id": 21, "soal": "Indra yang berfungsi mendeteksi rasa manis, asin, asam, dan pahit adalah....", "opsi": ["Hidung", "Kulit", "Lidah", "Telinga"], "jawaban": "Lidah" },
+      { "id": 22, "soal": "Perpindahan panas melalui zat perantara tanpa disertai perpindahan zat disebut....", "opsi": ["Konduksi", "Konveksi", "Radiasi", "Evaporasi"], "jawaban": "Konduksi" },
+      { "id": 23, "soal": "Contoh hewan herbivora adalah....", "opsi": ["Harimau", "Sapi", "Elang", "Buaya"], "jawaban": "Sapi" },
+      { "id": 24, "soal": "Bintang yang menjadi pusat Tata Surya adalah....", "opsi": ["Bulan", "Matahari", "Venus", "Jupiter"], "jawaban": "Matahari" },
+      { "id": 25, "soal": "Organ manusia yang berfungsi menyaring darah dan menghasilkan urine adalah....", "opsi": ["Jantung", "Hati", "Ginjal", "Paru-paru"], "jawaban": "Ginjal" },
+      { "id": 26, "soal": "Bagian bunga yang berfungsi sebagai alat kelamin jantan adalah....", "opsi": ["Putik", "Mahkota", "Benang sari", "Kelopak"], "jawaban": "Benang sari" },
+      { "id": 27, "soal": "Jika sebuah magnet dipotong menjadi dua bagian, maka setiap potongan akan....", "opsi": ["Kehilangan sifat magnet", "Menjadi kutub utara saja", "Menjadi kutub selatan saja", "Tetap memiliki kutub utara dan selatan"], "jawaban": "Tetap memiliki kutub utara dan selatan" },
+      { "id": 28, "soal": "Gas yang diperlukan tumbuhan untuk melakukan fotosintesis adalah....", "opsi": ["Oksigen", "Karbon dioksida", "Nitrogen", "Hidrogen"], "jawaban": "Karbon dioksida" },
+      { "id": 29, "soal": "Bagian rangka manusia yang melindungi otak adalah....", "opsi": ["Tulang rusuk", "Tulang belakang", "Tulang tengkorak", "Tulang paha"], "jawaban": "Tulang tengkorak" },
+      { "id": 30, "soal": "Organisme yang berperan menguraikan sisa makhluk hidup dalam ekosistem adalah....", "opsi": ["Produsen", "Konsumen", "Pengurai", "Predator"], "jawaban": "Pengurai" }
+    ],
+    "susah": [
+      { "id": 1, "soal": "Bagian sel tumbuhan yang berfungsi sebagai tempat berlangsungnya fotosintesis adalah....", "opsi": ["Mitokondria", "Kloroplas", "Nukleus", "Ribosom"], "jawaban": "Kloroplas" },
+      { "id": 2, "soal": "Pembuluh darah yang membawa darah kaya oksigen dari paru-paru menuju jantung adalah....", "opsi": ["Arteri pulmonalis", "Vena pulmonalis", "Aorta", "Vena cava"], "jawaban": "Vena pulmonalis" },
+      { "id": 3, "soal": "Perubahan wujud benda dari gas langsung menjadi padat disebut....", "opsi": ["Menyublim", "Deposisi", "Mengembun", "Mencair"], "jawaban": "Deposisi" },
+      { "id": 4, "soal": "Planet yang memiliki waktu revolusi paling lama mengelilingi Matahari adalah....", "opsi": ["Saturnus", "Uranus", "Neptunus", "Jupiter"], "jawaban": "Neptunus" },
+      { "id": 5, "soal": "Alat yang digunakan untuk mengukur kuat arus listrik adalah....", "opsi": ["Voltmeter", "Barometer", "Amperemeter", "Ohmmeter"], "jawaban": "Amperemeter" },
+      { "id": 6, "soal": "Dalam rantai makanan, organisme yang memperoleh energi langsung dari produsen disebut....", "opsi": ["Konsumen tingkat I", "Konsumen tingkat II", "Predator puncak", "Pengurai"], "jawaban": "Konsumen tingkat I" },
+      { "id": 7, "soal": "Lapisan atmosfer tempat sebagian besar cuaca terjadi adalah....", "opsi": ["Stratosfer", "Mesosfer", "Troposfer", "Termosfer"], "jawaban": "Troposfer" },
+      { "id": 8, "soal": "Perpindahan panas tanpa melalui zat perantara disebut....", "opsi": ["Konduksi", "Konveksi", "Radiasi", "Evaporasi"], "jawaban": "Radiasi" },
+      { "id": 9, "soal": "Jenis sendi yang memungkinkan gerakan ke segala arah terdapat pada....", "opsi": ["Siku", "Lutut", "Bahu", "Pergelangan kaki"], "jawaban": "Bahu" },
+      { "id": 10, "soal": "Gas yang paling banyak terkandung di atmosfer Bumi adalah....", "opsi": ["Oksigen", "Nitrogen", "Karbon dioksida", "Argon"], "jawaban": "Nitrogen" },
+      { "id": 11, "soal": "Organel sel yang berfungsi sebagai pusat pengendali seluruh aktivitas sel adalah....", "opsi": ["Ribosom", "Mitokondria", "Nukleus", "Vakuola"], "jawaban": "Nukleus" },
+      { "id": 12, "soal": "Jika sebuah benda dikenai gaya yang seimbang dari dua arah berlawanan, maka benda akan....", "opsi": ["Selalu bergerak lebih cepat", "Bergerak ke arah gaya terbesar", "Tetap diam atau bergerak dengan kecepatan tetap", "Berputar dengan sendirinya"], "jawaban": "Tetap diam atau bergerak dengan kecepatan tetap" },
+      { "id": 13, "soal": "Bagian mata yang mengatur banyak sedikitnya cahaya yang masuk adalah....", "opsi": ["Kornea", "Pupil", "Retina", "Lensa"], "jawaban": "Pupil" },
+      { "id": 14, "soal": "Contoh perubahan kimia adalah....", "opsi": ["Es mencair", "Air menguap", "Besi berkarat", "Garam larut dalam air"], "jawaban": "Besi berkarat" },
+      { "id": 15, "soal": "Planet yang memiliki jumlah satelit alami terbanyak berdasarkan penemuan saat ini adalah....", "opsi": ["Jupiter", "Saturnus", "Uranus", "Neptunus"], "jawaban": "Saturnus" },
+      { "id": 16, "soal": "Bagian tumbuhan yang menjadi tempat terjadinya pertukaran gas adalah....", "opsi": ["Kambium", "Stomata", "Floem", "Xilem"], "jawaban": "Stomata" },
+      { "id": 17, "soal": "Energi yang tersimpan di dalam makanan disebut energi....", "opsi": ["Listrik", "Kimia", "Panas", "Cahaya"], "jawaban": "Kimia" },
+      { "id": 18, "soal": "Batuan yang terbentuk dari pembekuan magma disebut batuan....", "opsi": ["Sedimen", "Metamorf", "Beku", "Kapur"], "jawaban": "Beku" },
+      { "id": 19, "soal": "Peristiwa gerhana Matahari terjadi ketika....", "opsi": ["Bumi berada di antara Matahari dan Bulan", "Bulan berada di antara Matahari dan Bumi", "Matahari berada di antara Bumi dan Bulan", "Bumi berada di belakang Matahari"], "jawaban": "Bulan berada di antara Matahari dan Bumi" },
+      { "id": 20, "soal": "Jaringan pada tumbuhan yang berfungsi mengangkut hasil fotosintesis ke seluruh bagian tumbuhan adalah....", "opsi": ["Xilem", "Floem", "Epidermis", "Kambium"], "jawaban": "Floem" },
+      { "id": 21, "soal": "Zat kimia yang memiliki lambang 'NaCl' di kehidupan sehari-hari adalah...", "opsi": ["Gula", "Garam Dapur", "Asam Cuka", "Soda Kue"], "jawaban": "Garam Dapur" },
+      { "id": 22, "soal": "Bagian sel yang berfungsi mengatur seluruh aktivitas sel adalah....", "opsi": ["Mitokondria", "Nukleus", "Ribosom", "Vakuola"], "jawaban": "Nukleus" },
+      { "id": 23, "soal": "Jika tumbuhan tidak memiliki jaringan xilem, akibat yang paling mungkin terjadi adalah....", "opsi": ["Hasil fotosintesis tidak dapat disalurkan", "Air dan mineral tidak dapat diangkut ke daun", "Tumbuhan tidak dapat berkembang biak", "Bunga tidak dapat mekar"], "jawaban": "Air dan mineral tidak dapat diangkut ke daun" },
+      { "id": 24, "soal": "Perubahan wujud dari gas langsung menjadi padat disebut....", "opsi": ["Menyublim", "Deposisi", "Mengembun", "Mencair"], "jawaban": "Deposisi" },
+      { "id": 25, "soal": "Planet yang memiliki kemiringan sumbu rotasi paling ekstrem sehingga tampak berputar sambil 'menggelinding' adalah....", "opsi": ["Saturnus", "Mars", "Uranus", "Neptunus"], "jawaban": "Uranus" },
+      { "id": 26, "soal": "Bagian telinga yang mengubah getaran bunyi menjadi impuls saraf adalah....", "opsi": ["Daun telinga", "Gendang telinga", "Rumah siput (koklea)", "Saluran Eustachius"], "jawaban": "Rumah siput (koklea)" },
+      { "id": 27, "soal": "Jika gaya total yang bekerja pada suatu benda adalah nol, maka benda akan....", "opsi": ["Selalu berhenti", "Selalu bergerak melingkar", "Tetap diam atau bergerak lurus beraturan", "Selalu bergerak dipercepat"], "jawaban": "Tetap diam atau bergerak lurus beraturan" },
+      { "id": 28, "soal": "Gas rumah kaca yang paling banyak dihasilkan dari pembakaran bahan bakar fosil adalah....", "opsi": ["Oksigen", "Karbon dioksida", "Nitrogen", "Helium"], "jawaban": "Karbon dioksida" },
+      { "id": 29, "soal": "Jaringan tumbuhan yang mengangkut hasil fotosintesis dari daun ke seluruh bagian tumbuhan adalah....", "opsi": ["Xilem", "Floem", "Kambium", "Epidermis"], "jawaban": "Floem" },
+      { "id": 30, "soal": "Dalam rantai makanan, organisme yang menempati tingkat trofik tertinggi disebut....", "opsi": ["Produsen", "Konsumen tingkat I", "Predator puncak", "Pengurai"], "jawaban": "Predator puncak" },
+      { "id": 31, "soal": "Alat yang digunakan untuk mengukur hambatan listrik adalah....", "opsi": ["Voltmeter", "Amperemeter", "Ohmmeter", "Termometer"], "jawaban": "Ohmmeter" },
+      { "id": 32, "soal": "Perpindahan panas yang terjadi karena perpindahan zat perantaranya disebut....", "opsi": ["Konduksi", "Konveksi", "Radiasi", "Refleksi"], "jawaban": "Konveksi" },
+      { "id": 33, "soal": "Organ yang menghasilkan hormon insulin untuk mengatur kadar gula darah adalah....", "opsi": ["Hati", "Pankreas", "Ginjal", "Limpa"], "jawaban": "Pankreas" },
+      { "id": 34, "soal": "Lapisan atmosfer yang terbakar oleh sebagian besar meteor adalah....", "opsi": ["Troposfer", "Stratosfer", "Mesosfer", "Termosfer"], "jawaban": "Mesosfer" },
+      { "id": 35, "soal": "Jika populasi produsen dalam suatu ekosistem menurun drastis, dampak yang paling mungkin terjadi adalah....", "opsi": ["Populasi konsumen meningkat", "Populasi konsumen menurun", "Pengurai menghilang", "Jumlah sinar matahari berkurang"], "jawaban": "Populasi konsumen menurun" },
+      { "id": 36, "soal": "Batuan yang terbentuk akibat perubahan batuan beku atau sedimen karena tekanan dan suhu tinggi disebut batuan....", "opsi": ["Beku", "Sedimen", "Metamorf", "Granit"], "jawaban": "Metamorf" },
+      { "id": 37, "soal": "Peristiwa pasang surut air laut terutama dipengaruhi oleh....", "opsi": ["Rotasi Bumi", "Gaya gravitasi Bulan", "Angin laut", "Aktivitas gunung api"], "jawaban": "Gaya gravitasi Bulan" },
+      { "id": 38, "soal": "Jika sebuah benda memiliki massa jenis lebih kecil daripada air, maka benda tersebut akan....", "opsi": ["Tenggelam", "Melayang", "Terapung", "Menguap"], "jawaban": "Terapung" },
+      { "id": 39, "soal": "Bagian darah yang berfungsi melawan infeksi dan penyakit adalah....", "opsi": ["Sel darah merah", "Plasma darah", "Keping darah", "Sel darah putih"], "jawaban": "Sel darah putih" },
+      { "id": 40, "soal": "Proses perubahan uap air menjadi titik-titik air di atmosfer sehingga membentuk awan disebut....", "opsi": ["Evaporasi", "Kondensasi", "Presipitasi", "Infiltrasi"], "jawaban": "Kondensasi" },
+      { "id": 41, "soal": "Gerhana Matahari total hanya dapat terjadi ketika....", "opsi": ["Bumi berada di antara Matahari dan Bulan", "Bulan berada di antara Matahari dan Bumi serta ketiganya segaris", "Matahari berada di antara Bumi dan Bulan", "Bulan berada di titik terjauh dari Bumi"], "jawaban": "Bulan berada di antara Matahari dan Bumi serta ketiganya segaris" }
+    ],
+    "extreme": [
+      { "id": 1, "soal": "Jika sebuah tumbuhan diletakkan di tempat gelap selama beberapa hari, proses yang paling terganggu adalah....", "opsi": ["Respirasi", "Fotosintesis", "Transpirasi", "Penyerapan air"], "jawaban": "Fotosintesis" },
+      { "id": 2, "soal": "Organ manusia yang menghasilkan empedu untuk membantu proses pencernaan lemak adalah....", "opsi": ["Lambung", "Pankreas", "Hati", "Usus halus"], "jawaban": "Hati" },
+      { "id": 3, "soal": "Urutan yang benar dalam rantai makanan adalah....", "opsi": ["Konsumen → Produsen → Pengurai", "Produsen → Konsumen → Pengurai", "Pengurai → Produsen → Konsumen", "Konsumen → Pengurai → Produsen"], "jawaban": "Produsen → Konsumen → Pengurai" },
+      { "id": 4, "soal": "Jika gaya yang bekerja pada suatu benda sama dengan nol, maka berdasarkan Hukum I Newton benda akan....", "opsi": ["Selalu berhenti", "Bergerak semakin cepat", "Tetap diam atau bergerak lurus beraturan", "Berubah arah setiap saat"], "jawaban": "Tetap diam atau bergerak lurus beraturan" },
+      { "id": 5, "soal": "Planet yang memiliki rotasi paling cepat di Tata Surya adalah....", "opsi": ["Mars", "Jupiter", "Saturnus", "Bumi"], "jawaban": "Jupiter" },
+      { "id": 6, "soal": "Lapisan atmosfer yang mengandung sebagian besar ozon adalah....", "opsi": ["Troposfer", "Stratosfer", "Mesosfer", "Termosfer"], "jawaban": "Stratosfer" },
+      { "id": 7, "soal": "Jaringan pengangkut pada tumbuhan yang membawa air dan mineral dari akar ke daun adalah....", "opsi": ["Floem", "Xilem", "Kambium", "Epidermis"], "jawaban": "Xilem" },
+      { "id": 8, "soal": "Bagian darah yang berfungsi dalam proses pembekuan darah adalah....", "opsi": ["Sel darah merah", "Sel darah putih", "Keping darah", "Plasma darah"], "jawaban": "Keping darah" },
+      { "id": 9, "soal": "Jika sebuah benda memiliki massa tetap, maka semakin besar gaya yang diberikan, percepatan benda akan....", "opsi": ["Semakin kecil", "Tetap", "Semakin besar", "Menjadi nol"], "jawaban": "Semakin besar" },
+      { "id": 10, "soal": "Bunyi tidak dapat merambat melalui....", "opsi": ["Air", "Udara", "Besi", "Ruang hampa"], "jawaban": "Ruang hampa" },
+      { "id": 11, "soal": "Urutan lapisan atmosfer dari yang paling dekat hingga paling jauh dari permukaan Bumi adalah....", "opsi": ["Troposfer → Stratosfer → Mesosfer → Termosfer", "Stratosfer → Troposfer → Termosfer → Mesosfer", "Troposfer → Mesosfer → Stratosfer → Termosfer", "Mesosfer → Troposfer → Stratosfer → Termosfer"], "jawaban": "Troposfer → Stratosfer → Mesosfer → Termosfer" },
+      { "id": 12, "soal": "Perubahan energi yang terjadi pada panel surya adalah....", "opsi": ["Energi kimia menjadi listrik", "Energi cahaya menjadi listrik", "Energi panas menjadi gerak", "Energi listrik menjadi cahaya"], "jawaban": "Energi cahaya menjadi listrik" },
+      { "id": 13, "soal": "Jika populasi ular dalam suatu ekosistem menurun drastis, kemungkinan yang paling terjadi adalah....", "opsi": ["Populasi tikus meningkat", "Populasi padi meningkat", "Populasi elang meningkat", "Populasi pengurai menurun"], "jawaban": "Populasi tikus meningkat" },
+      { "id": 14, "soal": "Organel sel yang sering disebut sebagai pusat pembangkit energi sel adalah....", "opsi": ["Ribosom", "Mitokondria", "Lisosom", "Badan Golgi"], "jawaban": "Mitokondria" },
+      { "id": 15, "soal": "Gerhana Bulan terjadi ketika....", "opsi": ["Bulan berada di antara Matahari dan Bumi", "Bumi berada di antara Matahari dan Bulan", "Matahari berada di antara Bumi dan Bulan", "Bulan berada di belakang Matahari"], "jawaban": "Bumi berada di antara Matahari dan Bulan" },
+      { "id": 16, "soal": "Zat yang paling banyak dihasilkan tumbuhan saat proses fotosintesis berlangsung adalah....", "opsi": ["Karbon dioksida dan air", "Glukosa dan oksigen", "Nitrogen dan air", "Oksigen dan nitrogen"], "jawaban": "Glukosa dan oksigen" },
+      { "id": 17, "soal": "Peristiwa naiknya air dari akar menuju daun pada tumbuhan terutama dipengaruhi oleh....", "opsi": ["Gaya gravitasi", "Kapilaritas dan daya isap daun", "Tekanan udara", "Medan magnet Bumi"], "jawaban": "Kapilaritas dan daya isap daun" },
+      { "id": 18, "soal": "Jika suatu benda dicelupkan ke dalam air dan massa jenis benda lebih kecil daripada massa jenis air, maka benda akan....", "opsi": ["Tenggelam", "Melayang", "Terapung", "Larut"], "jawaban": "Terapung" },
+      { "id": 19, "soal": "Fungsi utama stomata pada daun adalah....", "opsi": ["Mengangkut air", "Menyerap cahaya", "Tempat pertukaran gas dan penguapan air", "Menyimpan cadangan makanan"], "jawaban": "Tempat pertukaran gas dan penguapan air" },
+      { "id": 20, "soal": "Dalam sebuah ekosistem, organisme yang mampu mengubah zat organik menjadi zat anorganik sehingga dapat dimanfaatkan kembali oleh produsen adalah....", "opsi": ["Produsen", "Konsumen tingkat I", "Predator", "Pengurai"], "jawaban": "Pengurai" },
+      { "id": 21, "soal": "Manakah organel sel yang dijuluki sebagai 'Powerhouse of Cell'?", "opsi": ["Mitokondria", "Ribosom", "Badan Golgi", "Lisosom"], "jawaban": "Mitokondria" },
+      { "id": 22, "soal": "Apabila semua tumbuhan hijau di suatu ekosistem punah, dampak pertama yang paling mungkin terjadi adalah....", "opsi": ["Jumlah oksigen meningkat", "Populasi konsumen tingkat I menurun", "Jumlah pengurai langsung habis", "Populasi predator meningkat"], "jawaban": "Populasi konsumen tingkat I menurun" },
+      { "id": 23, "soal": "Urutan aliran darah yang benar setelah darah meninggalkan bilik kiri adalah....", "opsi": ["Aorta → Seluruh tubuh → Vena cava → Serambi kanan", "Aorta → Paru-paru → Serambi kiri → Bilik kiri", "Arteri pulmonalis → Paru-paru → Vena pulmonalis", "Vena cava → Aorta → Seluruh tubuh"], "jawaban": "Aorta → Seluruh tubuh → Vena cava → Serambi kanan" },
+      { "id": 24, "soal": "Jika kadar karbon dioksida di atmosfer meningkat secara drastis, dampak yang paling mungkin terjadi adalah....", "opsi": ["Efek rumah kaca meningkat", "Ozon bertambah tebal", "Suhu Bumi menurun", "Curah hujan berhenti"], "jawaban": "Efek rumah kaca meningkat" },
+      { "id": 25, "soal": "Organel sel yang berperan dalam respirasi sel untuk menghasilkan ATP adalah....", "opsi": ["Kloroplas", "Mitokondria", "Ribosom", "Lisosom"], "jawaban": "Mitokondria" },
+      { "id": 26, "soal": "Peristiwa naiknya air pada batang tumbuhan terutama dipengaruhi oleh....", "opsi": ["Gaya gravitasi", "Kapilaritas dan daya isap daun", "Tekanan udara", "Gaya magnet"], "jawaban": "Kapilaritas dan daya isap daun" },
+      { "id": 27, "soal": "Planet yang memiliki hari (rotasi) lebih panjang daripada tahunnya (revolusi) adalah....", "opsi": ["Merkurius", "Venus", "Mars", "Saturnus"], "jawaban": "Venus" },
+      { "id": 28, "soal": "Jika sebuah benda dicelupkan ke dalam air dan massa jenis benda sama dengan massa jenis air, maka benda akan....", "opsi": ["Terapung", "Melayang", "Tenggelam", "Larut"], "jawaban": "Melayang" },
+      { "id": 29, "soal": "Lapisan ozon yang melindungi Bumi dari sinar ultraviolet berada di....", "opsi": ["Troposfer", "Stratosfer", "Mesosfer", "Termosfer"], "jawaban": "Stratosfer" },
+      { "id": 30, "soal": "Perubahan energi yang terjadi pada generator listrik adalah....", "opsi": ["Listrik menjadi panas", "Gerak menjadi listrik", "Kimia menjadi cahaya", "Panas menjadi gerak"], "jawaban": "Gerak menjadi listrik" },
+      { "id": 31, "soal": "Bagian mata yang berfungsi memfokuskan cahaya agar jatuh tepat pada retina adalah....", "opsi": ["Kornea", "Lensa", "Iris", "Pupil"], "jawaban": "Lensa" },
+      { "id": 32, "soal": "Jika seluruh pengurai dalam suatu ekosistem hilang, maka yang paling mungkin terjadi adalah....", "opsi": ["Sisa makhluk hidup menumpuk dan unsur hara berkurang", "Produsen bertambah cepat", "Predator menjadi satu-satunya organisme", "Fotosintesis berhenti seketika"], "jawaban": "Sisa makhluk hidup menumpuk dan unsur hara berkurang" },
+      { "id": 33, "soal": "Bunyi dapat terdengar lebih cepat di besi dibandingkan di udara karena....", "opsi": ["Besi menghasilkan bunyi", "Partikel besi lebih rapat", "Udara tidak memiliki partikel", "Besi memantulkan cahaya"], "jawaban": "Partikel besi lebih rapat" },
+      { "id": 34, "soal": "Jika tekanan udara di suatu daerah menurun drastis, kemungkinan kondisi cuaca yang akan terjadi adalah....", "opsi": ["Cuaca cerah", "Hujan atau badai", "Salju turun di daerah tropis", "Tidak ada perubahan"], "jawaban": "Hujan atau badai" },
+      { "id": 35, "soal": "Gerhana Matahari cincin terjadi ketika....", "opsi": ["Bulan lebih dekat ke Bumi", "Diameter tampak Bulan lebih kecil daripada Matahari", "Bumi berada di antara Matahari dan Bulan", "Matahari berada di antara Bumi dan Bulan"], "jawaban": "Diameter tampak Bulan lebih kecil daripada Matahari" },
+      { "id": 36, "soal": "Jika sebuah magnet dipanaskan hingga suhu yang sangat tinggi, sifat kemagnetannya dapat berkurang karena....", "opsi": ["Elektron berhenti bergerak", "Susunan domain magnet menjadi tidak teratur", "Massa magnet berkurang", "Kutub magnet berpindah"], "jawaban": "Susunan domain magnet menjadi tidak teratur" },
+      { "id": 37, "soal": "Fungsi utama alveolus pada paru-paru adalah....", "opsi": ["Menyaring udara", "Menghasilkan lendir", "Tempat pertukaran oksigen dan karbon dioksida", "Mengatur irama pernapasan"], "jawaban": "Tempat pertukaran oksigen dan karbon dioksida" },
+      { "id": 38, "soal": "Urutan yang benar dalam sistem pencernaan manusia adalah....", "opsi": ["Mulut → Kerongkongan → Lambung → Usus halus → Usus besar", "Mulut → Lambung → Kerongkongan → Usus halus → Usus besar", "Mulut → Kerongkongan → Usus besar → Lambung", "Mulut → Lambung → Usus besar → Usus halus"], "jawaban": "Mulut → Kerongkongan → Lambung → Usus halus → Usus besar" },
+      { "id": 39, "soal": "Pada fotosintesis, energi cahaya diubah menjadi energi....", "opsi": ["Gerak", "Kimia", "Listrik", "Panas"], "jawaban": "Kimia" },
+      { "id": 40, "soal": "Jika populasi ular meningkat drastis pada suatu ekosistem sawah, dampak yang paling mungkin adalah....", "opsi": ["Populasi tikus menurun", "Populasi padi menurun", "Populasi ular langsung punah", "Populasi belalang meningkat"], "jawaban": "Populasi tikus menurun" },
+      { "id": 41, "soal": "Lapisan Bumi yang tersusun atas batuan cair dan menjadi sumber magma adalah....", "opsi": ["Kerak Bumi", "Mantel", "Inti luar", "Inti dalam"], "jawaban": "Mantel" }
+    ]
+  },
+  "ips": {
+    "mudah": [
+      { "id": 1, "soal": "Benua terbesar di dunia adalah benua...", "opsi": ["Afrika", "Amerika", "Asia", "Eropa"], "jawaban": "Asia" }
+    ],
+    "sedang": [
+      { "id": 1, "soal": "Mata uang resmi negara Jepang adalah...", "opsi": ["Won", "Yen", "Dollar", "Yuan"], "jawaban": "Yen" }
+    ],
+    "susah": [
+      { "id": 1, "soal": "Kerajaan Hindu tertua di Indonesia adalah...", "opsi": ["Majapahit", "Tarumanegara", "Kutai", "Sriwijaya"], "jawaban": "Kutai" }
+    ],
+    "extreme": [
+      { "id": 1, "soal": "Peristiwa Rengasdengklok terjadi pada tanggal berapa di tahun 1945?", "opsi": ["14 Agustus", "15 Agustus", "16 Agustus", "17 Agustus"], "jawaban": "16 Agustus" }
+    ]
+  },
+  "umum": {
+    "mudah": [
+      { "id": 1, "soal": "Siapakah pencipta lagu kebangsaan Indonesia Raya?", "opsi": ["Ibu Sud", "W.R. Supratman", "C. Simanjuntak", "Kusbini"], "jawaban": "W.R. Supratman" }
+    ],
+    "sedang": [
+      { "id": 1, "soal": "Kuis Family 100 pertama kali dipandu oleh...", "opsi": ["Tukul Arwana", "Anjasmara", "Sonny Tulung", "Eko Patrio"], "jawaban": "Sonny Tulung" }
+    ],
+    "susah": [
+      { "id": 1, "soal": "Negara manakah yang memiliki garis pantai terpanjang di dunia?", "opsi": ["Kanada", "Indonesia", "Rusia", "Australia"], "jawaban": "Kanada" }
+    ],
+    "extreme": [
+      { "id": 1, "soal": "Apa nama selat yang memisahkan Pulau Jawa dan Pulau Sumatera?", "opsi": ["Selat Sunda", "Selat Madura", "Selat Bali", "Selat Malaka"], "jawaban": "Selat Sunda" }
+    ]
+  }
+}

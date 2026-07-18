@@ -1,0 +1,23 @@
+.opsi-jawaban-btn {
+    width: 100%;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-color);
+    transition: all 0.15s ease;
+}
+
+/* 🌟 KUNCI UTAMA: Hover hanya aktif jika tombol TIDAK dalam kondisi disabled */
+.opsi-jawaban-btn:not(:disabled):hover {
+    background: rgba(0, 245, 212, 0.15) !important;
+    border-color: #00f5d4 !important;
+    cursor: pointer;
+}
+
+.opsi-jawaban-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

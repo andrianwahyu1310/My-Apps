@@ -1,0 +1,47 @@
+[
+    { 
+        "id": 1, 
+        "kategori": "olahraga", 
+        "judul": "Wali Kota Depok Minta ASN Harus Disiplin Olahraga, Tak Ada Rapat di Jam 07.00–09.00", 
+        "ringkasan": "Pelaksanaan kegiatan olahraga bagi Aparatur Sipil Negara (ASN) yang digelar setiap Jumat pagi.", 
+        "gambar": "olahraga1.webp", 
+        "tanggal": "13 Oktober 2025",
+        "url": "https://berita.depok.go.id/wali-kota-depok-minta-asn-harus-disiplin-olahraga-tak-ada-rapat-di-jam-0700-0900"
+    },
+    { 
+        "id": 2, 
+        "kategori": "olahraga", 
+        "judul": "BSI Sponsor Utama Liga Jasa Keuangan 2025, Perkuat Sinergi dan Kemajuan Olahraga di Industri Keuangan", 
+        "ringkasan": "PT Bank Syariah Indonesia Tbk kembali menunjukkan komitmennya dalam mendukung perkembangan olahraga dan memperkuat industri...", 
+        "gambar": "olahraga2.jpg", 
+        "tanggal": "28 Juli 2025",
+        "url": "https://www.bankbsi.co.id/news-update/berita/bsi-sponsor-utama-liga-jasa-keuangan-2025-perkuat-sinergi-dan-kemajuan-olahraga-di-industri-keuangan"
+    },
+    { 
+        "id": 3, 
+        "kategori": "teknologi", 
+        "judul": "Vietnam Airlines meraih penghargaan ganda untuk transformasi digital.", 
+        "ringkasan": "VHO - Vietnam Airlines baru saja memenangkan dua penghargaan penting di ajang Vietnam I4 Impact Awards 2026.", 
+        "gambar": "teknologi1.webp", 
+        "tanggal": "30 Mei 2026",
+        "url": "https://www.vietnam.vn/id/vietnam-airlines-gianh-cu-dup-giai-thuong-ve-chuyen-doi-so"
+    },
+    { 
+        "id": 4, 
+        "kategori": "politik", 
+        "judul": "Setahun pemerintahan Prabowo-Gibran – 'Arah balik demokrasi' dan apa saja tantangan yang mungkin dihadapi ke depan?", 
+        "ringkasan": "Satu tahun pemerintahan Prabowo-Gibran diwarnai kekhawatiran dari kalangan aktivis dan akademisi terkait adanya kemunduran atau \"arah balik\" dalam praktik demokrasi.", 
+        "gambar": "politik2.webp", 
+        "tanggal": "19 Oktober 2025",
+        "url": "https://www.bbc.com/indonesia/articles/ce86yln4nmro"
+    },
+    {
+        "id": 5,
+        "kategori": "hiburan",
+        "judul": "Fun City Mega Mall Bengkulu Siapkan Promo Menarik",
+        "ringkasan": "Bagi Anda yang sedang mencari tempat hiburan keluarga yang seru dan penuh kejutan",
+        "gambar": "mega_mall.webp",
+        "tanggal": "24 Juni 2025",
+        "url": "https://www.beritamerdekaonline.com/fun-city-mega-mall-bengkulu-siapkan-promo-menarik-destinasi-hiburan-keluarga-yang-seru-dan-terjangkau/headline/#show"
+    }
+]
