@@ -57,7 +57,7 @@ export default function App() {
   }
 
   return (
-    <Router>
+    <Router basename="/My-Apps">
       <div className="app-container">
         <Routes>
           <Route path="/" element={<Dashboard />} />
