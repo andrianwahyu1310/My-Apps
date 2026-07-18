@@ -56,6 +56,8 @@ export default function App() {
     "/games/kuis": <Quiz />
   }
 
+  console.log("pathname:", window.location.pathname);
+
   return (
     <Router basename="/My-Apps">
       <div className="app-container">
