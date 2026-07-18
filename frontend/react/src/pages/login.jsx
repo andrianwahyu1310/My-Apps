@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { showToast } from "../utils/toasted";
 import "../../main/login.css";
+import API_URL from "../config/api";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -24,7 +25,7 @@ export default function Login() {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/api/login", {
+            const response = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

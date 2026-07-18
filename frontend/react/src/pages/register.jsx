@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../main/register.css";
 import { showToast } from "../utils/toasted";
 import { isValidUsername, isValidPassword } from "../utils/validator";
+import API_URL from "../config/api";
 
 export default function Register() {
     const [username, setUsername] = useState("");
@@ -38,7 +39,7 @@ export default function Register() {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/api/register", {
+            const response = await fetch(`${API_URL}/api/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
