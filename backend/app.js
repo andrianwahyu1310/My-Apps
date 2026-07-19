@@ -87,10 +87,10 @@ app.get('/api/health', (req, res) => {
 // ✉️ CONFIGURATION NODEMAILER (GERBANG PENGIRIMAN EMAIL)
 // =========================================================================
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // bisa menggunakan gmail atau layanan smtp lainnya
+    service: "gmail",
     auth: {
-        user: 'kolen.icikiwir1310@gmail.com', // Ganti dengan email pengembang Anda
-        pass: 'rhqglloepbfdixjn' // Gunakan "App Password" dari Google Akun, bukan password biasa!
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
