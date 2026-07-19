@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 import cors from 'cors'; 
 import multer from 'multer';
 import nodemailer from 'nodemailer';
-import { isValidUsername, isValidPassword } from '../frontend/react/src/utils/validator.js';
+import { isValidUsername, isValidPassword } from './utils/validator.js';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -17,7 +17,13 @@ const USER_FILE = path.join(__dirname, 'data', 'users.json');
 const DATA_NEWS_PATH = path.join(__dirname, 'data', 'article.json');
 
 // ⁡⁣⁣⁢--- 𝗠𝗜𝗗𝗗𝗟𝗘𝗪𝗔𝗥𝗘 𝗖𝗢𝗥𝗦 ---⁡
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://127.0.0.1:5174'];
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:5174',
+    'http://127.0.0.1:5174',
+    'https://andrianwahyu1310.github.io'
+];
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -38,11 +44,11 @@ app.use(session({
     secret: 'login-secret-base/23-1244-Sd-34',
     resave: false,
     saveUninitialized: false,
-    cookie: { 
-        secure: false, 
-        maxAge: 3600000,
+    cookie: {
+        secure: true,
+        sameSite: "none",
         httpOnly: true,
-        sameSite: 'lax' 
+        maxAge: 3600000
     }
 }));
 
