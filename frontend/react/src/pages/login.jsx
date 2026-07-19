@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { showToast } from "../utils/toasted";
 import "../../main/login.css";
-import API_URL from "../config/api";
+import API_URL from "../../src/config/api";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -16,7 +16,12 @@ export default function Login() {
     // ⁡⁣⁣⁢𝗞𝗶𝗿𝗶𝗺 𝗗𝗮𝘁𝗮 𝗸𝗲 𝗕𝗮𝗰𝗸𝗲𝗻𝗱 𝗔𝗣𝗜⁡
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // setErrorMsg(""); // ⁡⁢⁣⁢𝘽𝙚𝙧𝙨𝙞𝙝𝙠𝙖𝙣 𝙚𝙧𝙤𝙧 𝙡𝙖𝙢𝙖 𝙨𝙚𝙩𝙞𝙖𝙥 𝙠𝙖𝙡𝙞 𝙩𝙤𝙢𝙗𝙤𝙡 𝙙𝙞𝙩𝙚𝙠𝙖𝙣⁡
+        // setErrorMsg(""); 
+
+        if (!API_URL) {
+            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+            return;
+        }
 
         if (!username || !password) {
             showToast(setToast, "Username dan password wajib diisi!", "error");
