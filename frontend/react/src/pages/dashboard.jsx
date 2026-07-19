@@ -8,7 +8,7 @@ import { databaseQuotes } from '../utils/quotes';
 import { typewriterMessages } from '../utils/typewritter';
 import Navbar from '../components/navbar';
 import "../../main/dashboard.css";
-import API_URL, { apiFetch } from "../../src/config/api";
+import { apiFetch } from "../../src/config/api";
 
 export default function Dashboard() {
     // ⁡⁣⁣⁢=== SEKTOR STATE ===⁡
@@ -21,10 +21,6 @@ export default function Dashboard() {
 
     const handleLogoutAction = async () => {
     try {
-        if (!API_URL) {
-            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-            return;
-        }
 
         // ⁡⁢⁣⁣Taktik Penyerangan ke Backend: Hancurkan Cookie Sesi di Server⁡
         const { data } = await apiFetch("/api/logout", {
@@ -62,10 +58,6 @@ export default function Dashboard() {
 
     // ⁡⁣⁣⁢--- 𝗦𝗘𝗞𝗧𝗢𝗥 𝗘𝗙𝗙𝗘𝗖𝗧 (𝗟𝗢𝗚𝗜𝗞𝗔 𝗦𝗜𝗦𝗧𝗘𝗠) ---⁡
     useEffect(() => {
-        if (!API_URL) {
-            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-            return;
-        }
 
         //  ⁡⁣⁢⁣𝟭. 𝗣𝗼𝘀 𝗣𝗲𝗺𝗲𝗿𝗶𝗸𝘀𝗮𝗮𝗻 𝗦𝗲𝘀𝗶 𝗣𝗲𝗻𝗴𝗴𝘂𝗻𝗮⁡
         apiFetch("/api/auth-check", {
