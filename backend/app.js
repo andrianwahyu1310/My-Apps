@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from 'express';
 import session from 'express-session';
 import fs from 'fs/promises'; 
@@ -18,11 +21,9 @@ const DATA_NEWS_PATH = path.join(__dirname, 'data', 'article.json');
 
 // ⁡⁣⁣⁢--- 𝗠𝗜𝗗𝗗𝗟𝗘𝗪𝗔𝗥𝗘 𝗖𝗢𝗥𝗦 ---⁡
 const allowedOrigins = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'http://localhost:5174',
-    'http://127.0.0.1:5174',
-    'https://andrianwahyu1310.github.io'
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    process.env.FRONTEND_URL
 ];
 
 app.use(cors({
@@ -41,12 +42,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 app.use(session({
-    secret: 'login-secret-base/23-1244-Sd-34',
+    secret: process.env.TOKEN_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: true,
-        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         httpOnly: true,
         maxAge: 3600000
     }
