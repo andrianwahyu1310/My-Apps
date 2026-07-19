@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import API_URL, { apiFetch } from "../../src/config/api";
+import { apiFetch } from "../../src/config/api";
 
 export default function About() {
     const navigate = useNavigate();
@@ -11,10 +11,6 @@ export default function About() {
         const verifikasiSesiLayanan = async () => {
             try {
                 setIsLoading(true);
-                if (!API_URL) {
-                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-                    return;
-                }
 
                 const { data } = await apiFetch('/api/auth-check', {
                     method: 'GET',

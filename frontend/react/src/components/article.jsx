@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import '../../main/article.css';
-import API_URL, { apiFetch } from "../config/api";
+import { apiFetch } from "../config/api";
 
 export default function ArsipKategoriBerita() {
     // ⁡⁢⁣⁢𝗣𝗔𝗥𝗔𝗠𝗘𝗧𝗘𝗥 𝗤𝗨𝗘𝗥𝗬 𝗦𝗧𝗥𝗜𝗡𝗚 (?𝗰𝗮𝘁𝗲𝗴𝗼𝗿𝘆=𝗼𝗹𝗮𝗵𝗿𝗮𝗴𝗮)⁡
@@ -23,11 +23,6 @@ export default function ArsipKategoriBerita() {
 
         const ambilDataDariServer = async () => {
             try {
-                if (!API_URL) {
-                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-                    return;
-                }
-
                 setIsLoading(true);
 
                 const { data } = await apiFetch(`/api/artikel/${idKategori}`);
