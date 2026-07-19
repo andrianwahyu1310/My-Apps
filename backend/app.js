@@ -9,6 +9,7 @@ import multer from 'multer';
 import nodemailer from 'nodemailer';
 import { isValidUsername, isValidPassword } from '../frontend/react/src/utils/validator.js';
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -508,4 +509,6 @@ app.use('/api', (req, res) => {
     res.status(404).json({ success: false, message: 'Endpoint API tidak ditemukan!' });
 });
 
-app.listen(3000, () => console.log("Backend API Server berjalan di http://localhost:3000"));
+app.listen(PORT, () => {
+    console.log(`Server berjalan di port ${PORT}`);
+});
