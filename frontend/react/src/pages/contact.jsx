@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { showToast } from '../utils/toasted';
-import API_URL, { apiFetch } from "../../src/config/api";
+import { apiFetch } from "../../src/config/api";
 
 export default function Contact() {
     const navigate = useNavigate();
@@ -22,10 +22,6 @@ export default function Contact() {
         const cekOtoritasUser = async () => {
             try {
                 setIsLoading(true);
-                if (!API_URL) {
-                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-                    return;
-                }
                 const { data } = await apiFetch('/api/auth-check', {
                     method: 'GET',
                     credentials: 'include'
@@ -93,11 +89,6 @@ export default function Contact() {
                 formData.append('sendVia', sendVia);
                 if (screenshot) {
                     formData.append('screenshot', screenshot);
-                }
-
-                if (!API_URL) {
-                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-                    return;
                 }
 
                 const { data: hasil } = await apiFetch('/api/contact/report', {

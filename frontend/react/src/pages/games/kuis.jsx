@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar';
 import { showToast } from '../../utils/toasted';
 import '../../../main/base/kuis.css';
-import API_URL, { apiFetch } from "../../../src/config/api";
+import { apiFetch } from "../../../src/config/api";
 
 export default function QuizFamily({ user, onLogout }) {
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
@@ -82,10 +82,6 @@ export default function QuizFamily({ user, onLogout }) {
             setIsProcessing(true); // Kunci sistem sementara selama proses pengambilan data API
 
         try {
-            if (!API_URL) {
-                alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-                return;
-            }
 
             // 🌟 TEMBAK API BACKEND: Mengambil soal yang sudah diacak dan dipotong oleh server
             const { data: hasil } = await apiFetch(
