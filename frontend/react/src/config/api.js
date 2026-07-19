@@ -1,11 +1,13 @@
+const DEFAULT_API_URL = "http://localhost:3000";
 const API_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:3000"
-    : "";
+  import.meta.env.VITE_API_URL ||
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? DEFAULT_API_URL
+    : "");
 
 export const buildApiUrl = (path) => {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return `${API_URL}${normalizedPath}`;
+  return API_URL ? `${API_URL}${normalizedPath}` : normalizedPath;
 };
 
 export const apiFetch = async (path, options = {}) => {

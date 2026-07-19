@@ -16,9 +16,17 @@ const USER_FILE = path.join(__dirname, 'data', 'users.json');
 const DATA_NEWS_PATH = path.join(__dirname, 'data', 'article.json');
 
 // ⁡⁣⁣⁢--- 𝗠𝗜𝗗𝗗𝗟𝗘𝗪𝗔𝗥𝗘 𝗖𝗢𝗥𝗦 ---⁡
+const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://127.0.0.1:5174'];
+
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true 
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+        }
+        callback(null, false);
+    },
+    credentials: true
 }));
 
 app.use(express.urlencoded({ extended: true }));
@@ -62,6 +70,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ 
     storage: storage,
     limits: { fileSize: 5 * 1024 * 1024 } // Membatasi ukuran gambar maksimal 5MB demi keadilan server
+});
+
+app.get('/api/health', (req, res) => {
+    res.json({ success: true, message: 'Backend berjalan normal.' });
 });
 
 // =========================================================================
