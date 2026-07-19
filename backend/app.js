@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 import cors from 'cors'; 
 import multer from 'multer';
 import nodemailer from 'nodemailer';
-import { isValidUsername, isValidPassword } from '../backend/utils/validator';
+import { isValidUsername, isValidPassword } from './utils/validator';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
