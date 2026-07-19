@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../../components/navbar';
 import { showToast } from '../../utils/toasted';
 import '../../../main/base/kuis.css';
-import API_URL from "../../src/config/api";
+import API_URL from "../../../src/config/api";
 
 export default function QuizFamily({ user, onLogout }) {
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
