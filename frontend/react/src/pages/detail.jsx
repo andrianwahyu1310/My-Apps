@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import API_URL from "../../src/config/api";
 
 export default function DetailAkun() {
     const navigate = useNavigate();
@@ -15,8 +16,13 @@ export default function DetailAkun() {
             try {
                 setIsLoading(true);
                 
+                if (!API_URL) {
+                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+                    return;
+                }
+
                 // Menembak rute spesifik yang telah kita daftarkan di backend Express
-                const respon = await fetch('http://localhost:3000/api/detail', {
+                const respon = await fetch(`${API_URL}/api/detail`, {
                     method: 'GET',
                     credentials: 'include', // AMUNISI KRUSIAL: Memastikan cookie session (connect.sid) ikut terkirim lintas port
                     headers: {

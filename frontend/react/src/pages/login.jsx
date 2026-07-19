@@ -18,14 +18,14 @@ export default function Login() {
         e.preventDefault();
         // setErrorMsg(""); 
 
-        if (!API_URL) {
-            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
-            return;
-        }
-
         if (!username || !password) {
             showToast(setToast, "Username dan password wajib diisi!", "error");
             setTimeout(() => setToast({ show: false, message: "", type: "success" }), 3000);
+            return;
+        }
+
+        if (!API_URL) {
+            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
             return;
         }
 

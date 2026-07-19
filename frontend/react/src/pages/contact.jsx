@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { showToast } from '../utils/toasted';
+import API_URL from "../../src/config/api";
 
 export default function Contact() {
     const navigate = useNavigate();
@@ -21,7 +22,11 @@ export default function Contact() {
         const cekOtoritasUser = async () => {
             try {
                 setIsLoading(true);
-                const respon = await fetch('http://localhost:3000/api/auth-check', {
+                if (!API_URL) {
+                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+                    return;
+                }
+                const respon = await fetch(`${API_URL}/api/auth-check`, {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -91,7 +96,12 @@ export default function Contact() {
                     formData.append('screenshot', screenshot);
                 }
 
-                const respon = await fetch('http://localhost:3000/api/contact/report', {
+                if (!API_URL) {
+                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+                    return;
+                }
+
+                const respon = await fetch(`${API_URL}/api/contact/report`, {
                     method: 'POST',
                     credentials: 'include',
                     body: formData // Kirim paket form data langsung ke backend

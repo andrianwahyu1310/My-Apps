@@ -8,6 +8,7 @@ import { databaseQuotes } from '../utils/quotes';
 import { typewriterMessages } from '../utils/typewritter';
 import Navbar from '../components/navbar';
 import "../../main/dashboard.css";
+import API_URL from "../../src/config/api";
 
 export default function Dashboard() {
     // ⁡⁣⁣⁢=== SEKTOR STATE ===⁡
@@ -20,8 +21,13 @@ export default function Dashboard() {
 
     const handleLogoutAction = async () => {
     try {
+        if (!API_URL) {
+            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+            return;
+        }
+
         // ⁡⁢⁣⁣Taktik Penyerangan ke Backend: Hancurkan Cookie Sesi di Server⁡
-        const response = await fetch("http://localhost:3000/api/logout", {
+        const response = await fetch(`${API_URL}/api/logout`, {
             method: "POST", // ⁡⁢⁣⁢Menggunakan POST demi keamanan jalur data⁡
             headers: {
                 "Content-Type": "application/json"
@@ -62,8 +68,13 @@ export default function Dashboard() {
 
     // ⁡⁣⁣⁢--- 𝗦𝗘𝗞𝗧𝗢𝗥 𝗘𝗙𝗙𝗘𝗖𝗧 (𝗟𝗢𝗚𝗜𝗞𝗔 𝗦𝗜𝗦𝗧𝗘𝗠) ---⁡
     useEffect(() => {
+        if (!API_URL) {
+            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+            return;
+        }
+
         //  ⁡⁣⁢⁣𝟭. 𝗣𝗼𝘀 𝗣𝗲𝗺𝗲𝗿𝗶𝗸𝘀𝗮𝗮𝗻 𝗦𝗲𝘀𝗶 𝗣𝗲𝗻𝗴𝗴𝘂𝗻𝗮⁡
-        fetch('http://localhost:3000/api/auth-check', {
+        fetch(`${API_URL}/api/auth-check`, {
             method: "GET",
             credentials: "include", 
             headers: {
@@ -91,7 +102,7 @@ export default function Dashboard() {
         });
 
         // ⁡⁣⁢⁣𝟮. 𝗣𝗼𝘀 𝗣𝗲𝗻𝗴𝗮𝗺𝗯𝗶𝗹𝗮𝗻 𝗗𝗮𝘁𝗮 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶 𝗕𝗲𝗿𝗶𝘁𝗮⁡
-        fetch('http://localhost:3000/api/categories')
+        fetch(`${API_URL}/api/categories`)
             .then(res => res.json())
             .then(data => setCategories(data))
             .catch(err => console.error("Gagal memuat kategori:", err));

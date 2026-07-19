@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import API_URL from "../../src/config/api";
 
 export default function About() {
     const navigate = useNavigate();
@@ -10,7 +11,12 @@ export default function About() {
         const verifikasiSesiLayanan = async () => {
             try {
                 setIsLoading(true);
-                const respon = await fetch('http://localhost:3000/api/auth-check', {
+                if (!API_URL) {
+                    alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+                    return;
+                }
+
+                const respon = await fetch(`${API_URL}/api/auth-check`, {
                     method: 'GET',
                     credentials: 'include' // Amunisi lintas port untuk menyertakan cookie session
                 });

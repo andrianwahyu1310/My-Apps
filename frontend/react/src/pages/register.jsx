@@ -26,6 +26,11 @@ export default function Register() {
             return;
         }
 
+        if (!API_URL) {
+            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+            return;
+        }
+
         // 🛡️ 2. Validasi Kedua: Periksa format username
         if (!isValidUsername(username)) {
             showToast(setToast, "Username tidak valid! Harus diawali huruf, alfanumerik, dan panjang 5-20 karakter.", "error");
