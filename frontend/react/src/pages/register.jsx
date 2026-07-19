@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../main/register.css";
 import { showToast } from "../utils/toasted";
 import { isValidUsername, isValidPassword } from "../utils/validator";
-import API_URL from "../../src/config/api";
+import API_URL, { apiFetch } from "../../src/config/api";
 
 export default function Register() {
     const [username, setUsername] = useState("");
@@ -27,7 +27,7 @@ export default function Register() {
         }
 
         if (!API_URL) {
-            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+            showToast(setToast, "Fitur registrasi hanya tersedia saat backend dijalankan.", "error");
             return;
         }
 
@@ -44,13 +44,12 @@ export default function Register() {
         }
 
         try {
-            const response = await fetch(`${API_URL}/api/register`, {
+            const { data } = await apiFetch("/api/register", {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
+                credentials: "include",
                 body: JSON.stringify({ username, password })
             });
-            
-            const data = await response.json();
             
             if (data.success) {
                 // 🌟 Gunakan showToast untuk memberikan sinyal sukses yang adil
@@ -64,7 +63,7 @@ export default function Register() {
             }
         } catch (err) {
             console.error("Sistem Registrasi Terganggu:", err);
-            showToast(setToast, "Gagal menghubungi server pendaftaran.", "error");
+            showToast(setToast, err.message || "Gagal menghubungi server pendaftaran.", "error");
         }
     };
 

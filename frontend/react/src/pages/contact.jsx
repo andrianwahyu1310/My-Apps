@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { showToast } from '../utils/toasted';
-import API_URL from "../../src/config/api";
+import API_URL, { apiFetch } from "../../src/config/api";
 
 export default function Contact() {
     const navigate = useNavigate();
@@ -26,11 +26,10 @@ export default function Contact() {
                     alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
                     return;
                 }
-                const respon = await fetch(`${API_URL}/api/auth-check`, {
+                const { data } = await apiFetch('/api/auth-check', {
                     method: 'GET',
                     credentials: 'include'
                 });
-                const data = await respon.json();
 
                 if (data.success && data.loggedIn) {
                     setUsername(data.user);
@@ -101,13 +100,11 @@ export default function Contact() {
                     return;
                 }
 
-                const respon = await fetch(`${API_URL}/api/contact/report`, {
+                const { data: hasil } = await apiFetch('/api/contact/report', {
                     method: 'POST',
                     credentials: 'include',
                     body: formData // Kirim paket form data langsung ke backend
                 });
-
-                const hasil = await respon.json();
 
                 if (hasil.success) {
                     showToast(setToast, hasil.message, "success", 5000);

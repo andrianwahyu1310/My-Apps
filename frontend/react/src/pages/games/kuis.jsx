@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar';
 import { showToast } from '../../utils/toasted';
 import '../../../main/base/kuis.css';
-import API_URL from "../../../src/config/api";
+import API_URL, { apiFetch } from "../../../src/config/api";
 
 export default function QuizFamily({ user, onLogout }) {
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
@@ -13,7 +13,6 @@ export default function QuizFamily({ user, onLogout }) {
     const [mapelTerpilih, setMapelTerpilih] = useState("");
     const [jumlahSoalPilihan, setJumlahSoalPilihan] = useState(5);
     const [modeGame, setModeGame] = useState("santai");
-    const [kesulitanTerpilih, setKesulitanTerpilih] = useState("");
 
     // ⁡⁣⁣⁢𝗦𝘁𝗮𝘁𝗲 𝗧𝗲𝗺𝗽𝗮𝘁 𝗦𝗼𝗮𝗹⁡
     const [kumpulanSoal, setKumpulanSoal] = useState([]);
@@ -80,7 +79,6 @@ export default function QuizFamily({ user, onLogout }) {
 
     // ⁡⁣⁣⁢𝗛𝗮𝗻𝗱𝗹𝗲𝗿 𝗙𝗮𝘀𝗲 𝟯: 𝗣𝗶𝗹𝗶𝗵 𝗞𝗲𝘀𝘂𝗹𝗶𝘁𝗮𝗻 & 𝗔𝗰𝗮𝗸 + 𝗣𝗼𝘁𝗼𝗻𝗴 𝗣𝗮𝗸𝗲𝘁 𝗦𝗼𝗮𝗹⁡
         const handlePilihKesulitan = async (id) => {
-        setKesulitanTerpilih(id);
         setIsProcessing(true); // Kunci sistem sementara selama proses pengambilan data API
 
         try {
@@ -90,16 +88,14 @@ export default function QuizFamily({ user, onLogout }) {
             }
 
             // 🌟 TEMBAK API BACKEND: Mengambil soal yang sudah diacak dan dipotong oleh server
-            const respon = await fetch(
-                `${API_URL}/api/quiz-questions?mapel=${mapelTerpilih}&kesulitan=${id}&limit=${jumlahSoalPilihan}`,
+            const { data: hasil } = await apiFetch(
+                `/api/quiz-questions?mapel=${mapelTerpilih}&kesulitan=${id}&limit=${jumlahSoalPilihan}`,
                 { 
                     method: 'GET', 
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include'
                 }
             );
-            
-            const hasil = await respon.json();
 
             if (hasil.success) {
                 const soalDariServer = hasil.data;

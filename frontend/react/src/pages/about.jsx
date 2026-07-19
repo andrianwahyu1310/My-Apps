@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import API_URL from "../../src/config/api";
+import API_URL, { apiFetch } from "../../src/config/api";
 
 export default function About() {
     const navigate = useNavigate();
@@ -16,11 +16,10 @@ export default function About() {
                     return;
                 }
 
-                const respon = await fetch(`${API_URL}/api/auth-check`, {
+                const { data } = await apiFetch('/api/auth-check', {
                     method: 'GET',
                     credentials: 'include' // Amunisi lintas port untuk menyertakan cookie session
                 });
-                const data = await respon.json();
 
                 if (!data.success || !data.loggedIn) {
                     console.warn("Akses halaman tentang ditolak, mengalihkan ke gerbang login...");

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import API_URL from "../../src/config/api";
+import API_URL, { apiFetch } from "../../src/config/api";
 
 export default function DetailAkun() {
     const navigate = useNavigate();
@@ -22,20 +22,13 @@ export default function DetailAkun() {
                 }
 
                 // Menembak rute spesifik yang telah kita daftarkan di backend Express
-                const respon = await fetch(`${API_URL}/api/detail`, {
+                const { data } = await apiFetch('/api/detail', {
                     method: 'GET',
                     credentials: 'include', // AMUNISI KRUSIAL: Memastikan cookie session (connect.sid) ikut terkirim lintas port
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-
-                // Jika gerbang API backend mengembalikan status di luar 200 ok
-                if (!respon.ok) {
-                    throw new Error("Sistem menolak permintaan atau rute tidak ditemukan.");
-                }
-
-                const data = await respon.json();
 
                 if (data.success) {
                     // Menyimpan data spesifik hasil filter users.json dari server

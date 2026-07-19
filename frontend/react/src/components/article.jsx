@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import '../../main/article.css';
-import API_URL from "../config/api";
+import API_URL, { apiFetch } from "../config/api";
 
 export default function ArsipKategoriBerita() {
     // ⁡⁢⁣⁢𝗣𝗔𝗥𝗔𝗠𝗘𝗧𝗘𝗥 𝗤𝗨𝗘𝗥𝗬 𝗦𝗧𝗥𝗜𝗡𝗚 (?𝗰𝗮𝘁𝗲𝗴𝗼𝗿𝘆=𝗼𝗹𝗮𝗵𝗿𝗮𝗴𝗮)⁡
@@ -30,8 +30,7 @@ export default function ArsipKategoriBerita() {
 
                 setIsLoading(true);
 
-                const respon = await fetch(`http://localhost:3000/api/artikel/${idKategori}`);
-                const data = await respon.json();
+                const { data } = await apiFetch(`/api/artikel/${idKategori}`);
 
                 if (data.success && data.articles) {
                     // ⁡⁢⁣⁣--- 𝗔𝗟𝗚𝗢𝗥𝗜𝗧𝗠𝗔 𝗦𝗛𝗨𝗙𝗙𝗟𝗘 𝗙𝗜𝗦𝗛𝗘𝗥-𝗬𝗔𝗧𝗘𝗦 ---⁡

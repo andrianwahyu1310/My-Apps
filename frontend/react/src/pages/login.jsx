@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { showToast } from "../utils/toasted";
 import "../../main/login.css";
-import API_URL from "../../src/config/api";
+import API_URL, { apiFetch } from "../../src/config/api";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -25,19 +25,17 @@ export default function Login() {
         }
 
         if (!API_URL) {
-            alert("Fitur registrasi hanya tersedia saat backend dijalankan.");
+            showToast(setToast, "Fitur login hanya tersedia saat backend dijalankan.", "error");
             return;
         }
 
         try {
-            const response = await fetch(`${API_URL}/api/login`, {
+            const { data } = await apiFetch("/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify({ username, password })
             });
-            
-            const data = await response.json();
             
             if (data.success) {
                 showToast(setToast, "Login berhasil! Mengalihkan...", "success");
@@ -45,11 +43,11 @@ export default function Login() {
                     navigate("/");
                 }, 1500);
             } else {
-                showToast(setToast, "Akses ditolak", "error");
+                showToast(setToast, data.message || "Akses ditolak", "error");
             }
         } catch (err) {
             console.error("Sistem Autentikasi Terganggu:", err);
-            showToast(setToast, "Gagal terhubung.", "error");
+            showToast(setToast, err.message || "Gagal terhubung.", "error");
         }
     };
 

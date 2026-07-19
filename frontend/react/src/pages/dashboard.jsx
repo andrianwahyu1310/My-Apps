@@ -8,7 +8,7 @@ import { databaseQuotes } from '../utils/quotes';
 import { typewriterMessages } from '../utils/typewritter';
 import Navbar from '../components/navbar';
 import "../../main/dashboard.css";
-import API_URL from "../../src/config/api";
+import API_URL, { apiFetch } from "../../src/config/api";
 
 export default function Dashboard() {
     // ⁡⁣⁣⁢=== SEKTOR STATE ===⁡
@@ -27,18 +27,12 @@ export default function Dashboard() {
         }
 
         // ⁡⁢⁣⁣Taktik Penyerangan ke Backend: Hancurkan Cookie Sesi di Server⁡
-        const response = await fetch(`${API_URL}/api/logout`, {
-            method: "POST", // ⁡⁢⁣⁢Menggunakan POST demi keamanan jalur data⁡
-            headers: {
-                "Content-Type": "application/json"
-            },
-            //  ⁡⁢⁣⁢WAJIB TRUE jika backend menggunakan cookie/session berbasis port berbeda⁡
-            credentials: "include" 
+        const { data } = await apiFetch("/api/logout", {
+            method: "GET",
+            credentials: "include"
         });
 
-        const data = await response.json();
-
-        if (response.ok && data.success) {
+        if (data.success) {
             console.log("Sesi di server berhasil dihancurkan.");
         } else {
             console.warn("Backend menolak atau sesi sudah kedaluwarsa terlebih dahulu.");
@@ -74,37 +68,28 @@ export default function Dashboard() {
         }
 
         //  ⁡⁣⁢⁣𝟭. 𝗣𝗼𝘀 𝗣𝗲𝗺𝗲𝗿𝗶𝗸𝘀𝗮𝗮𝗻 𝗦𝗲𝘀𝗶 𝗣𝗲𝗻𝗴𝗴𝘂𝗻𝗮⁡
-        fetch(`${API_URL}/api/auth-check`, {
+        apiFetch("/api/auth-check", {
             method: "GET",
             credentials: "include", 
             headers: {
                 "Content-Type": "application/json"
             }
-        }) 
-        .then(res => {
-            // ⁡⁢⁣⁣Jika server mengembalikan eror 401 atau tidak authorized, langsung lempar ke login⁡
-            if (!res.ok) {
-                throw new Error("Sesi tidak valid atau belum terautentikasi.");
-            }
-            return res.json();
         })
-        .then(data => { 
+        .then(({ data }) => { 
             if (data.success) { 
                 setUsername(data.user); 
             } else {
-                // ⁡⁢⁣⁣Taktik evakuasi jika sukses bernilai false⁡
                 navigate("/login");
             }
         })
         .catch(err => {
             console.error("Gagal memuat sistem autentikasi:", err);
-            navigate("/login"); // ⁡⁢⁣⁣Evakuasi user ke pos login demi keamanan⁡
+            navigate("/login");
         });
 
         // ⁡⁣⁢⁣𝟮. 𝗣𝗼𝘀 𝗣𝗲𝗻𝗴𝗮𝗺𝗯𝗶𝗹𝗮𝗻 𝗗𝗮𝘁𝗮 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶 𝗕𝗲𝗿𝗶𝘁𝗮⁡
-        fetch(`${API_URL}/api/categories`)
-            .then(res => res.json())
-            .then(data => setCategories(data))
+        apiFetch("/api/categories")
+            .then(({ data }) => setCategories(Array.isArray(data) ? data : []))
             .catch(err => console.error("Gagal memuat kategori:", err));
     }, [navigate]);
 
@@ -162,7 +147,12 @@ export default function Dashboard() {
         }, 0);
 
         fetch(`https://api.open-meteo.com/v1/forecast?latitude=${koordinatCuaca.split(',')[0]}&longitude=${koordinatCuaca.split(',')[1]}&current_weather=true`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Weather API request failed');
+                }
+                return res.json();
+            })
             .then(data => {
                 if (data.current_weather) {
                     setInfoCuaca({
