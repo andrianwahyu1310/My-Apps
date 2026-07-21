@@ -42,7 +42,7 @@ export default function Register() {
             showToast(setToast, "Password lemah! Wajib memiliki minimal 8 karakter yang terdiri dari huruf, angka, dan simbol khusus.", "error");
             return;
         }
-
+        
         try {
             const { data } = await apiFetch("/api/register", {
                 headers: { "Content-Type": "application/json" },
@@ -62,6 +62,10 @@ export default function Register() {
                 showToast(setToast, data.message || "Pendaftaran ditolak oleh otoritas sistem.", "error");
             }
         } catch (err) {
+            console.error(err);
+    console.error("Nama:", err.name);
+    console.error("Pesan:", err.message);
+    console.error("Stack:", err.stack);
             console.error("Sistem Registrasi Terganggu:", err);
             showToast(setToast, err.message || "Gagal menghubungi server pendaftaran.", "error");
         }

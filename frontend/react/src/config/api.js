@@ -1,9 +1,10 @@
 const DEFAULT_API_URL = "http://localhost:3000";
+const PROD_API_URL = "https://my-apps-backend.vercel.app";
 const API_URL =
   import.meta.env.VITE_API_URL ||
   (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? DEFAULT_API_URL
-    : "");
+    : PROD_API_URL);
 
 export const buildApiUrl = (path) => {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;

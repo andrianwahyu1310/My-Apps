@@ -1,5 +1,5 @@
 // import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import toolsData from '../../../backend/data/tools.json';
 import dataBrainAktif from '../../../backend/data/brainTeaser.json'
 
@@ -59,7 +59,7 @@ export default function App() {
   console.log("pathname:", window.location.pathname);
 
   return (
-    <Router basename="/My-Apps">
+    <Router>
       <div className="app-container">
         <Routes>
           <Route path="/" element={<Dashboard />} />
