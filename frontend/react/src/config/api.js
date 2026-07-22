@@ -1,5 +1,5 @@
 const DEFAULT_API_URL = "http://localhost:3000";
-const PROD_API_URL = "https://my-apps-backend.vercel.app";
+const PROD_API_URL = "https://my-apps-api.vercel.app";
 const API_URL =
   import.meta.env.VITE_API_URL ||
   (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
