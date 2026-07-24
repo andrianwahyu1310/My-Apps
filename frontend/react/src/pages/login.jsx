@@ -8,19 +8,16 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    // const [errorMsg, setErrorMsg] = useState("");
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
     
     const navigate = useNavigate();
 
-    // ⁡⁣⁣⁢𝗞𝗶𝗿𝗶𝗺 𝗗𝗮𝘁𝗮 𝗸𝗲 𝗕𝗮𝗰𝗸𝗲𝗻𝗱 𝗔𝗣𝗜⁡
+    // Kirim Data ke Backend API
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // setErrorMsg(""); 
 
         if (!username || !password) {
             showToast(setToast, "Username dan password wajib diisi!", "error");
-            setTimeout(() => setToast({ show: false, message: "", type: "success" }), 3000);
             return;
         }
 
@@ -47,13 +44,13 @@ export default function Login() {
             }
         } catch (err) {
             console.error("Sistem Autentikasi Terganggu:", err);
-            showToast(setToast, err.message || "Gagal terhubung.", "error");
+            showToast(setToast, err.message || "Gagal terhubung ke server.", "error");
         }
     };
 
     return (
-        <div className="auth-body-wrapper"> {/* ⁡⁢⁣⁢𝙋𝙚𝙣𝙟𝙖𝙜𝙖 𝙡𝙖𝙮𝙤𝙪𝙩 𝙖𝙜𝙖𝙧 𝙩𝙚𝙧𝙞𝙨𝙤𝙡𝙖𝙨𝙞 ⁡*/}
-        {/* ⁡⁢⁣⁣𝗥𝗘𝗡𝗗𝗘𝗥 𝗘𝗟𝗘𝗠𝗘𝗡𝗧 𝗧𝗢𝗔𝗦𝗧⁡ */}
+        <div className="auth-body-wrapper">
+            {/* RENDER ELEMENT TOAST */}
             {toast.show && (
                 <div id="toast" className={`toast ${toast.type} toast-show`}>
                     {toast.message}
@@ -69,7 +66,7 @@ export default function Login() {
                         placeholder="Masukkan username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        autoComplete="current-username"
+                        autoComplete="username"
                     />
                     
                     <div className="password-wrapper">
@@ -84,6 +81,7 @@ export default function Login() {
                             type="button" 
                             id="toggleBtn" 
                             onClick={() => setShowPassword(!showPassword)}
+                            aria-label="Toggle password visibility"
                         >
                             {showPassword ? "🙈" : "👁️"}
                         </button>
