@@ -35,7 +35,7 @@ export const register = async (req, res) => {
         const user = await createUser(username, hashedPassword);
 
         req.session.isLoggedIn = true;
-        req.session.userId = user._id;
+        req.session.userId = user._id.toString();
         req.session.user = user.username;
 
         req.session.save((err) => {
@@ -47,7 +47,7 @@ export const register = async (req, res) => {
                 });
             }
 
-            res.json({
+            res.status(201).json({
                 success: true,
                 message: "Register berhasil!"
             });
@@ -212,7 +212,11 @@ export const logout = (req, res) => {
             });
         }
 
-        res.clearCookie("connect.sid");
+        res.clearCookie("connect.sid", {
+            path: "/",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            secure: process.env.NODE_ENV === "production"
+        });
 
         return res.status(200).json({
             success: true,
@@ -224,7 +228,12 @@ export const logout = (req, res) => {
 export const setTheme = async (req, res) => {
     try {
         const { theme } = req.body;
-        const currentUsername = req.session.user;
+        const currentUsername = req.session?.user;
+
+        // Cek apakah user terautentikasi
+        if (!currentUsername) {
+            return res.status(401).json({ success: false, message: "Akses ditolak. Sesi tidak ditemukan." });
+        }
 
         if (!theme) {
             return res.status(400).json({ success: false, message: "Tema tidak boleh kosong." });

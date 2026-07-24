@@ -30,7 +30,7 @@ const writeUsersToFile = async (users) => {
 };
 
 // ========================================
-// USER
+// USER SERVICES
 // ========================================
 
 export const findUserByUsername = async (username) => {
@@ -51,6 +51,11 @@ export const findUserById = async (id) => {
         const users = await readUsersFromFile();
         const user = users.find((item) => item._id === id);
         return user ? { ...user, _id: user._id } : null;
+    }
+
+    // Mencegah error jika ID bukan Mongoose ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return null;
     }
 
     return User.findById(id).select(
@@ -89,6 +94,8 @@ export const createUser = async (
 };
 
 export const updateUserTheme = async (username, theme) => {
+    if (!username) return null;
+
     if (!isMongoAvailable()) {
         const users = await readUsersFromFile();
         const userIndex = users.findIndex((item) => item.username === username);
@@ -97,34 +104,29 @@ export const updateUserTheme = async (username, theme) => {
 
         users[userIndex].theme = theme;
         await writeUsersToFile(users);
-        return users[userIndex];
+        
+        const { password, ...safeUser } = users[userIndex];
+        return safeUser;
     }
 
     return User.findOneAndUpdate(
         { username },
         { theme },
         { new: true }
-    );
+    ).select("-password");
 };
 
 // ========================================
-// MIGRASI JSON
+// MIGRASI JSON KE MONGO
 // ========================================
 
 export const migrateUsersFromJson = async () => {
-    const userFile = path.join(__dirname, "../data/users.json");
-
     try {
-        const rawData = await fs.readFile(userFile, "utf-8");
+        const rawData = await fs.readFile(usersFilePath, "utf-8");
         const users = JSON.parse(rawData);
 
-        if (!Array.isArray(users) || users.length === 0) {
-            return;
-        }
-
-        if (!isMongoAvailable()) {
-            return;
-        }
+        if (!Array.isArray(users) || users.length === 0) return;
+        if (!isMongoAvailable()) return;
 
         let imported = 0;
 
@@ -145,11 +147,11 @@ export const migrateUsersFromJson = async () => {
         }
 
         if (imported > 0) {
-            console.log(`✅ Migrasi ${imported} user berhasil.`);
+            console.log(`✅ Migrasi ${imported} user ke MongoDB berhasil.`);
         }
     } catch (err) {
         if (err.code !== "ENOENT") {
-            console.error(err);
+            console.error("❌ Error Migrasi JSON:", err.message);
         }
     }
 };

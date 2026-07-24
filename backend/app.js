@@ -71,17 +71,16 @@ app.use(express.static(path.join(__dirname, "public")));
 // =========================
 // SESSION
 // =========================
+const isProduction = process.env.NODE_ENV === "production";
+
 app.use(sessionConfig({
     secret: process.env.TOKEN_SECRET,
     resave: false,
     saveUninitialized: false,
 
     cookie: {
-        secure: process.env.NODE_ENV === "production",
-        sameSite:
-            process.env.NODE_ENV === "production"
-                ? "none"
-                : "lax",
+        secure: isProduction, // Wajib true jika sameSite: "none"
+        sameSite: isProduction ? "none" : "lax",
         httpOnly: true,
         maxAge: 1000 * 60 * 60
     }
