@@ -30,6 +30,8 @@ const __dirname = path.dirname(__filename);
 // =========================
 app.locals.toolsFile = path.join(__dirname, "data", "tools.json");
 
+// WAJIB: Beri tahu Express bahwa ia ada di balik reverse proxy Railway (untuk HTTPS cookie)
+app.set("trust proxy", 1);
 // =========================
 // CORS
 // =========================
