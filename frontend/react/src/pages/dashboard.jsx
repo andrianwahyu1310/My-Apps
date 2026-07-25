@@ -85,9 +85,14 @@ export default function Dashboard() {
             setShowCursor(true);
         }, 0);
 
-        const teksLengkap = username === 'Guest'
+        // 💡 PERBAIKAN: Pastikan namaClean adalah String murni, bukan Object!
+        const namaClean = typeof username === 'object' 
+            ? (username?.username || username?.name || 'Guest') 
+            : (username || 'Guest');
+
+        const teksLengkap = namaClean === 'Guest'
             ? typewriterMessages.guest
-            : `${username}! ${typewriterMessages.user}`;
+            : `${namaClean}! ${typewriterMessages.user}`;
 
         const intervalKetik = setInterval(() => {
             if (i < teksLengkap.length) {
