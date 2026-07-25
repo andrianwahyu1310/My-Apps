@@ -1,14 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext'; // Pastikan path lokasi AuthContext benar
 import '../../main/second/navbar.css';
 
 export default function Navbar({ user: userProp, onLogout }) {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [currentTime, setCurrentTime] = useState('00:00:00 | Menghitung...');
+    
+    // Ambil data user dari AuthContext
     const { user: userCtx } = useContext(AuthContext);
-    const user = userProp || userCtx || 'Guest';
+
+    // 💡 SANITASI TINGKAT HIGH: Ambil string username secara spesifik agar tidak berupa Object
+    const rawUser = userProp || userCtx;
+    const usernameDisplay = typeof rawUser === 'object' 
+        ? (rawUser?.username || rawUser?.name || 'Guest') 
+        : (rawUser || 'Guest');
 
     const getPageTitle = (path) => {
         switch (path) {
@@ -41,34 +48,34 @@ export default function Navbar({ user: userProp, onLogout }) {
 
     return (
         <div className="nav-bar">
-            {/* ⁡⁣⁣⁢KANAN: JUDUL HALAMAN⁡ */}
+            {/* KANAN: JUDUL HALAMAN */}
             <div className="nav-bar-kanan">
                 <p>Welcome to {getPageTitle(location.pathname)}</p>
             </div>
 
-            {/* ⁡⁣⁣⁢TENGAH: DETAK WAKTU REALTIME⁡ */}
+            {/* TENGAH: DETAK WAKTU REALTIME */}
             <div className="nav-bar-tengah">
                 <p id="time">{currentTime}</p>
             </div>
 
-            {/* ⁡⁣⁣⁢KIRI: NAVIGASI & DROPDOWN SETTINGS⁡ */}
+            {/* KIRI: NAVIGASI & DROPDOWN SETTINGS */}
             <div className="nav-bar-kiri">
-                {/* <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active' : ''}>Beranda</Link> */}
                 <Link to="/detail" className={`${location.pathname === '/detail' ? 'active' : ''} unlock`}>Detail</Link>
                 <Link to="/contact" className={`${location.pathname === '/contact' ? 'active' : ''} unlock`}>Contact</Link>
                 <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
 
-                {/* ⁡⁣⁣⁢DROPDOWN CONTAINER⁡ */}
+                {/* DROPDOWN CONTAINER */}
                 <div className="settings-container">
                     <button id="settings-btn" onClick={() => setIsOpen(!isOpen)}>
                         <img src="/images/settings_2.svg" alt="setting"/>
                     </button>
 
-                    {/* ⁡⁢⁣⁣Logika Taktis: Hanya render card ke DOM jika state isOpen bernilai true⁡ */}
+                    {/* Logika Taktis: Hanya render card jika state isOpen bernilai true */}
                     {isOpen && (
                         <div className="dropdown-card">
                             <div className="dropdown-header">
-                                <h4>Pengaturan Akun, {user || 'Guest'}</h4>
+                                {/* 💡 Menggunakan usernameDisplay yang dijamin berupa String murni */}
+                                <h4>Pengaturan Akun, {usernameDisplay}</h4>
                             </div>
                             <div className="dropdown-body">
                                 <Link to="/dashboard" className="dropdown-item" onClick={() => setIsOpen(false)}>
@@ -88,7 +95,8 @@ export default function Navbar({ user: userProp, onLogout }) {
                                 </Link>
                                 <hr className="dropdown-divider" />
                                 
-                                {user && user !== "Guest" && user !== "" ? (
+                                {/* 💡 Pengecekan kondisi Login/Logout yang presisi */}
+                                {usernameDisplay !== "Guest" && usernameDisplay !== "" ? (
                                     <button 
                                         className="dropdown-item logout" 
                                         onClick={() => {
