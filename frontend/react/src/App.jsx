@@ -5,6 +5,7 @@ import dataBrainAktif from '../../../backend/data/brainTeaser.json'
 
 // ⁡⁣⁢⁣IMPOR KOMPONEN HALAMAN UTAMA⁡
 import Dashboard from "./pages/dashboard";
+import ProtectedRoute from './components/ProtectedRoute';
 import Login from "./pages/login";
 import Register from "./pages/register";
 import DetailAkun from "./pages/detail";
@@ -62,7 +63,7 @@ export default function App() {
     <Router>
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/detail" element={<DetailAkun />} />

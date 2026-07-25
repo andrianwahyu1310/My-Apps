@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 import '../../main/second/navbar.css';
 
-export default function Navbar({ user, onLogout }) {
+export default function Navbar({ user: userProp, onLogout }) {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [currentTime, setCurrentTime] = useState('00:00:00 | Menghitung...');
+    const { user: userCtx } = useContext(AuthContext);
+    const user = userProp || userCtx || 'Guest';
 
     const getPageTitle = (path) => {
         switch (path) {

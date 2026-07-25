@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { showToast } from '../utils/toasted';
 import { apiFetch } from "../../src/config/api";
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Contact() {
     const navigate = useNavigate();
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
     
+    const { user, loading } = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [subject, setSubject] = useState("");
     const [message, setMessage] = useState("");
@@ -19,30 +21,15 @@ export default function Contact() {
     const NOMOR_WA = "6281585760151";
 
     useEffect(() => {
-        const cekOtoritasUser = async () => {
-            try {
-                setIsLoading(true);
-                const { data } = await apiFetch('/api/auth-check', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
+        if (loading) return;
 
-                if (data.success && data.loggedIn) {
-                    setUsername(data.user);
-                } else {
-                    showToast(setToast, "Silakan login terlebih dahulu untuk mengakses pengaduan.", "error");
-                    navigate('/login');
-                }
-            } catch (error) {
-                console.error("Gagal verifikasi sesi kontak:", error);
-                navigate('/login');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        cekOtoritasUser();
-    }, [navigate]);
+        if (user) {
+            setUsername(user);
+        } else {
+            showToast(setToast, "Silakan login terlebih dahulu untuk mengakses pengaduan.", "error");
+            navigate('/login', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     // Handler ketika user memilih file gambar dari perangkat
     const handleFileChange = (e) => {
@@ -140,7 +127,7 @@ export default function Contact() {
         }
     };
 
-    if (isLoading) {
+    if (loading) {
         return (
             <div className="main-content" style={{ textAlign: 'center', padding: '100px 20px' }}>
                 <p style={{ color: 'var(--text-color)' }}>Mempersiapkan Lembar Pengaduan...</p>

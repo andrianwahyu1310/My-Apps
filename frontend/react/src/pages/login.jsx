@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { showToast } from "../utils/toasted";
 import "../../main/login.css";
 import API_URL, { apiFetch } from "../../src/config/api";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -11,6 +13,7 @@ export default function Login() {
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
     
     const navigate = useNavigate();
+    const { setUser } = useContext(AuthContext);
 
     // Kirim Data ke Backend API
     const handleSubmit = async (e) => {
@@ -33,12 +36,17 @@ export default function Login() {
                 credentials: "include",
                 body: JSON.stringify({ username, password })
             });
-            
+
             if (data.success) {
+                // update global auth state
+                if (setUser) setUser(data.user || null);
+
                 showToast(setToast, "Login berhasil! Mengalihkan...", "success");
+
+                // beri jeda singkat agar browser menyelesaikan penyimpanan cookie cross-origin
                 setTimeout(() => {
-                    navigate("/");
-                }, 1500);
+                    navigate("/", { replace: true });
+                }, 700);
             } else {
                 showToast(setToast, data.message || "Akses ditolak", "error");
             }

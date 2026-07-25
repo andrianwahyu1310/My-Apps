@@ -1,38 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiFetch } from "../../src/config/api";
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function About() {
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(true);
+    const { user, loading } = useContext(AuthContext);
 
-    // 🛡️ Menjaga Integritas Halaman: Memastikan Hanya User Terautentikasi yang Bisa Mengakses
     useEffect(() => {
-        const verifikasiSesiLayanan = async () => {
-            try {
-                setIsLoading(true);
+        if (loading) return; // tunggu pengecekan auth selesai
 
-                const { data } = await apiFetch('/api/auth-check', {
-                    method: 'GET',
-                    credentials: 'include' // Amunisi lintas port untuk menyertakan cookie session
-                });
+        if (!user) {
+            navigate('/login', { replace: true });
+        }
+    }, [loading, user, navigate]);
 
-                if (!data.success || !data.loggedIn) {
-                    console.warn("Akses halaman tentang ditolak, mengalihkan ke gerbang login...");
-                    navigate('/login');
-                }
-            } catch (error) {
-                console.error("Gagal memverifikasi sesi halaman tentang:", error);
-                navigate('/login');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        verifikasiSesiLayanan();
-    }, [navigate]);
-
-    if (isLoading) {
+    if (loading) {
         return (
             <div className="main-content" style={{ textAlign: 'center', padding: '100px 20px' }}>
                 <p style={{ color: 'var(--text-color)', fontSize: '1.1rem' }}>

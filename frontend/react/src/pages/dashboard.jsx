@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import  { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import { typewriterMessages } from '../utils/typewritter';
 import Navbar from '../components/navbar';
 import "../../main/dashboard.css";
 import { apiFetch } from "../../src/config/api";
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Dashboard() {
     // ⁡⁣⁣⁢=== SEKTOR STATE ===⁡
@@ -17,7 +18,8 @@ export default function Dashboard() {
     const [typewriterText, setTypewriterText] = useState('');
 
     const navigate = useNavigate();
-    const currentUsername = "Andrian";
+    const { user, loading } = useContext(AuthContext);
+    const currentUsername = user || 'Guest';
 
     const handleLogoutAction = async () => {
     try {
@@ -58,32 +60,18 @@ export default function Dashboard() {
 
     // ⁡⁣⁣⁢--- 𝗦𝗘𝗞𝗧𝗢𝗥 𝗘𝗙𝗙𝗘𝗖𝗧 (𝗟𝗢𝗚𝗜𝗞𝗔 𝗦𝗜𝗦𝗧𝗘𝗠) ---⁡
     useEffect(() => {
+        // tunggu hasil auth check dari AuthContext sebelum mengambil kategori
+        if (loading) return;
 
-        //  ⁡⁣⁢⁣𝟭. 𝗣𝗼𝘀 𝗣𝗲𝗺𝗲𝗿𝗶𝗸𝘀𝗮𝗮𝗻 𝗦𝗲𝘀𝗶 𝗣𝗲𝗻𝗴𝗴𝘂𝗻𝗮⁡
-        apiFetch("/api/auth-check", {
-            method: "GET",
-            credentials: "include", 
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(({ data }) => { 
-            if (data.success) { 
-                setUsername(data.user); 
-            } else {
-                navigate("/login");
-            }
-        })
-        .catch(err => {
-            console.error("Gagal memuat sistem autentikasi:", err);
-            navigate("/login");
-        });
-
-        // ⁡⁣⁢⁣𝟮. 𝗣𝗼𝘀 𝗣𝗲𝗻𝗴𝗮𝗺𝗯𝗶𝗹𝗮𝗻 𝗗𝗮𝘁𝗮 𝗞𝗮𝘁𝗲𝗴𝗼𝗿𝗶 𝗕𝗲𝗿𝗶𝘁𝗮⁡
-        apiFetch("/api/categories")
-            .then(({ data }) => setCategories(Array.isArray(data) ? data : []))
-            .catch(err => console.error("Gagal memuat kategori:", err));
-    }, [navigate]);
+        if (user) {
+            setUsername(user);
+            apiFetch("/api/categories")
+                .then(({ data }) => setCategories(Array.isArray(data) ? data : []))
+                .catch(err => console.error("Gagal memuat kategori:", err));
+        } else {
+            navigate("/login", { replace: true });
+        }
+    }, [loading, user, navigate]);
 
     // ⁡⁣⁣⁢--- 𝗔𝗡𝗜𝗠𝗔𝗦𝗜 𝗧𝗬𝗣𝗘𝗪𝗥𝗜𝗧𝗘𝗥 ---⁡
     const [showCursor, setShowCursor] = useState(true);

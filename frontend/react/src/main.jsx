@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx'; // Mengarah ke berkas App.jsx Anda
+import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './components/theme'; // Pembungkus Tema Global Anda
 import '../main/base/theme.css';
 import './index.css';
@@ -20,7 +21,9 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
