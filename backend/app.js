@@ -34,7 +34,7 @@ app.locals.toolsFile = path.join(__dirname, "data", "tools.json");
 // CORS
 // =========================
 app.use(corsMiddleware);
-app.options("*", corsMiddleware);
+app.options(/(.*)/, corsMiddleware);
 
 // =========================
 // BODY PARSER
