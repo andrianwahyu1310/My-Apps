@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import corsConfig from "./config/cors.js";
 import corsMiddleware from "./config/cors.js";
 import sessionConfig from "./config/sessions.js";
 import path from "path";
@@ -35,6 +34,7 @@ app.locals.toolsFile = path.join(__dirname, "data", "tools.json");
 // CORS
 // =========================
 app.use(corsMiddleware);
+app.options("*", corsMiddleware);
 
 // =========================
 // BODY PARSER

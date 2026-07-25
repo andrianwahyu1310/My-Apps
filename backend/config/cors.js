@@ -21,7 +21,6 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    // Jangan kirim new Error(), cukup return false agar server tidak melempar 500 error
     return callback(null, false);
   },
   credentials: true,
@@ -36,7 +35,7 @@ const corsOptions = {
     "Access-Control-Request-Method",
     "Access-Control-Request-Headers"
   ],
-  optionsSuccessStatus: 200 // Memastikan respons status 200 untuk browser lama/preflight
+  optionsSuccessStatus: 200
 };
 
 export default cors(corsOptions);
