@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiFetch } from "../../src/config/api";
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function DetailAkun() {
     const navigate = useNavigate();
+    const { user, loading } = useContext(AuthContext);
     
     // 1. Inisialisasi State Komponen
     const [accountData, setAccountData] = useState(null);
@@ -12,45 +14,47 @@ export default function DetailAkun() {
 
     // 2. Siklus Pengambilan Data Akun Spesifik dari Backend
     useEffect(() => {
+        if (loading) return;
+
+        if (!user) {
+            navigate('/login', { replace: true });
+            return;
+        }
+
         const ambilDetailAkun = async () => {
             try {
                 setIsLoading(true);
 
-                // Menembak rute spesifik yang telah kita daftarkan di backend Express
                 const { data } = await apiFetch('/api/detail', {
                     method: 'GET',
-                    credentials: 'include', // AMUNISI KRUSIAL: Memastikan cookie session (connect.sid) ikut terkirim lintas port
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
 
                 if (data.success) {
-                    // Menyimpan data spesifik hasil filter users.json dari server
-                    setAccountData(data); 
+                    setAccountData(data);
                 } else {
-                    // Jika session kosong atau kedaluwarsa, lemparkan user kembali ke gerbang login
                     console.warn("Sesi tidak valid, mengalihkan ke halaman login...");
-                    navigate('/login');
+                    navigate('/login', { replace: true });
                 }
             } catch (error) {
                 console.error("Gagal memuat data detail akun:", error.message);
-                navigate('/login');
+                navigate('/login', { replace: true });
             } finally {
                 setIsLoading(false);
             }
         };
 
-        // Mengunci token acak di dalam useEffect agar nilainya konisten dan tidak berubah-ubah saat re-render
         const tokenAcak = "SES_ID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
         setSessionToken(tokenAcak);
 
-        // Eksekusi fungsi penjemputan data
         ambilDetailAkun();
-    }, [navigate]);
+    }, [loading, user, navigate]);
 
     // 3. Tampilan Loading saat Menunggu Konfirmasi Server
-    if (isLoading) {
+    if (loading || isLoading) {
         return (
             <div className="main-content" style={{ textAlign: 'center', padding: '100px 20px' }}>
                 <p style={{ color: 'var(--text-color)', fontSize: '1.2rem' }}>

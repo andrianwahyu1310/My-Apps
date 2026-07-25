@@ -66,24 +66,28 @@ export default function App() {
           <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/detail" element={<DetailAkun />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-
-          <Route path="/mainTools" element={<Tools />} />
-          <Route path="/container-brain-teaser" element={<ContainerBrain />} />
-          <Route path="/setTheme" element={<Theme />} />
+          <Route path="/detail" element={<ProtectedRoute><DetailAkun /></ProtectedRoute>} />
+          <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+          <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+          <Route path="/mainTools" element={<ProtectedRoute><Tools /></ProtectedRoute>} />
+          <Route path="/container-brain-teaser" element={<ProtectedRoute><ContainerBrain /></ProtectedRoute>} />
+          <Route path="/setTheme" element={<ProtectedRoute><Theme /></ProtectedRoute>} />
+          <Route path="/artikel" element={<ProtectedRoute><ArsipKategoriBerita /></ProtectedRoute>} />
 
           {/* ⁡⁣⁢⁣REGISTRASI OTOMATIS BERDASARKAN DATA JSON (HANYA UNTUK MODUL ALAT)⁡ */}
           {toolsData.map((alat) => (
             <Route 
               key={alat.id} 
               path={alat.url} 
-              element={komponenAlat[alat.url] || (
-                <div style={{ textAlign: "center", marginTop: "50px", color: "#fff" }}>
-                  Halaman sedang dalam perbaikan.
-                </div>
-              )} 
+              element={
+                <ProtectedRoute>
+                  {komponenAlat[alat.url] || (
+                    <div style={{ textAlign: "center", marginTop: "50px", color: "#fff" }}>
+                      Halaman sedang dalam perbaikan.
+                    </div>
+                  )}
+                </ProtectedRoute>
+              } 
             />
           ))}
 
@@ -91,16 +95,20 @@ export default function App() {
             <Route 
               key={brain.id} 
               path={brain.url} 
-              element={komponenBrain[brain.url] || (
-                <div style={{ textAlign: "center", marginTop: "50px", color: "#fff" }}>
-                  Halaman sedang dalam perbaikan.
-                </div>
-              )} 
+              element={
+                <ProtectedRoute>
+                  {komponenBrain[brain.url] || (
+                    <div style={{ textAlign: "center", marginTop: "50px", color: "#fff" }}>
+                      Halaman sedang dalam perbaikan.
+                    </div>
+                  )}
+                </ProtectedRoute>
+              } 
             />
           ))}
           
           {/* ⁡⁢⁣⁣Jalur ArsipKategoriBerita⁡ */}
-          <Route path="/artikel" element={<ArsipKategoriBerita />} />
+          <Route path="/artikel" element={<ProtectedRoute><ArsipKategoriBerita /></ProtectedRoute>} />
           
           {/* ⁡⁢⁣⁣Jalur Proteksi 404⁡ */}
           <Route path="*" element={
