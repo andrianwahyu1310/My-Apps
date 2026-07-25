@@ -36,22 +36,31 @@ app.locals.toolsFile = path.join(__dirname, "data", "tools.json");
 const allowedOrigins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    process.env.FRONTEND_URL
-].filter(Boolean);
+    "https://andrianwahyu1310.github.io", // Ditambahkan langsung sebagai cadangan aman
+    process.env.FRONTEND_URL,
+    process.env.CLIENT_URL
+]
+  .filter(Boolean)
+  .map(url => url.replace(/\/$/, "")); // Menghapus tanda '/' di akhir URL jika ada
 
 app.use(corsConfig({
     origin(origin, callback) {
-        // Postman / Thunder Client
+        // Postman / Thunder Client / Server-to-Server
         if (!origin) {
             return callback(null, true);
         }
 
-        if (allowedOrigins.includes(origin)) {
+        const cleanOrigin = origin.replace(/\/$/, "");
+
+        if (allowedOrigins.includes(cleanOrigin)) {
             return callback(null, true);
         }
+
         return callback(new Error("Origin tidak diizinkan oleh CORS."));
     },
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 // =========================
