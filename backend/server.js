@@ -19,7 +19,7 @@ const startServer = async () => {
             await migrateUsersFromJson();
         }
 
-        app.listen(PORT, () => {
+        app.listen(PORT, "0.0.0.0", () => {
             console.log(`🚀 Server berjalan di port ${PORT}`);
         });
     } catch (err) {
@@ -29,8 +29,7 @@ const startServer = async () => {
     }
 };
 
-if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
-    startServer();
-}
+// PANGGIL LANGSUNG TANPA KONDISI IF!
+startServer();
 
 export default app;
