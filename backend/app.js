@@ -3,6 +3,7 @@ dotenv.config();
 
 import express from "express";
 import corsConfig from "./config/cors.js";
+import corsMiddleware from "./config/cors.js";
 import sessionConfig from "./config/sessions.js";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -33,35 +34,7 @@ app.locals.toolsFile = path.join(__dirname, "data", "tools.json");
 // =========================
 // CORS
 // =========================
-const allowedOrigins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://andrianwahyu1310.github.io", // Ditambahkan langsung sebagai cadangan aman
-    process.env.FRONTEND_URL,
-    process.env.CLIENT_URL
-]
-  .filter(Boolean)
-  .map(url => url.replace(/\/$/, "")); // Menghapus tanda '/' di akhir URL jika ada
-
-app.use(corsConfig({
-    origin(origin, callback) {
-        // Postman / Thunder Client / Server-to-Server
-        if (!origin) {
-            return callback(null, true);
-        }
-
-        const cleanOrigin = origin.replace(/\/$/, "");
-
-        if (allowedOrigins.includes(cleanOrigin)) {
-            return callback(null, true);
-        }
-
-        return callback(new Error("Origin tidak diizinkan oleh CORS."));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(corsMiddleware);
 
 // =========================
 // BODY PARSER
