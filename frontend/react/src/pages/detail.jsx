@@ -25,23 +25,19 @@ export default function DetailAkun() {
             try {
                 setIsLoading(true);
 
-                const { data } = await apiFetch('/api/detail', {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+                // apiFetch sudah otomatis menangani credentials & Content-Type
+                const { data } = await apiFetch('/api/detail');
 
-                if (data.success) {
-                    setAccountData(data);
+                if (data.success && data.user) {
+                    // 💡 PERBAIKAN 1: Simpan data.user secara langsung agar praktis
+                    setAccountData(data.user);
                 } else {
                     console.warn("Sesi tidak valid, mengalihkan ke halaman login...");
                     navigate('/login', { replace: true });
                 }
             } catch (error) {
                 console.error("Gagal memuat data detail akun:", error.message);
-                navigate('/login', { replace: true });
+                // Beri penanganan gracefully tanpa langsung melempar jika hanya glitch network
             } finally {
                 setIsLoading(false);
             }
@@ -57,7 +53,7 @@ export default function DetailAkun() {
     if (loading || isLoading) {
         return (
             <div className="main-content" style={{ textAlign: 'center', padding: '100px 20px' }}>
-                <p style={{ color: 'var(--text-color)', fontSize: '1.2rem' }}>
+                <p style={{ color: 'var(--text-color, #fff)', fontSize: '1.2rem' }}>
                     Memverifikasi Otoritas Sesi Akun Senpai...
                 </p>
             </div>
@@ -67,7 +63,7 @@ export default function DetailAkun() {
     // 4. Struktur Utama Tampilan Komponen Detail Akun
     return (
         <main className="detail-wrapper" style={{ padding: '50px 50px', boxSizing: 'border-box' }}>
-            <Link to="/" className="btn-back" style={{width: '20%'}}>
+            <Link to="/" className="btn-back" style={{ width: '20%' }}>
                 <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
             </Link>
 
@@ -75,12 +71,11 @@ export default function DetailAkun() {
                 className="card-detail" 
                 style={{ 
                     maxWidth: '600px',
-                    margin: '100px auto',
+                    margin: '50px auto',
                     padding: '30px',
                     borderRadius: '12px',
-                    // Mengikuti variabel global tema agar selaras dengan dashboard.css
-                    background: 'var(--card-bg)', 
-                    border: '1px solid var(--card-border)',
+                    background: 'var(--card-bg, rgba(255, 255, 255, 0.05))', 
+                    border: '1px solid var(--card-border, rgba(255, 255, 255, 0.1))',
                     boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.2)',
                     backdropFilter: 'blur(4px)',
                     WebkitBackdropFilter: 'blur(4px)',
@@ -90,11 +85,11 @@ export default function DetailAkun() {
                 <h2 style={{ margin: '0 0 10px 0', fontSize: '1.8rem', fontWeight: '600' }}>
                     Informasi Detail Akun & Sistem
                 </h2>
-                <hr style={{ opacity: 0.15, margin: '15px 0', border: 'none', height: '1px', backgroundColor: 'var(--text-color)' }} />
+                <hr style={{ opacity: 0.15, margin: '15px 0', border: 'none', height: '1px', backgroundColor: 'var(--text-color, #fff)' }} />
                 
-                {/* GRUP DATA 1: USERNAME (DINAMIS DARI SERVER) */}
+                {/* GRUP DATA 1: USERNAME */}
                 <div className="info-group" style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', fontSize: '0.9rem', opacity: 0.7, marginBottom: '6px', fontWeight: '5px' }}>
+                    <label style={{ display: 'block', fontSize: '0.9rem', opacity: 0.7, marginBottom: '6px' }}>
                         Nama Pengguna (Username)
                     </label>
                     <div 
@@ -104,11 +99,11 @@ export default function DetailAkun() {
                             fontWeight: '500',
                             padding: '4px 12px',
                         }}>
-                        {accountData?.username}
+                        {accountData?.username || "Tidak diketahui"}
                     </div>
                 </div>
 
-                {/* GRUP DATA 2: STATUS HAK AKSES (DINAMIS DARI SERVER) */}
+                {/* GRUP DATA 2: STATUS HAK AKSES */}
                 <div className="info-group" style={{ marginBottom: '20px' }}>
                     <label style={{ display: 'block', fontSize: '0.9rem', opacity: 0.7, marginBottom: '6px' }}>
                         Status Hak Akses
@@ -126,11 +121,11 @@ export default function DetailAkun() {
                             border: '1px solid rgba(46, 204, 113, 0.3)'
                         }}
                     >
-                        {accountData?.statusAkses}
+                        {accountData?.status || "Aktif"}
                     </span>
                 </div>
 
-                {/* GRUP DATA 3: TOKEN KEAMANAN SESI (DIKUNCI FRONTEND) */}
+                {/* GRUP DATA 3: TOKEN KEAMANAN SESI */}
                 <div className="info-group" style={{ marginBottom: '20px' }}>
                     <label style={{ display: 'block', fontSize: '0.9rem', opacity: 0.7, marginBottom: '6px' }}>
                         Token Keamanan Sesi
@@ -152,22 +147,22 @@ export default function DetailAkun() {
                     </p>
                 </div>
 
-                {/* GRUP DATA 4: DEDIKASI SISTEM (DINAMIS DARI SERVER) */}
+                {/* GRUP DATA 4: TANGGAL PEMBUATAN AKUN / TEMA */}
                 <div className="info-group">
                     <label style={{ display: 'block', fontSize: '0.9rem', opacity: 0.7, marginBottom: '6px' }}>
-                        Dedikasi Sistem
+                        Tema Aktif Akun
                     </label>
                     <p 
                         className="info-value" 
                         style={{ 
                             margin: 0,
                             fontWeight: '600',
-                            // Variabel warna header akan menyala hijau terang saat mode cyberpunk aktif
                             color: 'var(--header, #2b6cb0)', 
-                            transition: 'color 0.2s ease'
+                            transition: 'color 0.2s ease',
+                            textTransform: 'capitalize'
                         }}
                     >
-                        {accountData?.dedikasi}
+                        {accountData?.theme || "Default"}
                     </p>
                 </div>
             </div>

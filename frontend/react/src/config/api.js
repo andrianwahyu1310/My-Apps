@@ -21,8 +21,14 @@ export const buildApiUrl = (path) => {
 export const apiFetch = async (path, options = {}) => {
   const headers = new Headers(options.headers || {});
 
-  if (!(options.body instanceof FormData) && !headers.has("Content-Type")) {
-    headers.set("Accept", "application/json");
+  // 💡 PERBAIKAN: Pastikan Content-Type & Accept selalu terpasang default untuk JSON
+  if (!(options.body instanceof FormData)) {
+    if (!headers.has("Content-Type")) {
+      headers.set("Content-Type", "application/json");
+    }
+    if (!headers.has("Accept")) {
+      headers.set("Accept", "application/json");
+    }
   }
 
   const response = await fetch(buildApiUrl(path), {
