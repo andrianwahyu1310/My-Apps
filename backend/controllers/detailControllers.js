@@ -2,6 +2,13 @@ import { findUserById } from "../services/userServices.js";
 
 export const detail = async (req, res) => {
     try {
+        // 💡 PERBAIKAN 1: Cek apakah session.userId ada
+        if (!req.session || !req.session.userId) {
+            return res.status(401).json({
+                success: false,
+                message: "Akses ditolak. Silakan login terlebih dahulu."
+            });
+        }
 
         const user = await findUserById(req.session.userId);
 
@@ -24,13 +31,11 @@ export const detail = async (req, res) => {
         });
 
     } catch (err) {
-
         console.error("DETAIL ERROR:", err);
 
         return res.status(500).json({
             success: false,
             message: "Terjadi kesalahan pada server."
         });
-
     }
 };
