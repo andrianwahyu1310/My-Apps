@@ -15,7 +15,6 @@ export default function Contact() {
     const [sendVia, setSendVia] = useState("whatsapp"); // Default kirim via WhatsApp
     const [screenshot, setScreenshot] = useState(null); // Menyimpan file gambar dari perangkat
     const [previewUrl, setPreviewUrl] = useState(null); // Untuk menampilkan preview gambar di form
-    const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const NOMOR_WA = "6281585760151";
@@ -24,7 +23,9 @@ export default function Contact() {
         if (loading) return;
 
         if (user) {
-            setUsername(user);
+            // 💡 PERBAIKAN: Ambil string username secara spesifik dari object user
+            const namaUser = typeof user === 'object' ? (user.username || user.nama || "") : user;
+            setUsername(namaUser);
         } else {
             showToast(setToast, "Silakan login terlebih dahulu untuk mengakses pengaduan.", "error");
             navigate('/login', { replace: true });
@@ -93,7 +94,6 @@ export default function Contact() {
                     setPreviewUrl(null);
                 } else {
                     showToast(setToast, hasil.message || "Gagal mengirim email.", "error");
-                    console.log(hasil.message || "Gagal mengirim email.", "error")
                 }
             } catch (err) {
                 console.error("Error submit email:", err);
@@ -137,14 +137,14 @@ export default function Contact() {
 
     return (
         <main className="contact-wrapper" style={{ padding: '40px 50px', boxSizing: 'border-box' }}>
-            {/* ⁡⁢⁣⁣𝗥𝗘𝗡𝗗𝗘𝗥 𝗘𝗟𝗘𝗠𝗘𝗡𝗧 𝗧𝗢𝗔𝗦𝗧⁡ */}
-                {toast.show && (
-                    <div id="toast" className={`toast ${toast.type} toast-show`}>
-                        {toast.message}
-                    </div>
-                )}
+            {/* RENDER ELEMEN TOAST */}
+            {toast.show && (
+                <div id="toast" className={`toast ${toast.type} toast-show`}>
+                    {toast.message}
+                </div>
+            )}
 
-            <Link to="/" className="btn-back" style={{width: '20%'}}>
+            <Link to="/" className="btn-back" style={{ width: '20%' }}>
                 <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
             </Link>
                 
@@ -193,7 +193,7 @@ export default function Contact() {
                         <textarea rows="5" placeholder="Ketikkan pesan Anda dengan sejelas-jelasnya di sini..." value={message} onChange={(e) => setMessage(e.target.value)} required style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid var(--card-border)', background: 'var(--bg-color, #1e1e1e)', color: 'var(--text-color)', resize: 'vertical' }}></textarea>
                     </div>
 
-                    {/* INPUT 5: UNGHAH BERKAS SCREENSHOT GAMBAR BUG */}
+                    {/* INPUT 5: UNGGAH BERKAS SCREENSHOT GAMBAR BUG */}
                     <div className="form-group" style={{ marginBottom: '25px' }}>
                         <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Lampiran Gambar Bukti Bug (Opsional)</label>
                         <input type="file" accept="image/*" onChange={handleFileChange} style={{ color: 'var(--text-color)', cursor: 'pointer' }} />
