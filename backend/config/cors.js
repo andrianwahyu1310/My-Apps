@@ -4,6 +4,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "https://andrianwahyu1310.github.io",
+  "https://www.andrianwahyu1310.github.io",
   process.env.FRONTEND_URL,
   process.env.CLIENT_URL
 ]

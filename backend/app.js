@@ -61,7 +61,7 @@ app.use(sessionConfig({
     secret: process.env.TOKEN_SECRET,
     resave: false,
     saveUninitialized: false,
-
+    Proxy: true,
     cookie: {
         secure: isProduction, // Wajib true jika sameSite: "none"
         sameSite: isProduction ? "none" : "lax",

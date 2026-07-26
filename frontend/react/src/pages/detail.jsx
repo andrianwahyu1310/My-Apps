@@ -11,6 +11,7 @@ export default function DetailAkun() {
     const [accountData, setAccountData] = useState(null);
     const [sessionToken, setSessionToken] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState("");
 
     // 2. Siklus Pengambilan Data Akun Spesifik dari Backend
     useEffect(() => {
@@ -21,26 +22,36 @@ export default function DetailAkun() {
             return;
         }
 
+        let isMounted = true;
+
         const ambilDetailAkun = async () => {
             try {
                 setIsLoading(true);
+                setErrorMessage("");
 
                 // apiFetch sudah otomatis menangani credentials & Content-Type
                 const { data } = await apiFetch('/api/detail');
+                const detailUser = data?.user ?? null;
 
-                if (data.success && data.user) {
-                    // 💡 PERBAIKAN 1: Simpan data.user secara langsung agar praktis
-                    setAccountData(data.user);
+                if (!isMounted) return;
+
+                if (data?.success && detailUser) {
+                    setAccountData(detailUser);
                 } else {
-                    console.warn("Sesi tidak valid, mengalihkan ke halaman login...");
-                    // navigate('/login', { replace: true });
+                    setAccountData(null);
+                    setErrorMessage(data?.message || "Sesi tidak valid.");
                 }
             } catch (error) {
+                if (!isMounted) return;
+
                 console.error("Gagal memuat data detail akun:", error.message);
                 console.error("DEBUG ERROR DETAIL:", error);
-                // Beri penanganan gracefully tanpa langsung melempar jika hanya glitch network
+                setAccountData(null);
+                setErrorMessage(error.message || "Gagal memuat data detail akun.");
             } finally {
-                setIsLoading(false);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         };
 
@@ -48,6 +59,10 @@ export default function DetailAkun() {
         setSessionToken(tokenAcak);
 
         ambilDetailAkun();
+
+        return () => {
+            isMounted = false;
+        };
     }, [loading, user, navigate]);
 
     // 3. Tampilan Loading saat Menunggu Konfirmasi Server
