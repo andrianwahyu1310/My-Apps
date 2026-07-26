@@ -116,6 +116,8 @@ export const login =  async (req, res) => {
         req.session.save((err) => {
             if (err) {
                 console.error("❌ Gagal menyimpan session:", err);
+                console.log("===== SESSION SETELAH SAVE =====");
+                console.log(req.session);
 
                 return res.status(500).json({
                     success: false,
@@ -124,6 +126,8 @@ export const login =  async (req, res) => {
             }
 
             console.log(`✅ ${userFound.username} berhasil login.`);
+            console.log("Session ID:", req.sessionID);
+            console.log(req.session);
 
             return res.status(200).json({
                 success: true,
@@ -149,6 +153,12 @@ export const login =  async (req, res) => {
 };
 
 export const authCheck = async (req, res) => {
+    console.log("========== AUTH CHECK ==========");
+    console.log(req.session);
+    console.log("isLoggedIn:", req.session?.isLoggedIn);
+    console.log("user:", req.session?.user);
+    console.log("userId:", req.session?.userId);
+
     try {
         if (!req.session?.isLoggedIn || !req.session?.userId) {
             return res.status(200).json({
