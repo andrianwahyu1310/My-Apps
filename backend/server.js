@@ -29,6 +29,8 @@ const startServer = async () => {
     }
 };
 
+console.log("===== BUILD BARU 26 JULI =====");
+
 // PANGGIL LANGSUNG TANPA KONDISI IF!
 startServer();
 
