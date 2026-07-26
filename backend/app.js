@@ -70,6 +70,17 @@ app.use(sessionConfig({
     }
 }));
 
+app.get("/api/test-session", (req, res) => {
+
+    req.session.test = "Halo";
+
+    res.json({
+        success: true,
+        id: req.sessionID
+    });
+
+});
+
 // =========================
 // HEALTH CHECK
 // =========================
