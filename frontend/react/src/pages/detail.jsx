@@ -33,10 +33,11 @@ export default function DetailAkun() {
                     setAccountData(data.user);
                 } else {
                     console.warn("Sesi tidak valid, mengalihkan ke halaman login...");
-                    navigate('/login', { replace: true });
+                    // navigate('/login', { replace: true });
                 }
             } catch (error) {
                 console.error("Gagal memuat data detail akun:", error.message);
+                console.error("DEBUG ERROR DETAIL:", error);
                 // Beri penanganan gracefully tanpa langsung melempar jika hanya glitch network
             } finally {
                 setIsLoading(false);
