@@ -23,9 +23,9 @@ export default function Contact() {
         if (loading) return;
 
         if (user) {
-            // 💡 PERBAIKAN: Ambil string username secara spesifik dari object user
-            const namaUser = typeof user === 'object' ? (user.username || user.nama || "") : user;
-            setUsername(namaUser);
+            // 💡 Ambil string username secara eksplisit
+            const namaUser = typeof user === 'object' ? user.username : user;
+            setUsername(namaUser || "");
         } else {
             showToast(setToast, "Silakan login terlebih dahulu untuk mengakses pengaduan.", "error");
             navigate('/login', { replace: true });
@@ -157,7 +157,22 @@ export default function Contact() {
                     {/* INPUT 1: USERNAME */}
                     <div className="form-group" style={{ marginBottom: '20px' }}>
                         <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Nama Pengguna</label>
-                        <input type="text" value={username} readOnly className="input-readonly" style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid var(--card-border)', background: 'rgba(0, 0, 0, 0.15)', color: 'var(--text-color)', opacity: 0.7, cursor: 'not-allowed' }} />
+                        <input 
+                            type="text" 
+                            value={typeof username === 'object' ? username?.username : username} 
+                            readOnly 
+                            className="input-readonly" 
+                            style={{ 
+                                width: '100%', 
+                                padding: '10px', 
+                                borderRadius: '6px', 
+                                border: '1px solid var(--card-border)', 
+                                background: 'rgba(0, 0, 0, 0.15)', 
+                                color: 'var(--text-color)', 
+                                opacity: 0.7, 
+                                cursor: 'not-allowed' 
+                            }} 
+                        />
                     </div>
 
                     {/* INPUT 2: METODE PENGIRIMAN */}
