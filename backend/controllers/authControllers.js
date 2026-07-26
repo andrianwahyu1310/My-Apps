@@ -113,11 +113,12 @@ export const login =  async (req, res) => {
         req.session.user = userFound.username;
         req.session.userId = userFound._id.toString();
 
+        console.log("===== SESSION SETELAH SAVE =====");
+        console.log(req.session);
+
         req.session.save((err) => {
             if (err) {
                 console.error("❌ Gagal menyimpan session:", err);
-                console.log("===== SESSION SETELAH SAVE =====");
-                console.log(req.session);
 
                 return res.status(500).json({
                     success: false,
