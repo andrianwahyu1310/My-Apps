@@ -13,6 +13,9 @@ export default function ArsipKategoriBerita() {
     const [articles, setArticles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    // 💡 GAMBAR FALLBACK LOKAL (SVG Data URI) - Bebas dari Error Koneksi/ERR_CONNECTION_CLOSED
+    const FALLBACK_IMAGE = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='100%' height='100%' fill='%231e293b'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-size='16' font-family='sans-serif'>Gambar Tidak Tersedia</text></svg>";
+
     // ⁡⁢⁣⁣𝗢𝗣𝗘𝗥𝗔𝗦𝗜 𝗣𝗘𝗡𝗔𝗥𝗜𝗞𝗔𝗡 𝗗𝗔𝗧𝗔 𝗞𝗔𝗧𝗘𝗚𝗢𝗥𝗜⁡
     useEffect(() => {
         const selesaiMemuat = () => {
@@ -80,12 +83,12 @@ export default function ArsipKategoriBerita() {
 
     return (
         <>
-        <div className='body-arc'>
-            {/* ⁡⁣⁣⁢𝗕𝗨𝗧𝗧𝗢𝗡 𝗕𝗔𝗖𝗞 𝗧𝗢 𝗗𝗔𝗦𝗛𝗕𝗢𝗔𝗥𝗗⁡ */}
-            <Link to="/" className="btn-back">
-                <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
-            </Link>
-        </div>
+            <div className='body-arc'>
+                {/* ⁡⁣⁣⁢𝗕𝗨𝗧𝗧𝗢𝗡 𝗕𝗔𝗖𝗞 𝗧𝗢 𝗗𝗔𝗦𝗛𝗕𝗢𝗔𝗥𝗗⁡ */}
+                <Link to="/" className="btn-back">
+                    <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                </Link>
+            </div>
 
             {/* ⁡⁣⁣⁢HEADER KATEGORI⁡ */}
             <h1 style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.1)', paddingBottom: '15px', color: '#fff', margin: '0 30px 30px 30px' }}>
@@ -97,12 +100,15 @@ export default function ArsipKategoriBerita() {
                 <div className="news-grid" id="news-grids">
                     {articles.map((art, index) => (
                         <article className="news-card" key={art.id || index}>
-                            {/* ⁡⁢⁣⁢𝗚𝗮𝗺𝗯𝗮𝗿 𝗔𝗿𝘁𝗶𝗸𝗲𝗹 𝗱𝗲𝗻𝗴𝗮𝗻 𝗽𝗲𝗻𝗴𝗮𝗺𝗮𝗻 (𝗷𝗶𝗸𝗮 𝗽𝗮𝘁𝗵 𝗴𝗮𝗺𝗯𝗮𝗿 𝗲𝗿𝗿𝗼𝗿)⁡ */}
+                            {/* ⁡⁢⁣⁢Gambar Artikel dengan pengaman SVG lokal (Bebas dari Error ERR_CONNECTION_CLOSED)⁡ */}
                             <img 
-                                src={`/images/news/${art.gambar}`} 
-                                alt={art.judul} 
+                                src={art.gambar ? `../../assets/images/news/${art.gambar}` : FALLBACK_IMAGE}
+                                alt={art.judul || "Berita"} 
                                 className="news-img" 
-                                onError={(e) => { e.target.src = 'https://via.placeholder.com/400x250?text=No+Image'; }}
+                                onError={(e) => { 
+                                    e.target.onerror = null; // Mencegah infinite loop
+                                    e.target.src = FALLBACK_IMAGE; 
+                                }}
                             />
                             
                             {/* ⁡⁢⁣⁣𝗞𝗼𝗻𝘁𝗲𝗻 𝗨𝘁𝗮𝗺𝗮 𝗞𝗮𝗿𝘁𝘂 𝗕𝗲𝗿𝗶𝘁𝗮⁡ */}
