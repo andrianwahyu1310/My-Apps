@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiFetch } from "../../src/config/api";
 import { AuthContext } from '../contexts/AuthContext';
+import '/main/base/global-tools.css';
 
 export default function About() {
     const navigate = useNavigate();

@@ -26,7 +26,7 @@ export default function MenuBrain({ title = "Utama", user, onLogout }) {
                     <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
                 </Link>
 
-                <h1 style={{ 
+                <h1 className='headers-brain' style={{ 
                     borderBottom: '2px solid rgba(255, 255, 255, 0.1)', 
                     paddingBottom: '15px', 
                     marginBottom: '30px',

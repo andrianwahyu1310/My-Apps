@@ -201,7 +201,7 @@ export default function QuizFamily({ user, onLogout }) {
                         ========================================================================= */}
                     {fase === 1 && (
                         <section className="card-phase">
-                            <h1 style={{ marginBottom: '10px' }}>🎯 Pilih Mata Pelajaran</h1>
+                            <h1 className='headers-mapel' style={{ marginBottom: '10px' }}>🎯 Pilih Mata Pelajaran</h1>
                             <p style={{ opacity: 0.7, marginBottom: '30px' }}>Silakan tentukan bidang kompetensi yang ingin Anda taklukkan hari ini.</p>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                                 {daftarMapel.map(mapel => (

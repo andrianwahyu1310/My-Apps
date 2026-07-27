@@ -391,7 +391,11 @@ body {
             "quote"
             "weather"
             "changelog";
-        padding: 0 16px;
+        padding: 0 0px;
+    }
+
+    .quote-author {
+        bottom: 10px !important;
     }
 
     .weather-header {
@@ -402,6 +406,16 @@ body {
 
     #weather-location-select {
         width: 100%;
+    }
+
+    .weather-temp {
+        margin-left: 10px;
+    }
+    
+    i#weather-icon {
+        font-size: 4.1rem !important;
+        margin-bottom: 19px;
+        margin-right: 10px !important;
     }
 
     .weather-details {

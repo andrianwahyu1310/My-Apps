@@ -71,11 +71,14 @@
     background-color: transparent !important;
     padding: 0;
     margin-left: 6px;
+    border-radius: 50px;
 }
 
 .settings-container button {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    /* background: rgba(255, 255, 255, 0.08); */
+    background-color: transparent;
+    /* border: 1px solid rgba(255, 255, 255, 0.12); */
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,6 +174,10 @@
     .nav-bar .nav-bar-kiri {
         width: 100%;
         justify-content: center;
+    }
+
+    .nav-bar .nav-bar-kanan {
+        display: none;
     }
 }
 

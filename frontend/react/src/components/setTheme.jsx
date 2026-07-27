@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTheme } from '../components/theme';
+import Navbar from '../components/navbar';
 import "../../main/base/theme.css"
 
-export default function PengaturanTema() {
+export default function PengaturanTema({user, onLogout}) {
     // ⁡⁢⁣⁣Ambil state tema aktif dan fungsi pengubahnya dari Context Global⁡
     const { theme, ubahTema } = useTheme();
 
@@ -13,8 +14,11 @@ export default function PengaturanTema() {
     ];
 
     return (
+
         <div className="main-content">
-            <div className="settings-container">
+            <Navbar user={user} onLogout={onLogout} />
+
+            <div className="settings-container-theme">
                 <h2>Pilih Tema Aplikasi</h2>
                 <p>Silakan pilih tema yang paling nyaman untuk mata Anda.</p>
                 

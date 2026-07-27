@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { showToast } from '../utils/toasted';
 import { apiFetch } from "../../src/config/api";
 import { AuthContext } from '../contexts/AuthContext';
+import '/main/base/global-tools.css';
 
 export default function Contact() {
     const navigate = useNavigate();
