@@ -18,6 +18,7 @@ import accountRoutes from "./routes/accountRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 
 const app = express();
+const isProduction = process.env.NODE_ENV === "production";
 
 // =========================
 // __dirname
@@ -30,76 +31,76 @@ const __dirname = path.dirname(__filename);
 // =========================
 app.locals.toolsFile = path.join(__dirname, "data", "tools.json");
 
-// WAJIB: Beri tahu Express bahwa ia ada di balik reverse proxy Railway (untuk HTTPS cookie)
-app.set("trust proxy", 1);
+// 💡 1. TRUST PROXY (Hanya diaktifkan saat Production di Railway/HTTPS)
+if (isProduction) {
+  app.set("trust proxy", 1);
+}
+
 // =========================
-// CORS
+// 2. CORS MIDDLEWARE
 // =========================
 app.use(corsMiddleware);
 app.options(/(.*)/, corsMiddleware);
 
 // =========================
-// BODY PARSER
+// 3. BODY PARSER
 // =========================
 app.use(express.json());
-
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(express.urlencoded({ extended: true }));
 
 // =========================
-// STATIC FILE
+// 4. SESSION MIDDLEWARE (Sangat disarankan dipasang sebelum file statis & routes)
 // =========================
-app.use(express.static(path.join(__dirname, "public")));
-
-// =========================
-// SESSION
-// =========================
-const isProduction = process.env.NODE_ENV === "production";
-
-app.use(sessionConfig({
-    secret: process.env.TOKEN_SECRET,
+app.use(
+  sessionConfig({
+    secret: process.env.TOKEN_SECRET || "fallback-secret-key",
     resave: false,
     saveUninitialized: false,
     proxy: true,
     cookie: {
-        secure: isProduction, // Wajib true jika sameSite: "none"
-        sameSite: isProduction ? "none" : "lax",
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60
+      secure: isProduction, // Wajib true jika sameSite: "none"
+      sameSite: isProduction ? "none" : "lax",
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 // Ditingkatkan ke 24 jam agar sesi lebih stabil
     }
-}));
+  })
+);
 
-app.get('/api/me', (req, res) => {
-    if (req.session && req.session.user) {
-        return res.json({ success: true, user: req.session.user });
-    }
-    return res.status(401).json({ success: false, message: 'Tidak ada sesi' });
+// =========================
+// 5. STATIC FILE
+// =========================
+app.use(express.static(path.join(__dirname, "public")));
+
+// =========================
+// 6. CHECK SESSION ENDPOINTS
+// =========================
+app.get("/api/me", (req, res) => {
+  if (req.session && req.session.user) {
+    return res.json({ success: true, user: req.session.user });
+  }
+  return res.status(401).json({ success: false, message: "Tidak ada sesi" });
 });
 
 app.get("/api/test-session", (req, res) => {
-
-    req.session.test = "Halo";
-
-    res.json({
-        success: true,
-        id: req.sessionID
-    });
-
+  req.session.test = "Halo";
+  res.json({
+    success: true,
+    id: req.sessionID
+  });
 });
 
 // =========================
-// HEALTH CHECK
+// 7. HEALTH CHECK
 // =========================
 app.get("/api/health", (req, res) => {
-    res.json({
-        success: true,
-        message: "Backend berjalan normal."
-    });
+  res.json({
+    success: true,
+    message: "Backend berjalan normal."
+  });
 });
 
 // =========================
-// ROUTES
+// 8. API ROUTES
 // =========================
 app.use("/api", authRoutes);
 app.use("/api", toolRoutes);
@@ -109,25 +110,25 @@ app.use("/api", accountRoutes);
 app.use("/api", contactRoutes);
 
 // =========================
-// 404 API
+// 9. 404 API HANDLER
 // =========================
 app.use("/api", (req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Endpoint API tidak ditemukan!"
-    });
+  res.status(404).json({
+    success: false,
+    message: "Endpoint API tidak ditemukan!"
+  });
 });
 
 // =========================
-// GLOBAL ERROR HANDLER
+// 10. GLOBAL ERROR HANDLER
 // =========================
 app.use((err, req, res, next) => {
-    console.error(err);
+  console.error("Global Error:", err.message || err);
 
-    res.status(500).json({
-        success: false,
-        message: "Terjadi kesalahan pada server."
-    });
+  res.status(500).json({
+    success: false,
+    message: "Terjadi kesalahan pada server."
+  });
 });
 
 export default app;
