@@ -70,6 +70,13 @@ app.use(sessionConfig({
     }
 }));
 
+app.get('/api/me', (req, res) => {
+    if (req.session && req.session.user) {
+        return res.json({ success: true, user: req.session.user });
+    }
+    return res.status(401).json({ success: false, message: 'Tidak ada sesi' });
+});
+
 app.get("/api/test-session", (req, res) => {
 
     req.session.test = "Halo";

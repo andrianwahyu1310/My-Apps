@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { showToast } from "../utils/toasted";
 import "../../main/login.css";
 import API_URL, { apiFetch } from "../../src/config/api";
-import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function Login() {
@@ -11,9 +10,41 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
     
     const navigate = useNavigate();
     const { setUser } = useContext(AuthContext);
+
+    // 💡 PENGECEKAN SESSION OTOMATIS SAAT COMPONENT DI-MOUNT
+    // Mencegah login ulang jika cookie session masih valid di backend
+    useEffect(() => {
+        const checkExistingSession = async () => {
+            if (!API_URL) {
+                setIsCheckingAuth(false);
+                return;
+            }
+
+            try {
+                const { data } = await apiFetch("/api/me", {
+                    method: "GET",
+                    credentials: "include"
+                });
+
+                if (data && data.success && data.user) {
+                    if (setUser) setUser(data.user);
+                    // Redirect langsung ke Dashboard jika sesi terdeteksi aktif
+                    navigate("/", { replace: true });
+                }
+            } catch (err) {
+                // Sesi tidak ditemukan/expired, izinkan user mengisi form login
+                console.log("Belum ada sesi aktif:", err.message);
+            } finally {
+                setIsCheckingAuth(false);
+            }
+        };
+
+        checkExistingSession();
+    }, [navigate, setUser]);
 
     // Kirim Data ke Backend API
     const handleSubmit = async (e) => {
@@ -38,12 +69,12 @@ export default function Login() {
             });
 
             if (data.success) {
-                // update global auth state
+                // Update global auth state
                 if (setUser) setUser(data.user || null);
 
                 showToast(setToast, "Login berhasil! Mengalihkan...", "success");
 
-                // beri jeda singkat agar browser menyelesaikan penyimpanan cookie cross-origin
+                // Jeda singkat agar browser menyelesaikan penyimpanan cookie cross-origin
                 setTimeout(() => {
                     navigate("/", { replace: true });
                 }, 700);
@@ -55,6 +86,15 @@ export default function Login() {
             showToast(setToast, err.message || "Gagal terhubung ke server.", "error");
         }
     };
+
+    // TAMPILKAN LOADING SEDERHANA SAAT MENGECEK SESI
+    if (isCheckingAuth) {
+        return (
+            <div className="auth-body-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', color: '#fff' }}>
+                <p>Memeriksa sesi login...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="auth-body-wrapper">

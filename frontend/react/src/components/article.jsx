@@ -102,7 +102,7 @@ export default function ArsipKategoriBerita() {
                         <article className="news-card" key={art.id || index}>
                             {/* ⁡⁢⁣⁢Gambar Artikel dengan pengaman SVG lokal (Bebas dari Error ERR_CONNECTION_CLOSED)⁡ */}
                             <img 
-                                src={art.gambar ? `../../assets/images/news/${art.gambar}` : FALLBACK_IMAGE}
+                                src={`./assets/images/news/${art.gambar}`}
                                 alt={art.judul || "Berita"} 
                                 className="news-img" 
                                 onError={(e) => { 

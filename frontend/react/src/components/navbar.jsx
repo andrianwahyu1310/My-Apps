@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext'; // Pastikan path lokasi AuthContext benar
 import '../../main/second/navbar.css';
-import settingsIcon from "../assets/images/settings_2.svg";
 
 export default function Navbar({ user: userProp, onLogout }) {
     const location = useLocation();
@@ -68,7 +67,7 @@ export default function Navbar({ user: userProp, onLogout }) {
                 {/* DROPDOWN CONTAINER */}
                 <div className="settings-container">
                     <button id="settings-btn" onClick={() => setIsOpen(!isOpen)}>
-                        <img src={settingsIcon} alt="Setting" />
+                        <img src="./assets/images/settings_2.svg" alt="Setting" />
                     </button>
 
                     {/* Logika Taktis: Hanya render card jika state isOpen bernilai true */}

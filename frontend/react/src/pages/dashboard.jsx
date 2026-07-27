@@ -247,7 +247,10 @@ export default function Dashboard() {
                     {categories.map((ctgr) => (
                         <div key={ctgr.id} className="fiture-box">
                             <Link to={`/artikel?category=${ctgr.id}`}>
-                                <img src={new URL(`../assets/images/${ctgr.gambar}`, import.meta.url).href} alt={ctgr.nama} />
+                                <img 
+                                    src={`./assets/images/${ctgr.gambar}`} 
+                                    alt={ctgr.nama} 
+                                />
                                 <h4>{ctgr.nama}</h4>
                             </Link>
                         </div>
