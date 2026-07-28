@@ -1,0 +1,15 @@
+{
+    "mudah": [
+      { "id": 1, "soal": "Berapakah hasil dari 5 + 7 x 2?", "opsi": ["24", "19", "17", "14"], "jawaban": "19" },
+      { "id": 2, "soal": "Berapa jumlah titik sudut pada sebuah kubus?", "opsi": ["4", "6", "8", "12"], "jawaban": "8" }
+    ],
+    "sedang": [
+      { "id": 1, "soal": "Jika 3x + 5 = 20, berapakah nilai dari x?", "opsi": ["3", "4", "5", "6"], "jawaban": "5" }
+    ],
+    "susah": [
+      { "id": 1, "soal": "Berapakah akar kuadrat dari 144 dikali 5?", "opsi": ["60", "50", "72", "64"], "jawaban": "60" }
+    ],
+    "extreme": [
+      { "id": 1, "soal": "Tentukan turunan pertama dari f(x) = 3x² + 4x!", "opsi": ["6x + 4", "3x + 4", "6x", "6x² + 4"], "jawaban": "6x + 4" }
+    ]
+  }

@@ -8,13 +8,13 @@ import { apiFetch } from "../../../src/config/api";
 export default function QuizFamily({ user, onLogout }) {
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
-    // ⁡⁣⁣⁢𝗦𝘁𝗮𝘁𝗲 𝗔𝗹𝘂𝗿 𝗣𝗲𝗿𝗺𝗮𝗶𝗻𝗮𝗻⁡
+    // State Alur Permainan
     const [fase, setFase] = useState(1); 
     const [mapelTerpilih, setMapelTerpilih] = useState("");
     const [jumlahSoalPilihan, setJumlahSoalPilihan] = useState(5);
     const [modeGame, setModeGame] = useState("santai");
 
-    // ⁡⁣⁣⁢𝗦𝘁𝗮𝘁𝗲 𝗧𝗲𝗺𝗽𝗮𝘁 𝗦𝗼𝗮𝗹⁡
+    // State Tempat Soal & Gameplay
     const [kumpulanSoal, setKumpulanSoal] = useState([]);
     const [indeksSoal, setIndeksSoal] = useState(0);
     const [jumlahBenar, setJumlahBenar] = useState(0);
@@ -22,7 +22,7 @@ export default function QuizFamily({ user, onLogout }) {
     const [waktuSisa, setWaktuSisa] = useState(0);
     const [isProcessing, setIsProcessing] = useState(false);
 
-    // ⁡⁢⁣⁣Ref untuk mengontrol pembersihan Timer interval secara mutlak/total⁡
+    // Ref untuk mengontrol pembersihan Timer interval
     const timerRef = useRef(null);
 
     const daftarMapel = [
@@ -47,15 +47,15 @@ export default function QuizFamily({ user, onLogout }) {
         { id: 'extreme', nama: "🔴 EXTREME", warna: "#e74c3c" }
     ];
 
-    // ⁡⁣⁣⁢𝗘𝗳𝗲𝗸 𝗣𝗲𝗻𝗴𝗲𝗻𝗱𝗮𝗹𝗶 𝗪𝗮𝗸𝘁𝘂 𝗠𝘂𝗻𝗱𝘂𝗿 (𝗧𝗶𝗺𝗲𝗿 𝗚𝘂𝗮𝗿𝗱)⁡
+    // Efek Pengendali Waktu Mundur (Timer Guard)
     useEffect(() => {
         if (fase === 4 && (modeGame === 'kompetitif' || modeGame === 'eliminasi')) {
             timerRef.current = setInterval(() => {
                 setWaktuSisa(prev => {
                     if (prev <= 1) {
                         clearInterval(timerRef.current);
-                        setFase(5); // ⁡⁢⁣⁢⁡⁣⁢⁢⁡⁢⁣⁢Paksa pindah ke halaman skor karena waktu habis⁡
-                        showToast(setToast, "Waktu Anda telah habis,", "error");
+                        setFase(5); // Paksa pindah ke halaman skor karena waktu habis
+                        showToast(setToast, "Waktu Anda telah habis!", "error");
                         return 0;
                     }
                     return prev - 1;
@@ -66,24 +66,22 @@ export default function QuizFamily({ user, onLogout }) {
         return () => clearInterval(timerRef.current);
     }, [fase, modeGame]);
 
-    // ⁡⁣⁣⁢𝗛𝗮𝗻𝗱𝗹𝗲𝗿 𝗙𝗮𝘀𝗲 𝟭: 𝗣𝗶𝗹𝗶𝗵 𝗠𝗮𝗽𝗲𝗹⁡
+    // Handler Fase 1: Pilih Mapel
     const handlePilihMapel = (id) => {
         setMapelTerpilih(id);
         setFase(2);
     };
 
-    // ⁡⁣⁣⁢𝗛𝗮𝗻𝗱𝗹𝗲𝗿 𝗙𝗮𝘀𝗲 𝟮: 𝗞𝗼𝗻𝗳𝗶𝗿𝗺𝗮𝘀𝗶 𝗝𝘂𝗺𝗹𝗮𝗵 𝗦𝗼𝗮𝗹 & 𝗠𝗼𝗱𝗲 𝗚𝗮𝗺𝗲⁡
+    // Handler Fase 2: Konfirmasi Pengaturan
     const handleKonfirmasiPengaturan = () => {
         setFase(3);
     };
 
-    // ⁡⁣⁣⁢𝗛𝗮𝗻𝗱𝗹𝗲𝗿 𝗙𝗮𝘀𝗲 𝟯: 𝗣𝗶𝗹𝗶𝗵 𝗞𝗲𝘀𝘂𝗹𝗶𝘁𝗮𝗻 & 𝗔𝗰𝗮𝗸 + 𝗣𝗼𝘁𝗼𝗻𝗴 𝗣𝗮𝗸𝗲𝘁 𝗦𝗼𝗮𝗹⁡
-        const handlePilihKesulitan = async (id) => {
-            setIsProcessing(true); // Kunci sistem sementara selama proses pengambilan data API
+    // Handler Fase 3: Tembak API & Ambil Soal
+    const handlePilihKesulitan = async (id) => {
+        setIsProcessing(true); // Kunci sistem sementara
 
         try {
-
-            // 🌟 TEMBAK API BACKEND: Mengambil soal yang sudah diacak dan dipotong oleh server
             const { data: hasil } = await apiFetch(
                 `/api/quiz-questions?mapel=${mapelTerpilih}&kesulitan=${id}&limit=${jumlahSoalPilihan}`,
                 { 
@@ -101,12 +99,11 @@ export default function QuizFamily({ user, onLogout }) {
                     setWaktuSisa(soalDariServer.length * 30);
                 }
 
-                // Masukkan data hasil kiriman server ke state arena
                 setKumpulanSoal(soalDariServer);
                 setIndeksSoal(0);
                 setJumlahBenar(0);
                 setNyawa(3); // Reset nyawa
-                setFase(4);  // Alihkan masuk ke arena pengerjaan soal
+                setFase(4);  // Masuk arena pengerjaan
             } else {
                 showToast(setToast, hasil.message || "Gagal mengambil soal dari server!", "error");
             }
@@ -115,16 +112,13 @@ export default function QuizFamily({ user, onLogout }) {
             console.error("🚨 Galat saat menghubungi API server:", error);
             showToast(setToast, "Koneksi ke server terputus! Gagal memuat data.", "error");
         } finally {
-            setIsProcessing(false); // Buka kembali kunci pemrosesan
+            setIsProcessing(false);
         }
     };
 
-    // ⁡⁣⁣⁢𝗛𝗮𝗻𝗱𝗹𝗲𝗿 𝗙𝗮𝘀𝗲 𝟰: 𝗘𝗸𝘀𝗲𝗸𝘂𝘀𝗶 𝗣𝗶𝗹𝗶𝗵𝗮𝗻 𝗝𝗮𝘄𝗮𝗯𝗮𝗻⁡
+    // Handler Fase 4: Eksekusi Jawaban
     const handleJawabSoal = (opsiPilihan) => {
-        // ⁡⁢⁣⁣PROTEKSI: Jika sistem sedang memproses transisi soal, batalkan klik berikutnya!⁡
         if (isProcessing) return;
-
-        // ⁡⁢⁣⁣Kunci tombol segera setelah klik pertama lolos⁡
         setIsProcessing(true);
 
         const soalSaatIni = kumpulanSoal[indeksSoal];
@@ -141,46 +135,50 @@ export default function QuizFamily({ user, onLogout }) {
             }
         }
 
-        // ⁡⁣⁣⁢𝗝𝗮𝗹𝘂𝗿 𝗣𝗿𝗼𝘁𝗲𝗸𝘀𝗶 𝗘𝗹𝗶𝗺𝗶𝗻𝗮𝘀𝗶: 𝗖𝗲𝗸 𝗷𝗶𝗸𝗮 𝗻𝘆𝗮𝘄𝗮 𝗵𝗮𝗯𝗶𝘀⁡
+        // Cek jika nyawa habis di mode eliminasi
         if (modeGame === 'eliminasi' && nyawaSisaSaatIni <= 0) {
             setTimeout(() => {
                 clearInterval(timerRef.current);
                 setFase(5);
                 showToast(setToast, "Eliminasi! Kesempatan Anda habis.", "error");
-                setIsProcessing(false); // ⁡⁢⁣⁢Buka kunci saat game over⁡
+                setIsProcessing(false);
             }, 1000);
             return;
         }
 
-        // ⁡⁣⁣⁢𝗧𝗿𝗮𝗻𝘀𝗶𝘀𝗶 𝗸𝗲 𝘀𝗼𝗮𝗹 𝗯𝗲𝗿𝗶𝗸𝘂𝘁𝗻𝘆𝗮 𝗮𝘁𝗮𝘂 𝘀𝗲𝗹𝗲𝘀𝗮𝗶𝗸𝗮𝗻 𝗴𝗮𝗺𝗲⁡
+        // Transisi ke soal berikutnya / selesai
         setTimeout(() => {
             if (indeksSoal + 1 < kumpulanSoal.length) {
                 setIndeksSoal(prev => prev + 1);
-                // ⁡⁢⁣⁣KUNCI DIBUKA: Hanya ketika soal berikutnya sudah sukses termuat di layar⁡
                 setIsProcessing(false);
             } else {
                 clearInterval(timerRef.current);
                 setFase(5);
-                setIsProcessing(false); // ⁡⁢⁣⁢Buka kunci saat masuk ke halaman skor akhir⁡
+                setIsProcessing(false);
             }
         }, 1200);
     };
 
-    // ⁡⁣⁣⁢𝗙𝗼𝗿𝗺𝗮𝘁 𝗪𝗮𝗸𝘁𝘂 (𝗠𝗲𝗻𝗶𝘁:𝗗𝗲𝘁𝗶𝗸)⁡
+    // Format Waktu (Menit:Detik)
     const formatWaktu = (totalDetik) => {
         const menit = Math.floor(totalDetik / 60);
         const detik = totalDetik % 60;
         return `${menit}:${detik < 10 ? '0' : ''}${detik}`;
     };
 
+    // PERBAIKAN: Hapus setKesulitanTerpilih("") agar tidak menggelembungkan runtime error
     const handleResetGame = () => {
+        clearInterval(timerRef.current);
         setFase(1);
         setMapelTerpilih("");
-        setKesulitanTerpilih("");
         setKumpulanSoal([]);
+        setIndeksSoal(0);
+        setJumlahBenar(0);
+        setWaktuSisa(0);
+        setNyawa(3);
     };
 
-    // ⁡⁣⁣⁢𝗞𝗔𝗟𝗞𝗨𝗟𝗔𝗦𝗜 𝗦𝗞𝗢𝗥 𝗢𝗧𝗢𝗠𝗔𝗧𝗜𝗦 𝗕𝗘𝗥𝗗𝗔𝗦𝗔𝗥𝗞𝗔𝗡 𝗝𝗨𝗠𝗔𝗛 𝗦𝗢𝗔𝗟 𝗬𝗔𝗡𝗚 𝗔𝗞𝗧𝗜𝗙 𝗗𝗜 𝗣𝗜𝗟𝗜𝗛⁡
+    // Kalkulasi skor akhir
     const skorAkhir = kumpulanSoal.length > 0 ? (jumlahBenar / kumpulanSoal.length) * 100 : 0;
 
     return (
@@ -196,9 +194,7 @@ export default function QuizFamily({ user, onLogout }) {
                         </Link>
                     )}
 
-                    {/* =========================================================================
-                        ⁡⁣⁣⁢𝗙𝗔𝗦𝗘 𝟭: 𝗥𝗘𝗡𝗗𝗘𝗥 𝗣𝗜𝗟𝗜𝗛𝗔𝗡 𝗠𝗔𝗧𝗔 𝗣𝗘𝗟𝗔𝗝𝗔𝗥𝗔𝗡⁡
-                        ========================================================================= */}
+                    {/* FASE 1: PILIH MAPEL */}
                     {fase === 1 && (
                         <section className="card-phase">
                             <h1 className='headers-mapel' style={{ marginBottom: '10px' }}>🎯 Pilih Mata Pelajaran</h1>
@@ -214,15 +210,12 @@ export default function QuizFamily({ user, onLogout }) {
                         </section>
                     )}
 
-                    {/* =========================================================================
-                        ⁡⁣⁣⁢𝗙𝗔𝗦𝗘 𝟮: 𝗣𝗜𝗟𝗜𝗛 𝗝𝗨𝗠𝗟𝗔𝗛 𝗦𝗢𝗔𝗟 & 𝗠𝗢𝗗𝗘 𝗣𝗘𝗥𝗠𝗔𝗜𝗡𝗔𝗡⁡
-                        ========================================================================= */}
+                    {/* FASE 2: PENGATURAN */}
                     {fase === 2 && (
                         <section className="card-phase" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '35px', borderRadius: '12px' }}>
                             <h2>⚙️ Pengaturan Pertandingan ({mapelTerpilih.toUpperCase()})</h2>
                             <p style={{ opacity: 0.6, marginBottom: '30px' }}>Konfigurasikan spesifikasi kuantitas dan regulasi permainan Anda.</p>
 
-                            {/* Pilihan Jumlah Soal */}
                             <div style={{ marginBottom: '30px' }}>
                                 <label style={{ display: 'block', fontWeight: '600', marginBottom: '12px' }}>🔢 Tentukan Jumlah Soal:</label>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -234,7 +227,6 @@ export default function QuizFamily({ user, onLogout }) {
                                 </div>
                             </div>
 
-                            {/* ⁡⁣⁣⁢𝗣𝗶𝗹𝗶𝗵𝗮𝗻 𝗠𝗼𝗱𝗲 𝗚𝗮𝗺𝗲⁡ */}
                             <div style={{ marginBottom: '35px' }}>
                                 <label style={{ display: 'block', fontWeight: '600', marginBottom: '12px' }}>🛡️ Pilih Mode Permainan:</label>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -254,9 +246,7 @@ export default function QuizFamily({ user, onLogout }) {
                         </section>
                     )}
 
-                    {/* =========================================================================
-                        ⁡⁣⁣⁢𝗙𝗔𝗦𝗘 𝟯: 𝗣𝗜𝗟𝗜𝗛 𝗧𝗜𝗡𝗚𝗞𝗔𝗧 𝗞𝗘𝗦𝗨𝗟𝗜𝗧𝗔𝗡⁡
-                        ========================================================================= */}
+                    {/* FASE 3: PILIH KESULITAN */}
                     {fase === 3 && (
                         <section className="card-phase" style={{ textAlign: 'center', padding: '40px 20px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '12px' }}>
                             <h2 style={{ margin: '0 0 10px 0' }}>⚡ Tentukan Tingkat Kesulitan</h2>
@@ -264,7 +254,7 @@ export default function QuizFamily({ user, onLogout }) {
                             
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center' }}>
                                 {daftarKesulitan.map(level => (
-                                    <button key={level.id} onClick={() => handlePilihKesulitan(level.id)} style={{ padding: '12px 30px', fontSize: '1rem', fontWeight: '600', color: '#fff', backgroundColor: 'transparent', border: `2px solid ${level.warna}`, borderRadius: '30px', cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseOver={e => { e.target.style.backgroundColor = level.warna; e.target.style.boxShadow = `0 0 15px ${level.warna}`; }} onMouseOut={e => { e.target.style.backgroundColor = 'transparent'; e.target.style.boxShadow = 'none'; }}>
+                                    <button key={level.id} disabled={isProcessing} onClick={() => handlePilihKesulitan(level.id)} style={{ padding: '12px 30px', fontSize: '1rem', fontWeight: '600', color: '#fff', backgroundColor: 'transparent', border: `2px solid ${level.warna}`, borderRadius: '30px', cursor: isProcessing ? 'not-allowed' : 'pointer', transition: 'all 0.2s ease', opacity: isProcessing ? 0.5 : 1 }} onMouseOver={e => { if(!isProcessing) { e.target.style.backgroundColor = level.warna; e.target.style.boxShadow = `0 0 15px ${level.warna}`; }}} onMouseOut={e => { if(!isProcessing) { e.target.style.backgroundColor = 'transparent'; e.target.style.boxShadow = 'none'; }}}>
                                         {level.nama}
                                     </button>
                                 ))}
@@ -273,26 +263,20 @@ export default function QuizFamily({ user, onLogout }) {
                         </section>
                     )}
 
-                    {/* =========================================================================
-                        ⁡⁣⁣⁢𝗙𝗔𝗦𝗘 𝟰: 𝗔𝗥𝗘𝗡𝗔 𝗣𝗘𝗥𝗧𝗔𝗡𝗗𝗜𝗡𝗚𝗔𝗡 𝗨𝗧𝗔𝗠𝗔⁡
-                        ========================================================================= */}
+                    {/* FASE 4: ARENA KUIS */}
                     {fase === 4 && kumpulanSoal.length > 0 && (
                         <section className="card-phase" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '35px', borderRadius: '12px' }}>
-                            
-                            {/* ⁡⁣⁣⁢𝗣𝗮𝗻𝗲𝗹 𝗔𝘁𝗮𝘀 𝗜𝗻𝗱𝗶𝗸𝗮𝘁𝗼𝗿 𝗙𝗶𝘁𝘂𝗿 𝗕𝗮𝗿𝘂⁡ */}
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem', opacity: 0.8, marginBottom: '25px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '15px' }}>
                                 <div>
                                     <span>Mapel: <strong style={{ color: '#00f5d4' }}>{mapelTerpilih.toUpperCase()}</strong></span>
                                     <span style={{ marginLeft: '15px' }}>Soal: <strong>{indeksSoal + 1}/{kumpulanSoal.length}</strong></span>
                                 </div>
                                 <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                                    {/* ⁡⁣⁣⁢𝗜𝗻𝗱𝗶𝗸𝗮𝘁𝗼𝗿 𝗪𝗮𝗸𝘁𝘂 𝗗𝗶𝗻𝗮𝗺𝗶𝘀⁡ */}
                                     {(modeGame === 'kompetitif' || modeGame === 'eliminasi') && (
                                         <div style={{ padding: '5px 12px', background: waktuSisa <= 15 ? 'rgba(231, 76, 60, 0.2)' : 'rgba(255,255,255,0.05)', border: waktuSisa <= 15 ? '1px solid #e74c3c' : '1px solid var(--card-border)', borderRadius: '6px', fontWeight: '700', color: waktuSisa <= 15 ? '#e74c3c' : '#ffc107' }}>
                                             ⏱️ {formatWaktu(waktuSisa)}
                                         </div>
                                     )}
-                                    {/* ⁡⁣⁣⁢𝗜𝗻𝗱𝗶𝗸𝗮𝘁𝗼𝗿 𝗡𝘆𝗮𝘄𝗮 𝗗𝗶𝗻𝗮𝗺𝗶𝘀⁡ */}
                                     {modeGame === 'eliminasi' && (
                                         <div style={{ padding: '5px 12px', background: 'rgba(231, 76, 60, 0.1)', border: '1px solid #e74c3c', borderRadius: '6px', fontWeight: '700', color: '#e74c3c' }}>
                                             {"❤️".repeat(nyawa)}{"🖤".repeat(3 - nyawa)}
@@ -310,8 +294,8 @@ export default function QuizFamily({ user, onLogout }) {
                                     <button 
                                         key={idx} 
                                         onClick={() => handleJawabSoal(opsi)} 
-                                        disabled={isProcessing} // ⁡⁢⁣⁢Mengunci tombol secara fisik⁡
-                                        className="opsi-jawaban-btn" // ⁡⁢⁣⁢Menyerahkan mandat hover ke CSS Class⁡
+                                        disabled={isProcessing}
+                                        className="opsi-jawaban-btn"
                                         style={{
                                             width: '100%', 
                                             padding: '15px 20px', 
@@ -336,9 +320,7 @@ export default function QuizFamily({ user, onLogout }) {
                         </section>
                     )}
 
-                    {/* =========================================================================
-                        ⁡⁣⁣⁢𝗙𝗔𝗦𝗘 𝟱: 𝗚𝗘𝗥𝗕𝗔𝗡𝗚 𝗥𝗜𝗡𝗚𝗞𝗔𝗦𝗔𝗡 𝗦𝗞𝗢𝗥 𝗔𝗞𝗛𝗜𝗥⁡
-                        ========================================================================= */}
+                    {/* FASE 5: SKOR AKHIR */}
                     {fase === 5 && (
                         <section className="card-phase" style={{ textAlign: 'center', background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '50px 30px', borderRadius: '12px' }}>
                             <i className="bi bi-trophy" style={{ fontSize: '4.5rem', color: '#ffc107', display: 'block', marginBottom: '20px' }}></i>
@@ -366,7 +348,7 @@ export default function QuizFamily({ user, onLogout }) {
                 </div>
             </div>
 
-            {/* ⁡⁣⁣⁢𝗚𝗘𝗥𝗕𝗔𝗡𝗚 𝗘𝗠𝗜𝗦𝗜 𝗧𝗢𝗔𝗦𝗧⁡ */}
+            {/* TOAST NOTIFICATION */}
             {toast.show && (
                 <div className={`toast-box toast-${toast.type}`} style={{ position: 'fixed', bottom: '30px', right: '30px', padding: '15px 25px', borderRadius: '8px', backgroundColor: toast.type === 'success' ? '#2ecc71' : '#e74c3c', color: '#ffffff', fontWeight: '600', zIndex: 99999, display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span>{toast.type === 'success' ? '✅' : '❌'}</span>
