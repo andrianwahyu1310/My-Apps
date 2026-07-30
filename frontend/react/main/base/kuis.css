@@ -3,26 +3,41 @@
     padding: 15px 20px;
     text-align: left;
     font-size: 1rem;
-    background: rgba(255, 255, 255, 0.05);
+
+    background: var(--surface);
     border: 1px solid var(--card-border);
     border-radius: 8px;
+
     color: var(--text-color);
-    transition: all 0.15s ease;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
 }
 
-/* 🌟 KUNCI UTAMA: Hover hanya aktif jika tombol TIDAK dalam kondisi disabled */
+/* Hover hanya jika tombol belum disabled */
 .opsi-jawaban-btn:not(:disabled):hover {
-    background: rgba(0, 245, 212, 0.15) !important;
-    border-color: #00f5d4 !important;
+    background: var(--surface-strong);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: translateY(-2px);
     cursor: pointer;
 }
 
 .opsi-jawaban-btn:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: .6;
+}
+
+.headers-mapel {
+    color: var(--text-color);
+    margin-bottom: 10px;
 }
 
 @media (max-width: 980px) {
+
     .headers-brain {
         margin-top: 20px;
         font-size: 23px;
@@ -32,8 +47,8 @@
         font-size: 25px;
     }
 
-    .btn-back  {
-        margin-top: 0px !important;
+    .btn-back {
+        margin-top: 0 !important;
         width: 30% !important;
     }
 }

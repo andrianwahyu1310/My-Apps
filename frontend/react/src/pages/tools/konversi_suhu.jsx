@@ -161,7 +161,7 @@ export default function KalkulatorSuhu({ user, onLogout }) {
         <>
             <div className="tools-page-wrapper" style={{ paddingTop: '100px' }}>
                 <Link to="/mainTools" className="btn-back">
-                    <i className="bi bi-arrow-left"></i> Kembali ke Menu Tools
+                    <i className="bi bi-arrow-left"></i> Kembali
                 </Link>
 
                 {/* SINKRONISASI SEJAJAR: Menggunakan susunan .tool-container agar kembar identik */}

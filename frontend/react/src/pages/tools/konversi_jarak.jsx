@@ -113,7 +113,7 @@ export default function KalkulatorPanjang() {
 
             <div className="tools-page-wrapper" style={{ paddingTop: '100px' }}>
                 <Link to="/mainTools" className="btn-back">
-                    <i className="bi bi-arrow-left"></i> Kembali ke Menu Tools
+                    <i className="bi bi-arrow-left"></i> Kembali
                 </Link>
 
                 <div className="tool-container">

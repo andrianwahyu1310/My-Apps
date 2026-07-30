@@ -151,12 +151,12 @@ export default function Contact() {
                 </div>
             )}
 
-            <Link to="/" className="btn-back" style={{ width: '20%' }}>
+            <Link to="/" className="btn-back">
                 <i className="bi bi-arrow-left"></i> Kembali
             </Link>
                 
             <div className="card-contact" style={{ maxWidth: '600px', margin: '40px auto', padding: '30px', borderRadius: '12px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.2)', backdropFilter: 'blur(4px)' }}>
-                <h2 style={{ margin: '0 0 10px 0', fontSize: '1.8rem' }}>Hubungi Layanan Pengaduan</h2>
+                <h2 className='headers-contact' style={{ margin: '0 0 10px 0', fontSize: '1.8rem' }}>Hubungi Layanan Pengaduan</h2>
                 <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '15px' }}>
                     Silakan kirimkan kritik, bug, atau saran secara nyata langsung ke hadapan pengembang.
                 </p>

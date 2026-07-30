@@ -140,7 +140,7 @@ export default function ArsipKategoriBerita() {
             </div>
 
             {/* HEADER KATEGORI */}
-            <h1 style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.1)', paddingBottom: '15px', color: '#fff', margin: '0 30px 30px 30px', fontSize: '23px' }}>
+            <h1 className='headers-arct' >
                 Arsip Berita: <span style={{ color: '#00f5d4', textTransform: 'capitalize' }}>{namaKategori}</span>
             </h1>
 

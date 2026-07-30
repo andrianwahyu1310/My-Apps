@@ -12,7 +12,7 @@ export default function MenuTools({ title = "Utama", user, onLogout }) {
     const dataAlatAktif = jsonBackendTools || [];
 
     // Taktik Deteksi di Konsol Browser
-    console.log("Data alat yang berhasil dimuat oleh sistem:", dataAlatAktif);
+    // console.log("Data alat yang berhasil dimuat oleh sistem:", dataAlatAktif);
 
     return (
         <>

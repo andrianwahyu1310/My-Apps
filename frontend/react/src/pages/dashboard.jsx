@@ -68,7 +68,7 @@ useEffect(() => {
         
         apiFetch("/api/categories")
             .then(({ data }) => {
-                console.log("Response Categories API:", data); // Untuk debugging Senpai di console
+                // console.log("Response Categories API:", data); // Untuk debugging Senpai di console
 
                 // Ekstrak array dari berbagai kemungkinan struktur respon backend
                 let categoryArray = [];

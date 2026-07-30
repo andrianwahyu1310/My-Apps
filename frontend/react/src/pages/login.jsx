@@ -16,7 +16,6 @@ export default function Login() {
     const { setUser } = useContext(AuthContext);
 
     // 💡 PENGECEKAN SESSION OTOMATIS SAAT COMPONENT DI-MOUNT
-    // Mencegah login ulang jika cookie session masih valid di backend
     useEffect(() => {
         const checkExistingSession = async () => {
             if (!API_URL) {
@@ -32,12 +31,10 @@ export default function Login() {
 
                 if (data && data.success && data.user) {
                     if (setUser) setUser(data.user);
-                    // Redirect langsung ke Dashboard jika sesi terdeteksi aktif
                     navigate("/", { replace: true });
                 }
             } catch (err) {
-                // Sesi tidak ditemukan/expired, izinkan user mengisi form login
-                console.log("Belum ada sesi aktif:", err.message);
+                console.error("Terjadi masalah pada server!", err.message);
             } finally {
                 setIsCheckingAuth(false);
             }
@@ -45,6 +42,40 @@ export default function Login() {
 
         checkExistingSession();
     }, [navigate, setUser]);
+
+    // 💡 TAMPILKAN PERINGATAN CONSOLE DENGAN ASCII ART RAPI
+    useEffect(() => {
+    console.clear();
+
+    const warn = `
+========================================================================================
+
+   ██████╗ █████╗ ███╗   ██╗ ██████╗  █████╗ ███╗   ██╗
+   ╚══██╔╝██╔══██╗████╗  ██║██╔════╝ ██╔══██╗████╗  ██║
+      ██║ ███████║██╔██╗ ██║██║  ███╗███████║██╔██╗ ██║
+ ██   ██║ ██╔══██║██║╚██╗██║██║   ██║██╔══██║██║╚██╗██║
+ ╚█████╔╝ ██║  ██║██║ ╚████║╚██████╔╝██║  ██║██║ ╚████║
+  ╚════╝  ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
+
+            ██╗███████╗███████╗███╗   ██╗██████╗ 
+            ██╗██╔════╝██╔════╝████╗  ██║██╔════╝ 
+            ██║███████╗█████╗  ██╔██╗ ██║██║  ███╗
+            ██║╚════██║██╔══╝  ██║╚██╗██║██║   ██║
+            ██╔███████║███████╗██║ ╚████║╚██████╔╝
+            ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝ ╚═════╝ 
+
+========================================================================================
+
+⛔ STOP! HALAMAN INI KHUSUS DEVELOPER ⛔
+
+========================================================================================
+`;
+
+    console.log(
+        "%c" + warn,
+        "color: #00f0ff; background-color: #080114; font-family: monospace; font-size: 11px; font-weight: bold; line-height: 1.2;"
+    );
+}, []);
 
     // Kirim Data ke Backend API
     const handleSubmit = async (e) => {
@@ -69,12 +100,10 @@ export default function Login() {
             });
 
             if (data.success) {
-                // Update global auth state
                 if (setUser) setUser(data.user || null);
 
                 showToast(setToast, "Login berhasil! Mengalihkan...", "success");
 
-                // Jeda singkat agar browser menyelesaikan penyimpanan cookie cross-origin
                 setTimeout(() => {
                     navigate("/", { replace: true });
                 }, 700);
@@ -87,7 +116,6 @@ export default function Login() {
         }
     };
 
-    // TAMPILKAN LOADING SEDERHANA SAAT MENGECEK SESI
     if (isCheckingAuth) {
         return (
             <div className="auth-body-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', color: '#fff' }}>
@@ -98,7 +126,6 @@ export default function Login() {
 
     return (
         <div className="auth-body-wrapper">
-            {/* RENDER ELEMENT TOAST */}
             {toast.show && (
                 <div id="toast" className={`toast ${toast.type} toast-show`}>
                     {toast.message}

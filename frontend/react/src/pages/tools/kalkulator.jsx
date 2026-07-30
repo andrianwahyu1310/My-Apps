@@ -162,7 +162,7 @@ export default function KalkulatorDualMode() {
         <div className="calc-body">
             {/* LINK KEMBALI MENGGUNAKAN REACT ROUTER DOM */}
             <Link to="/mainTools" className="btn-back">
-                <i className="bi bi-arrow-left"></i> Kembali ke Menu Tools
+                <i className="bi bi-arrow-left"></i> Kembali
             </Link>
         </div>
 

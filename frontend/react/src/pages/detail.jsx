@@ -84,7 +84,7 @@ export default function DetailAkun() {
                     transition: 'all 0.3s ease'
                 }}
             >
-                <h2 style={{ margin: '0 0 10px 0', fontSize: '1.8rem', fontWeight: '600' }}>
+                <h2 className='headers-detail'>
                     Informasi Detail Akun & Sistem
                 </h2>
                 <hr style={{ opacity: 0.15, margin: '15px 0', border: 'none', height: '1px', backgroundColor: 'var(--text-color, #fff)' }} />

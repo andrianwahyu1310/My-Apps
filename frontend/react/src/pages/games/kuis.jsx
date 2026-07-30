@@ -288,13 +288,13 @@ export default function QuizFamily({ user, onLogout }) {
                     {/* FASE 1: PILIH MAPEL */}
                     {fase === 1 && (
                         <section className="card-phase">
-                            <h1 className='headers-mapel' style={{ marginBottom: '10px' }}>🎯 Pilih Mata Pelajaran</h1>
-                            <p style={{ opacity: 0.7, marginBottom: '30px' }}>Silakan tentukan bidang kompetensi yang ingin Anda taklukkan hari ini.</p>
+                            <h1 className='headers-mapel'>🎯 Pilih Mata Pelajaran</h1>
+                            <p className='headers-mapel' style={{ opacity: 0.7, marginBottom: '30px' }}>Silakan tentukan bidang kompetensi yang ingin Anda taklukkan hari ini.</p>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                                 {daftarMapel.map(mapel => (
                                     <div key={mapel.id} onClick={() => handlePilihMapel(mapel.id)} style={{ padding: '25px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s ease', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }} onMouseOver={e => e.currentTarget.style.borderColor = '#00f5d4'} onMouseOut={e => e.currentTarget.style.borderColor = 'var(--card-border)'}>
-                                        <h3 style={{ margin: '0 0 10px 0' }}>{mapel.nama}</h3>
-                                        <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7, lineHeight: '1.4' }}>{mapel.desc}</p>
+                                        <h3 className='headers-mapel' style={{ margin: '0 0 10px 0' }}>{mapel.nama}</h3>
+                                        <p className='headers-mapel' style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7, lineHeight: '1.4' }}>{mapel.desc}</p>
                                     </div>
                                 ))}
                             </div>
@@ -304,8 +304,8 @@ export default function QuizFamily({ user, onLogout }) {
                     {/* FASE 2: PENGATURAN */}
                     {fase === 2 && (
                         <section className="card-phase" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '35px', borderRadius: '12px' }}>
-                            <h2>⚙️ Pengaturan Pertandingan ({mapelTerpilih.toUpperCase()})</h2>
-                            <p style={{ opacity: 0.6, marginBottom: '30px' }}>Konfigurasikan spesifikasi kuantitas dan regulasi permainan Anda.</p>
+                            <h2 className='headers-mapel' >⚙️ Pengaturan Pertandingan ({mapelTerpilih.toUpperCase()})</h2>
+                            <p className='headers-mapel'  style={{ opacity: 0.6, marginBottom: '30px' }}>Konfigurasikan spesifikasi kuantitas dan regulasi permainan Anda.</p>
 
                             <div style={{ marginBottom: '30px' }}>
                                 <label style={{ display: 'block', fontWeight: '600', marginBottom: '12px' }}>🔢 Tentukan Jumlah Soal:</label>
@@ -341,12 +341,12 @@ export default function QuizFamily({ user, onLogout }) {
                     {/* FASE 3: PILIH KESULITAN */}
                     {fase === 3 && (
                         <section className="card-phase" style={{ textAlign: 'center', padding: '40px 20px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '12px' }}>
-                            <h2 style={{ margin: '0 0 10px 0' }}>⚡ Tentukan Tingkat Kesulitan</h2>
-                            <p style={{ opacity: 0.7, marginBottom: '30px' }}>Mode: <span style={{ color: '#00f5d4', fontWeight: '600' }}>{modeGame.toUpperCase()}</span> | Kuantitas: <span style={{ color: '#00f5d4', fontWeight: '600' }}>{jumlahSoalPilihan} Soal</span></p>
+                            <h2 className='headers-mapel' style={{ margin: '0 0 10px 0' }}>⚡ Tentukan Tingkat Kesulitan</h2>
+                            <p className='headers-mapel'style={{ opacity: 0.7, marginBottom: '30px' }}>Mode: <span style={{ color: '#00f5d4', fontWeight: '600' }}>{modeGame.toUpperCase()}</span> | Kuantitas: <span style={{ color: '#00f5d4', fontWeight: '600' }}>{jumlahSoalPilihan} Soal</span></p>
                             
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center' }}>
                                 {daftarKesulitan.map(level => (
-                                    <button key={level.id} disabled={isProcessing} onClick={() => handlePilihKesulitan(level.id)} style={{ padding: '12px 30px', fontSize: '1rem', fontWeight: '600', color: '#fff', backgroundColor: 'transparent', border: `2px solid ${level.warna}`, borderRadius: '30px', cursor: isProcessing ? 'not-allowed' : 'pointer', transition: 'all 0.2s ease', opacity: isProcessing ? 0.5 : 1 }} onMouseOver={e => { if(!isProcessing) { e.target.style.backgroundColor = level.warna; e.target.style.boxShadow = `0 0 15px ${level.warna}`; }}} onMouseOut={e => { if(!isProcessing) { e.target.style.backgroundColor = 'transparent'; e.target.style.boxShadow = 'none'; }}}>
+                                    <button key={level.id} disabled={isProcessing} onClick={() => handlePilihKesulitan(level.id)} style={{ color: 'var(--text-color)', padding: '12px 30px', fontSize: '1rem', fontWeight: '600', backgroundColor: 'transparent', border: `2px solid ${level.warna}`, borderRadius: '30px', cursor: isProcessing ? 'not-allowed' : 'pointer', transition: 'all 0.2s ease', opacity: isProcessing ? 0.5 : 1 }} onMouseOver={e => { if(!isProcessing) { e.target.style.backgroundColor = level.warna; e.target.style.boxShadow = `0 0 15px ${level.warna}`; }}} onMouseOut={e => { if(!isProcessing) { e.target.style.backgroundColor = 'transparent'; e.target.style.boxShadow = 'none'; }}}>
                                         {level.nama}
                                     </button>
                                 ))}
@@ -363,7 +363,7 @@ export default function QuizFamily({ user, onLogout }) {
                                     <span>Mapel: <strong style={{ color: '#00f5d4' }}>{mapelTerpilih.toUpperCase()}</strong></span>
                                     <span style={{ marginLeft: '15px' }}>Soal: <strong>{indeksSoal + 1}/{kumpulanSoal.length}</strong></span>
                                 </div>
-                                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', gap: '15px', alignItems: 'center'}}>
                                     {(modeGame === 'kompetitif' || modeGame === 'eliminasi') && (
                                         <div style={{ padding: '5px 12px', background: waktuSisa <= 15 ? 'rgba(231, 76, 60, 0.2)' : 'rgba(255,255,255,0.05)', border: waktuSisa <= 15 ? '1px solid #e74c3c' : '1px solid var(--card-border)', borderRadius: '6px', fontWeight: '700', color: waktuSisa <= 15 ? '#e74c3c' : '#ffc107' }}>
                                             ⏱️ {formatWaktu(waktuSisa)}
@@ -377,7 +377,7 @@ export default function QuizFamily({ user, onLogout }) {
                                 </div>
                             </div>
 
-                            <h2 style={{ fontSize: '1.4rem', lineHeight: '1.5', marginBottom: '30px', fontWeight: '500' }}>
+                            <h2 style={{ color: 'var(--text-color)', fontSize: '1.4rem', lineHeight: '1.5', marginBottom: '30px', fontWeight: '500' }}>
                                 {kumpulanSoal[indeksSoal].soal}
                             </h2>
 
@@ -446,8 +446,8 @@ export default function QuizFamily({ user, onLogout }) {
                                 className={skorAkhir >= 70 ? "bi bi-trophy" : "bi bi-exclamation-triangle"} 
                                 style={{ fontSize: '4.5rem', color: skorAkhir >= 70 ? '#ffc107' : '#e74c3c', display: 'block', marginBottom: '20px' }}
                             ></i>
-                            <h2>{skorAkhir >= 70 ? "Performa Luar Biasa!" : "Evaluasi Perlu Ditingkatkan"}</h2>
-                            <p style={{ opacity: 0.6, margin: '5px 0 25px 0' }}>Ringkasan performa permainan Anda di bawah pengawasan regulasi `{modeGame}`:</p>
+                            <h2 className='headers-mapel'>{skorAkhir >= 70 ? "Performa Luar Biasa!" : "Evaluasi Perlu Ditingkatkan"}</h2>
+                            <p style={{ color: 'var(--text-color)', opacity: 0.6, margin: '5px 0 25px 0' }}>Ringkasan performa permainan Anda di bawah pengawasan regulasi `{modeGame}`:</p>
                             
                             <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', marginBottom: '40px', flexWrap: 'wrap' }}>
                                 <div style={{ padding: '15px 30px', background: 'rgba(0,0,0,0.15)', borderRadius: '10px', borderLeft: '4px solid #3498db' }}>
