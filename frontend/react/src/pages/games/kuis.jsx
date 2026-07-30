@@ -109,7 +109,7 @@ export default function QuizFamily({ user, onLogout }) {
             }
 
         } catch (error) {
-            console.error("🚨 Galat saat menghubungi API server:", error);
+            console.error("Galat saat menghubungi API server:", error);
             showToast(setToast, "Koneksi ke server terputus! Gagal memuat data.", "error");
         } finally {
             setIsProcessing(false);
@@ -126,7 +126,7 @@ export default function QuizFamily({ user, onLogout }) {
         
         if (opsiPilihan === soalSaatIni.jawaban) {
             setJumlahBenar(prev => prev + 1);
-            showToast(setToast, "Jawaban Benar! Poin diamankan.", "success");
+            showToast(setToast, "Jawaban Benar!.", "success");
         } else {
             showToast(setToast, `Kurang Tepat! Jawaban benar: ${soalSaatIni.jawaban}`, "error");
             if (modeGame === 'eliminasi') {
@@ -352,7 +352,7 @@ export default function QuizFamily({ user, onLogout }) {
             {toast.show && (
                 <div className={`toast-box toast-${toast.type}`} style={{ position: 'fixed', bottom: '30px', right: '30px', padding: '15px 25px', borderRadius: '8px', backgroundColor: toast.type === 'success' ? '#2ecc71' : '#e74c3c', color: '#ffffff', fontWeight: '600', zIndex: 99999, display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span>{toast.type === 'success' ? '✅' : '❌'}</span>
-                    <span>{toast.message}</span>
+                    <span style={{color : 'white'}}>{toast.message}</span>
                 </div>
             )}
         </>

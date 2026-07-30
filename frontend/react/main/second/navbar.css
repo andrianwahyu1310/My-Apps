@@ -142,7 +142,7 @@
 
 .dropdown-item i {
     font-size: 1rem;
-}
+} 
 
 .dropdown-item:hover {
     background: rgba(255,255,255,0.08);
@@ -162,32 +162,46 @@
     color: #2ec4b6 !important;
 }
 
+/* Sembunyikan item navigasi khusus mobile jika di layar lebar/laptop */
+.nav-links-mobile {
+    display: none;
+}
+
+.nav-links-desktop {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- TAMPILAN RESPONSIF (MOBILE / HANDPHONE) --- */
 @media (max-width: 900px) {
     .nav-bar {
         min-height: auto;
-        justify-content: center;
+        justify-content: space-between;
         padding: 12px 16px;
     }
 
-    .nav-bar .nav-bar-kanan,
-    .nav-bar .nav-bar-tengah,
-    .nav-bar .nav-bar-kiri {
-        width: 100%;
-        justify-content: center;
+    /* 1. Sembunyikan navigasi luar saat di HP */
+    .nav-links-desktop {
+        display: none !important;
+    }
+
+    /* 2. Tampilkan navigasi tersebut di dalam Dropdown Card saat di HP */
+    .nav-links-mobile {
+        display: block;
     }
 
     .nav-bar .nav-bar-kanan {
-        display: none;
+        display: none; /* Sembunyikan judul sambutan di HP jika terlalu sempit */
     }
-}
 
-@media (max-width: 600px) {
-    .nav-bar a {
-        font-size: 0.9rem;
-        padding: 7px 10px;
+    .nav-bar .nav-bar-tengah {
+        width: auto;
     }
 
     .dropdown-card {
-        right: -8px;
+        right: 0;
+        top: 50px;
+        width: min(300px, calc(100vw - 32px));
     }
 }

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext'; // Pastikan path lokasi AuthContext benar
+import { AuthContext } from '../contexts/AuthContext'; 
 import '../../main/second/navbar.css';
 
 export default function Navbar({ user: userProp, onLogout }) {
@@ -8,10 +8,13 @@ export default function Navbar({ user: userProp, onLogout }) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentTime, setCurrentTime] = useState('00:00:00 | Menghitung...');
     
+    // Inisialisasi useRef untuk area dropdown
+    const dropdownRef = useRef(null);
+
     // Ambil data user dari AuthContext
     const { user: userCtx } = useContext(AuthContext);
 
-    // 💡 SANITASI TINGKAT HIGH: Ambil string username secara spesifik agar tidak berupa Object
+    // Sanitasi Username Display
     const rawUser = userProp || userCtx;
     const usernameDisplay = typeof rawUser === 'object' 
         ? (rawUser?.username || rawUser?.name || 'Guest') 
@@ -30,6 +33,21 @@ export default function Navbar({ user: userProp, onLogout }) {
         }
     };
 
+    // Listener untuk mendeteksi klik di luar elemen dropdown
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // Timer Detak Waktu Realtime
     useEffect(() => {
         const timer = setInterval(() => {
             const now = new Date();
@@ -60,25 +78,44 @@ export default function Navbar({ user: userProp, onLogout }) {
 
             {/* KIRI: NAVIGASI & DROPDOWN SETTINGS */}
             <div className="nav-bar-kiri">
-                <Link to="/detail" className={`${location.pathname === '/detail' ? 'active' : ''} unlock`}>Detail</Link>
-                <Link to="/contact" className={`${location.pathname === '/contact' ? 'active' : ''} unlock`}>Contact</Link>
-                <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+                {/* NAVIGASI DESKTOP */}
+                <div className="nav-links-desktop">
+                    <Link to="/detail" className={`${location.pathname === '/detail' ? 'active' : ''} unlock`}>Detail</Link>
+                    <Link to="/contact" className={`${location.pathname === '/contact' ? 'active' : ''} unlock`}>Contact</Link>
+                    <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+                </div>
 
                 {/* DROPDOWN CONTAINER */}
-                <div className="settings-container">
+                <div className="settings-container" ref={dropdownRef}>
                     <button id="settings-btn" onClick={() => setIsOpen(!isOpen)}>
                         <img src="./assets/images/settings_2.svg" alt="Setting" />
                     </button>
 
-                    {/* Logika Taktis: Hanya render card jika state isOpen bernilai true */}
                     {isOpen && (
                         <div className="dropdown-card">
                             <div className="dropdown-header">
-                                {/* 💡 Menggunakan usernameDisplay yang dijamin berupa String murni */}
                                 <h4>Pengaturan Akun, {usernameDisplay}</h4>
                             </div>
                             <div className="dropdown-body">
-                                <Link to="/dashboard" className="dropdown-item" onClick={() => setIsOpen(false)}>
+                                
+                                {/* NAVIGASI KHUSUS MOBILE */}
+                                <div className="nav-links-mobile">
+                                    <Link to="/detail" className={`dropdown-item ${location.pathname === '/detail' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
+                                        <i className="bi bi-person-badge"></i> Detail
+                                    </Link>
+                                    <hr className="dropdown-divider" />
+                                    <Link to="/contact" className={`dropdown-item ${location.pathname === '/contact' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
+                                        <i className="bi bi-envelope"></i> Contact
+                                    </Link>
+                                    <hr className="dropdown-divider" />
+                                    <Link to="/about" className={`dropdown-item ${location.pathname === '/about' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
+                                        <i className="bi bi-info-circle"></i> About
+                                    </Link>
+                                    <hr className="dropdown-divider" />
+                                </div>
+
+                                {/* ITEM DROPDOWN REGULER */}
+                                <Link to="/" className="dropdown-item" onClick={() => setIsOpen(false)}>
                                     <i className="bi bi-house"></i> Beranda
                                 </Link>
                                 <hr className="dropdown-divider" />
@@ -87,7 +124,7 @@ export default function Navbar({ user: userProp, onLogout }) {
                                 </Link>
                                 <hr className="dropdown-divider" />
                                 <Link to="/container-brain-teaser" className="dropdown-item" onClick={() => setIsOpen(false)}>
-                                    <i className="bi bi-briefcase"></i> Asah Otak
+                                    <i className="bi bi-controller"></i> Asah Otak
                                 </Link>
                                 <hr className="dropdown-divider" />
                                 <Link to="/setTheme" className={`dropdown-item ${location.pathname === '/setTheme' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
@@ -95,7 +132,7 @@ export default function Navbar({ user: userProp, onLogout }) {
                                 </Link>
                                 <hr className="dropdown-divider" />
                                 
-                                {/* 💡 Pengecekan kondisi Login/Logout yang presisi */}
+                                {/* AUTHENTICATION ACTION */}
                                 {usernameDisplay !== "Guest" && usernameDisplay !== "" ? (
                                     <button 
                                         className="dropdown-item logout" 

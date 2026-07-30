@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../components/theme';
 import Navbar from '../components/navbar';
 import "../../main/base/theme.css"
@@ -19,6 +20,10 @@ export default function PengaturanTema({user, onLogout}) {
             <Navbar user={user} onLogout={onLogout} />
 
             <div className="settings-container-theme">
+                <Link to="/" className="btn-back" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '0px', marginBottom: '40px' }}>
+                    <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                </Link>
+
                 <h2>Pilih Tema Aplikasi</h2>
                 <p>Silakan pilih tema yang paling nyaman untuk mata Anda.</p>
                 

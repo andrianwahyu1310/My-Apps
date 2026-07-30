@@ -22,7 +22,7 @@ export default function MenuTools({ title = "Utama", user, onLogout }) {
             {/* 🌟 PEMBUNGKUS UTAMA: Menggunakan tag <div> yang utuh untuk menahan jarak dari Navbar */}
             <div className="tools-page-wrapper">
                 
-                <Link to="/dashboard" className="btn-back">
+                <Link to="/" className="btn-back" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '80px', marginBottom: '10px' }}>
                     <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
                 </Link>
 

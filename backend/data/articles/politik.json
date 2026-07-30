@@ -1,0 +1,119 @@
+[
+    { 
+        "id": 1, 
+        "kategori": "politik", 
+        "judul": "Setahun pemerintahan Prabowo-Gibran – 'Arah balik demokrasi' dan apa saja tantangan yang mungkin dihadapi ke depan?", 
+        "ringkasan": "Satu tahun pemerintahan Prabowo-Gibran diwarnai kekhawatiran dari kalangan aktivis dan akademisi terkait adanya kemunduran atau \"arah balik\" dalam praktik demokrasi.", 
+        "gambar": "politik1.webp", 
+        "tanggal": "19 Oktober 2025",
+        "url": "https://www.bbc.com/indonesia/articles/ce86yln4nmro"
+    },
+    {
+        "id": 2,
+        "kategori": "politik",
+        "judul": "Penangkapan Kembali Aktivis di Bandung Setelah Bebas Dinilai Melanggar Asas Keadilan",
+        "ringkasan": "Amnesty International Indonesia menilai penangkapan kembali seorang aktivis di Bandung setelah sebelumnya dibebaskan merupakan tindakan yang melanggar asas keadilan dan kepastian hukum. Organisasi tersebut mendesak aparat penegak hukum untuk menghormati hak asasi manusia serta menghentikan kriminalisasi terhadap aktivis.",
+        "gambar": "politik2.jpeg",
+        "tanggal": "10 Maret 2026",
+        "url": "https://www.amnesty.id/kabar-terbaru/siaran-pers/penangkapan-kembali-aktivis-di-bandung-setelah-bebas-melanggar-asas-keadilan/03/2026/"
+    },
+    {
+        "id": 3,
+        "kategori": "politik",
+        "judul": "Amnesty Desak Pemerintah Hentikan Penyusunan RUU Penanggulangan Disinformasi",
+        "ringkasan": "Amnesty International Indonesia meminta pemerintah menghentikan penyusunan RUU Penanggulangan Disinformasi dan Propaganda Asing karena dinilai berpotensi mengancam kebebasan berekspresi dan memperluas ruang kriminalisasi terhadap masyarakat sipil.",
+        "gambar": "politik3.jpg",
+        "tanggal": "23 Januari 2026",
+        "url": "https://www.amnesty.id/kabar-terbaru/siaran-pers/hentikan-penyusunan-ruu-penanggulangan-disinformasi-dan-propaganda-asing/01/2026/"
+    },
+    {
+        "id": 4,
+        "kategori": "politik",
+        "judul": "Prabowo Hadiri KTT Dewan Perdamaian Gaza di AS",
+        "ringkasan": "Presiden Prabowo Subianto menghadiri Konferensi Tingkat Tinggi Dewan Perdamaian Gaza di Amerika Serikat. Dalam kunjungannya, ia juga dijadwalkan menandatangani kesepakatan terkait tarif perdagangan bersama pihak Amerika Serikat.",
+        "gambar": "politik4.jpg",
+        "tanggal": "19 Februari 2026",
+        "url": "https://nasional.kompas.com/read/2026/02/19/06284901/prabowo-hadiri-ktt-dewan-perdamaian-gaza-di-as-hari-ini-lalu-teken-tarif"
+    },
+    {
+        "id": 5,
+        "kategori": "politik",
+        "judul": "MK Putuskan Pemilu Nasional dan Pemilu Lokal Dipisahkan Mulai 2029",
+        "ringkasan": "Mahkamah Konstitusi memutuskan bahwa penyelenggaraan Pemilu Nasional dan Pemilu Lokal akan dilaksanakan secara terpisah mulai tahun 2029. Putusan tersebut diharapkan meningkatkan efektivitas penyelenggaraan pemilu.",
+        "gambar": "politik5.jpg",
+        "tanggal": "26 Juni 2025",
+        "url": "https://www.mkri.id/berita/pemilu-nasional-dan-pemilu-lokal-diselenggarakan-terpisah-mulai-2029-23414"
+    },
+    {
+        "id": 6,
+        "kategori": "politik",
+        "judul": "Prabowo Lantik Irene sebagai Wakil Dubes RI untuk Cina",
+        "ringkasan": "Presiden Prabowo Subianto melantik Irene sebagai Wakil Duta Besar Republik Indonesia untuk Cina. Pelantikan tersebut menjadi bagian dari rotasi dan penguatan diplomasi Indonesia di kawasan Asia Timur.",
+        "gambar": "politik6.jpg",
+        "tanggal": "29 Oktober 2025",
+        "url": "https://www.tempo.co/politik/siapa-irene-wakil-dubes-ri-untuk-cina-yang-baru-dilantik-prabowo-2077760"
+    },
+    {
+        "id": 7,
+        "kategori": "politik",
+        "judul": "Miris, Indonesia ‘membebek’ pada Board of Peace Trump",
+        "ringkasan": "Amnesty International Indonesia menilai langkah Indonesia yang mengikuti kebijakan Board of Peace yang digagas Donald Trump sebagai tindakan yang patut disesalkan dan meminta pemerintah lebih mengedepankan prinsip hak asasi manusia.",
+        "gambar": "politik7.jpg",
+        "tanggal": "27 Januari 2026",
+        "url": "https://www.amnesty.id/kabar-terbaru/siaran-pers/miris-indonesia-membebek-pada-board-of-peace-trump/01/2026/"
+    },
+    {
+        "id": 8,
+        "kategori": "politik",
+        "judul": "Penjarahan rumah pejabat dan korban tewas bermunculan – Akankah berujung seperti krisis 1998?",
+        "ringkasan": "Aksi penjarahan rumah milik sejumlah pejabat negara terjadi secara beruntun sejak 30 hingga 31 Agustus dini hari. Pada saat yang sama, bentrokan antara massa dan aparat terus terjadi, termasuk yang berujung kematian mahasiswa di Yogyakarta.",
+        "gambar": "politik8.webp",
+        "tanggal": "1 September 2025",
+        "url": "https://www.bbc.com/indonesia/articles/c4gzn5vvw7jo"
+    },
+    {
+        "id": 9,
+        "kategori": "politik",
+        "judul": "Komdigi Jelaskan Pembatasan Fitur Live TikTok",
+        "ringkasan": "Kementerian Komunikasi dan Digital menjelaskan bahwa pembatasan fitur Live TikTok dilakukan sebagai respons terhadap meluasnya aksi demonstrasi. Pemerintah menyatakan kebijakan tersebut bertujuan menjaga ketertiban ruang digital.",
+        "gambar": "politik13.jpg",
+        "tanggal": "1 Agustus 2025",
+        "url": "https://www.tempo.co/politik/penjelasan-komdigi-soal-fitur-live-tiktok-yang-dibatasi-buntut-meluasnya-demo-2065025"
+    },
+    {
+        "id": 10,
+        "kategori": "politik",
+        "judul": "Bagaimana hubungan Prabowo-Gibran-Jokowi setelah polemik akun Fufufafa meluas?",
+        "ringkasan": "Polemik akun Fufufafa pada platform Kaskus menjadi salah satu tantangan politik pertama di tengah perpindahan kekuasaan Jokowi-Ma’ruf Amin kepada Prabowo Subianto-Gibran Rakabuming Raka yang tinggal menghitung hari.",
+        "gambar": "politik9.webp",
+        "tanggal": "17 September 2024",
+        "url": "https://www.bbc.com/indonesia/articles/c62mmkjeek0o"
+    },
+    {
+        "id": 11,
+        "kategori": "politik",
+        "judul": "Laras Faizati divonis hukuman masa percobaan enam bulan, namun tidak perlu menjalaninya – 'Vonis bersalah membuat orang takut bicara'",
+        "ringkasan": "Majelis hakim Pengadilan Negeri (PN) Jakarta Selatan, Kamis (15/01), menjatuhkan vonis hukuman masa percobaan selama enam bulan kepada Laras Faizati, namun hukuman itu tidak perlu dijalaninya. Syaratnya, Laras tidak melakukan tindak pidana selama setahun. Bagaimana perjalanan kasus ini?",
+        "gambar": "politik10.webp",
+        "tanggal": "15 Januari2026",
+        "url": "https://www.bbc.com/indonesia/articles/cx2y9l9pj84o"
+    },
+    {
+        "id": 12,
+        "kategori": "politik",
+        "judul": "Wapres ke-6 RI Try Sutrisno Meninggal Dunia",
+        "ringkasan": "Wakil Presiden ke-6 Republik Indonesia, Try Sutrisno, dikabarkan meninggal dunia. Kepergiannya mendapat ucapan belasungkawa dari berbagai tokoh nasional dan masyarakat Indonesia.",
+        "gambar": "politik11.jpg",
+        "tanggal": "2 Maret 2026",
+        "url": "https://news.detik.com/berita/d-8379161/wapres-ke-6-ri-try-sutrisno-meninggal-dunia"
+    },
+    {
+        "id": 13,
+        "kategori": "politik",
+        "judul": "Komdigi Larang Anak di Bawah 16 Tahun Memiliki Akun Media Sosial",
+        "ringkasan": "Kementerian Komunikasi dan Digital menetapkan kebijakan yang melarang anak di bawah usia 16 tahun memiliki akun media sosial. Kebijakan tersebut bertujuan meningkatkan perlindungan anak di ruang digital.",
+        "gambar": "politik12.jpg",
+        "tanggal": "6 Maret2026",
+        "url": "https://www.tempo.co/politik/komdigi-larang-anak-di-bawah-16-tahun-miliki-akun-medsos-2120071"
+    }
+]

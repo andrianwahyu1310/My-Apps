@@ -1,6 +1,5 @@
-import  { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 // IMPORT DATA BARU
 import { databaseChangelog } from '../utils/changelogData'; 
@@ -12,7 +11,7 @@ import { apiFetch } from "../../src/config/api";
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function Dashboard() {
-    // ⁡⁣⁣⁢=== SEKTOR STATE ===⁡
+    // === SEKTOR STATE ===
     const [username, setUsername] = useState('Guest');
     const [categories, setCategories] = useState([]);
     const [typewriterText, setTypewriterText] = useState('');
@@ -22,83 +21,100 @@ export default function Dashboard() {
     const currentUsername = user || 'Guest';
 
     const handleLogoutAction = async () => {
-    try {
+        try {
+            const { data } = await apiFetch("/api/logout", {
+                method: "GET",
+                credentials: "include"
+            });
 
-        // ⁡⁢⁣⁣Taktik Penyerangan ke Backend: Hancurkan Cookie Sesi di Server⁡
-        const { data } = await apiFetch("/api/logout", {
-            method: "GET",
-            credentials: "include"
-        });
-
-        if (data.success) {
-            console.log("Sesi di server berhasil dihancurkan.");
-        } else {
-            console.warn("Backend menolak atau sesi sudah kedaluwarsa terlebih dahulu.");
+            if (data?.success) {
+                console.log("Sesi di server berhasil dihancurkan.");
+            } else {
+                console.warn("Backend menolak atau sesi sudah kedaluwarsa terlebih dahulu.");
+            }
+        } catch (err) {
+            console.error("Gagal menghubungi server untuk logout:", err);
+        } finally {
+            sessionStorage.clear();
+            localStorage.removeItem("user_data");
+            navigate("/login", { replace: true }); 
         }
-    } catch (err) {
-        // ⁡⁢⁣⁡⁢⁣⁣Tetap lanjutkan evakuasi frontend meskipun server sedang down/terjadi galat jaringan⁡
-        console.error("Gagal menghubungi server untuk logout:", err);
-    } finally {
-        // ⁡⁢⁣⁣Pembersihan Total Pos Pertahanan Frontend⁡
-        sessionStorage.clear(); //⁡⁢⁣⁢ Menghapus token atau status login sementara⁡
-        localStorage.removeItem("user_data"); // ⁡⁢⁣⁢Jika ada data persisten yang Anda simpan di sini⁡
-
-        // ⁡⁢⁣⁣Lempar user kembali ke halaman login⁡
-        navigate("/login", { replace: true }); 
-    }
-};
+    };
     
-    // ⁡⁣⁣⁢--- 𝗦𝗧𝗔𝗧𝗘 𝗪𝗜𝗗𝗚𝗘𝗧 𝗖𝗨𝗔𝗖𝗔 & 𝗞𝗨𝗧𝗜𝗣𝗔𝗡 ---⁡
+    // --- STATE WIDGET CUACA & KUTIPAN ---
     const [koordinatCuaca, setKoordinatCuaca] = useState('-6.28,106.71');
     const [infoCuaca, setInfoCuaca] = useState({ deg: '--°C', desc: 'Memuat Cuaca...', wind: '-- km/jam', humidity: '--%' });
     const [quote, setQuote] = useState({ text: 'Memuat Kutipan...', author: '' });
     
-    // ⁡⁣⁣⁢--- 𝗦𝗧𝗔𝗧𝗘 𝗖𝗛𝗔𝗡𝗚𝗘𝗟𝗢𝗚 𝗔𝗗𝗔𝗣𝗧𝗜𝗙 ---⁡
-    const daftarVersi = Object.keys(databaseChangelog); 
-    const [versiTerpilih, setVersiTerpilih] = useState(daftarVersi[0] || 'v1.2.5');
-    const [tabAktif, setTabAktif] = useState('updates');
+    // --- STATE CHANGELOG ADAPTIF ---
+    const daftarVersi = Object.keys(databaseChangelog || {}); 
+    const [versiTerpilih, setVersiTerpilih] = useState(() => daftarVersi[0] || 'v1.2.5');
+    const [tabAktif, setTabAktif] = useState('updates'); // Sesuaikan key ini jika di changelogData menggunakan key lain (misal: 'fitur')
 
-    // ⁡⁣⁣⁢--- 𝗦𝗘𝗞𝗧𝗢𝗥 𝗘𝗙𝗙𝗘𝗖𝗧 (𝗟𝗢𝗚𝗜𝗞𝗔 𝗦𝗜𝗦𝗧𝗘𝗠) ---⁡
+    // Pertahanan: Jika daftarVersi berubah atau versiTerpilih tidak valid, reset ke versi pertama
     useEffect(() => {
-        // tunggu hasil auth check dari AuthContext sebelum mengambil kategori
-        if (loading) return;
-
-        if (user) {
-            setUsername(user);
-            apiFetch("/api/categories")
-                .then(({ data }) => setCategories(Array.isArray(data) ? data : []))
-                .catch(err => console.error("Gagal memuat kategori:", err));
-        } else {
-            navigate("/login", { replace: true });
+        if (daftarVersi.length > 0 && !daftarVersi.includes(versiTerpilih)) {
+            setVersiTerpilih(daftarVersi[0]);
         }
-    }, [loading, user, navigate]);
+    }, [daftarVersi, versiTerpilih]);
 
-    // ⁡⁣⁣⁢--- 𝗔𝗡𝗜𝗠𝗔𝗦𝗜 𝗧𝗬𝗣𝗘𝗪𝗥𝗜𝗧𝗘𝗥 ---⁡
+    // --- SEKTOR EFFECT (LOGIKA SISTEM) ---
+// --- SEKTOR EFFECT (PENGAMBILAN DATA KATEGORI) ---
+useEffect(() => {
+    if (loading) return;
+
+    if (user) {
+        setUsername(user);
+        
+        apiFetch("/api/categories")
+            .then(({ data }) => {
+                console.log("Response Categories API:", data); // Untuk debugging Senpai di console
+
+                // Ekstrak array dari berbagai kemungkinan struktur respon backend
+                let categoryArray = [];
+                if (Array.isArray(data)) {
+                    categoryArray = data;
+                } else if (Array.isArray(data?.data)) {
+                    categoryArray = data.data;
+                } else if (Array.isArray(data?.categories)) {
+                    categoryArray = data.categories;
+                }
+
+                setCategories(categoryArray);
+            })
+            .catch(err => {
+                console.error("Gagal memuat kategori:", err);
+                setCategories([]);
+            });
+    } else {
+        navigate("/login", { replace: true });
+    }
+}, [loading, user, navigate]);
+
+    // --- ANIMASI TYPEWRITER ---
     const [showCursor, setShowCursor] = useState(true);
 
     useEffect(() => {
         let i = 0;
-        let teksTerakumulasi = ''; // ⁡⁢⁣⁢POS PERTAHANAN:⁡ ⁡⁢⁣⁣Mengunci teks lokal agar tidak bercampur dengan state usang⁡
+        let teksTerakumulasi = '';
 
         const resetTypewriter = window.setTimeout(() => {
             setTypewriterText('');
             setShowCursor(true);
         }, 0);
 
-        // 💡 PERBAIKAN: Pastikan namaClean adalah String murni, bukan Object!
         const namaClean = typeof username === 'object' 
             ? (username?.username || username?.name || 'Guest') 
             : (username || 'Guest');
 
         const teksLengkap = namaClean === 'Guest'
-            ? typewriterMessages.guest
-            : `${namaClean}! ${typewriterMessages.user}`;
+            ? typewriterMessages?.guest || 'Selamat Datang!'
+            : `${namaClean}! ${typewriterMessages?.user || 'Selamat Datang kembali!'}`;
 
         const intervalKetik = setInterval(() => {
             if (i < teksLengkap.length) {
-                // ⁡⁢⁣⁣Menambahkan karakter ke variabel lokal terlebih dahulu, baru masukkan ke state⁡
                 teksTerakumulasi += teksLengkap.charAt(i); 
-                setTypewriterText(teksTerakumulasi); // ⁡⁢⁣⁢Langsung timpa state tanpa menggunakan (prev)⁡
+                setTypewriterText(teksTerakumulasi);
                 i++;
             } else {
                 clearInterval(intervalKetik);
@@ -112,30 +128,31 @@ export default function Dashboard() {
         };
     }, [username]);
 
-    // ⁡⁣⁣⁢--- 𝗪𝗜𝗗𝗚𝗘𝗧 𝗞𝗨𝗧𝗜𝗣𝗔𝗡 (𝗤𝗢𝗨𝗧𝗘) ---⁡
+    // --- WIDGET KUTIPAN (QUOTE) ---
     useEffect(() => {
         const gantiKutipan = () => {
-            // ⁡⁢⁣⁣Mengambil langsung dari databaseQuotes yang di-import⁡
-            const acak = databaseQuotes[Math.floor(Math.random() * databaseQuotes.length)];
-            setQuote(acak);
+            if (Array.isArray(databaseQuotes) && databaseQuotes.length > 0) {
+                const acak = databaseQuotes[Math.floor(Math.random() * databaseQuotes.length)];
+                setQuote(acak);
+            }
         };
 
-        gantiKutipan(); // ⁡⁢⁣⁢Eksekusi awal⁡
-        const intervalQuote = setInterval(gantiKutipan, 10000); // ⁡⁢⁣⁢Rotasi 10 detik⁡
+        gantiKutipan();
+        const intervalQuote = setInterval(gantiKutipan, 10000);
         return () => clearInterval(intervalQuote);
     }, []);
 
-    // ⁡⁢⁣⁣⁡⁣⁡⁣⁣⁢--- 𝗪𝗜𝗗𝗚𝗘𝗧 𝗔𝗣𝗜 𝗖𝗨𝗔𝗖𝗔 ---⁡
+    // --- WIDGET API CUACA ---
     useEffect(() => {
         const resetWeatherStatus = window.setTimeout(() => {
             setInfoCuaca(prev => ({ ...prev, desc: 'Memuat Cuaca...' }));
         }, 0);
 
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${koordinatCuaca.split(',')[0]}&longitude=${koordinatCuaca.split(',')[1]}&current_weather=true`)
+        const [lat, lon] = koordinatCuaca.split(',');
+
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
             .then(res => {
-                if (!res.ok) {
-                    throw new Error('Weather API request failed');
-                }
+                if (!res.ok) throw new Error('Weather API request failed');
                 return res.json();
             })
             .then(data => {
@@ -147,34 +164,38 @@ export default function Dashboard() {
                         humidity: '75%'
                     });
                 }
-            }).catch(() => setInfoCuaca({ deg: '29°C', desc: 'Koneksi Terbatasi', wind: '12 km/jam', humidity: '80%' }));
+            })
+            .catch(() => setInfoCuaca({ deg: '29°C', desc: 'Koneksi Terbatasi', wind: '12 km/jam', humidity: '80%' }));
 
         return () => {
             window.clearTimeout(resetWeatherStatus);
         };
     }, [koordinatCuaca]);
 
-    // ⁡⁣⁣⁢=== 𝗜𝗡𝗧𝗘𝗥𝗙𝗔𝗖𝗘 𝗗𝗔𝗦𝗛𝗕𝗢𝗔𝗥𝗗 (𝗝𝗦𝗫) ===⁡
+    // Ambil daftar item log berdasarkan versi dan tab yang aktif
+    const currentChangelogData = databaseChangelog?.[versiTerpilih];
+    const listKontenLog = currentChangelogData?.[tabAktif] || currentChangelogData?.[tabAktif === 'updates' ? 'fitur' : 'bug'] || [];
+
     return (
         <div className="main-content">
             <Navbar user={currentUsername} onLogout={handleLogoutAction} />
 
-            {/* ⁡⁢⁣⁣𝗧𝗘𝗞𝗦 𝗠𝗘𝗦𝗜𝗡 𝗞𝗘𝗧𝗜𝗞⁡ */}
+            {/* TEKS MESIN KETIK */}
             <h1 className="typewriter-container" style={{ fontFamily: "'Courier New', Courier, monospace", fontStyle: 'italic', fontSize: '24px' }}>
                 Hello, <span>{typewriterText}</span>
                 {showCursor && <span className="typewriter-cursor">|</span>}
             </h1>
 
-            {/* ⁡⁢⁣⁣𝗔𝗥𝗘𝗔 𝗦𝗧𝗥𝗨𝗞𝗧𝗨𝗥 𝗨𝗧𝗔𝗠𝗔 𝗪𝗜𝗗𝗚𝗘𝗧⁡ */}
+            {/* AREA STRUKTUR UTAMA WIDGET */}
             <div className="dashboard-widgets">
                 
-                {/* ⁡⁢⁣⁣𝗪𝗜𝗗𝗚𝗘𝗧 𝗞𝗨𝗧𝗜𝗣𝗔𝗡⁡ */}
+                {/* WIDGET KUTIPAN */}
                 <div className="quote-widget">
                     <h2 className="quote-text">"{quote.text}"</h2>
                     <p className="quote-author">- {quote.author}</p>
                 </div>
 
-                {/* ⁡⁢⁣⁣𝗪𝗜𝗗𝗚𝗘𝗧 𝗖𝗨𝗔𝗖𝗔⁡ */}
+                {/* WIDGET CUACA */}
                 <div className="weather-widget">
                     <div className="weather-header">
                         <select id="weather-location-select" value={koordinatCuaca} onChange={(e) => setKoordinatCuaca(e.target.value)}>
@@ -199,14 +220,19 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* ⁡⁢⁣⁣𝗪𝗜𝗗𝗚𝗘𝗧 𝗟𝗢𝗚 𝗣𝗘𝗠𝗕𝗔𝗥𝗨𝗔𝗡 (𝗖𝗛𝗔𝗡𝗚𝗘𝗟𝗢𝗚)⁡ */}
+                {/* WIDGET LOG PEMBARUAN (CHANGELOG) */}
                 <div className="changelog-container">
                     <div className="changelog-header">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <i className="bi bi-journal-text" style={{ fontSize: '1.2rem', color: '#00f5d4' }}></i>
                             <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>Log Pembaruan</h3>
                         </div>
-                        <select className='version-badge' value={versiTerpilih} onChange={(e) => setVersiTerpilih(e.target.value)} style={{ background: 'rgba(0, 245, 212, 0.1)', color: '#00f5d4', fontSize: '0.75rem', padding: '3px 8px', borderRadius: '20px', fontWeight: 'bold', border: '1px solid rgba(0, 245, 212, 0.2)', cursor: 'pointer', width: '120px' }}>
+                        <select 
+                            className='version-badge' 
+                            value={versiTerpilih} 
+                            onChange={(e) => setVersiTerpilih(e.target.value)} 
+                            style={{ background: 'rgba(0, 245, 212, 0.1)', color: '#00f5d4', fontSize: '0.75rem', padding: '3px 8px', borderRadius: '20px', fontWeight: 'bold', border: '1px solid rgba(0, 245, 212, 0.2)', cursor: 'pointer', width: '120px' }}
+                        >
                             {daftarVersi.map(versi => (
                                 <option key={versi} value={versi} style={{ background: '#121212', color: '#fff' }}>
                                     {versi} {versi === daftarVersi[0] ? '(Terbaru)' : ''}
@@ -216,10 +242,18 @@ export default function Dashboard() {
                     </div>
 
                     <div className="toggle-buttons-wrapper">
-                        <button className={`toggle-nav-btn ${tabAktif === 'updates' ? 'active-state' : ''}`} onClick={() => setTabAktif('updates')} style={{borderRadius: '10px'}}>
+                        <button 
+                            className={`toggle-nav-btn ${tabAktif === 'updates' ? 'active-state' : ''}`} 
+                            onClick={() => setTabAktif('updates')} 
+                            style={{ borderRadius: '10px' }}
+                        >
                             Fitur Baru
                         </button>
-                        <button className={`toggle-nav-btn ${tabAktif === 'fixes' ? 'active-state' : ''}`} onClick={() => setTabAktif('fixes')} style={{borderRadius: '10px'}}>
+                        <button 
+                            className={`toggle-nav-btn ${tabAktif === 'fixes' ? 'active-state' : ''}`} 
+                            onClick={() => setTabAktif('fixes')} 
+                            style={{ borderRadius: '10px' }}
+                        >
                             Perbaikan Bug
                         </button>
                     </div>
@@ -227,34 +261,49 @@ export default function Dashboard() {
                     <div className={`content-display-box ${tabAktif === 'updates' ? 'border-updates' : 'border-fixes'}`}>
                         <div className="content-pane">
                             <ul className="changelog-list">
-                                {databaseChangelog[versiTerpilih]?.[tabAktif]?.map((item, index) => (
-                                    <li key={index}>{item}</li>
-                                ))}
+                                {listKontenLog.length > 0 ? (
+                                    listKontenLog.map((item, index) => (
+                                        <li key={index}>{item}</li>
+                                    ))
+                                ) : (
+                                    <li style={{ fontStyle: 'italic', opacity: 0.6 }}>Tidak ada catatan untuk kategori ini.</li>
+                                )}
                             </ul>
                         </div>
                     </div>
                     <div className="changelog-footer">
-                        Diperbarui pada: {databaseChangelog[versiTerpilih]?.tanggal || '---'}
+                        Diperbarui pada: {currentChangelogData?.tanggal || '---'}
                     </div>
                 </div>
             </div>
 
-            {/* ⁡⁢⁣⁣𝗦𝗘𝗞𝗦𝗜 𝗞𝗔𝗧𝗘𝗚𝗢𝗥𝗜 𝗕𝗘𝗥𝗜𝗧𝗔⁡ */}
+            {/* SEKSI KATEGORI BERITA */}
             <div className="outerFiture">
                 <div style={{ borderTop: '2px solid rgba(255, 255, 255, 0.15)', margin: '0 auto 40px', width: '100%' }}></div>
                 <p className="desc-category">Baca Berita Sesuai Kategori</p>
+                
                 <div className="mainFiture">
-                    {categories.map((ctgr) => (
-                        <div key={ctgr.id} className="fiture-box">
-                            <Link to={`/artikel?category=${ctgr.id}`}>
-                                <img 
-                                    src={`./assets/images/${ctgr.gambar}`} 
-                                    alt={ctgr.nama} 
-                                />
-                                <h4>{ctgr.nama}</h4>
-                            </Link>
-                        </div>
-                    ))}
+                    {categories && categories.length > 0 ? (
+                        categories.map((ctgr) => (
+                            <div key={ctgr.id || ctgr._id} className="fiture-box">
+                                <Link to={`/artikel?category=${ctgr.id || ctgr._id}`}>
+                                    <img 
+                                        src={ctgr.gambar ? `./assets/images/${ctgr.gambar}` : '/assets/images/default.jpg'} 
+                                        alt={ctgr.nama || 'Kategori'} 
+                                        onError={(e) => {
+                                            // Fallback jika gambar gagal dimuat
+                                            e.target.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'><rect width='100%' height='100%' fill='%232a2a2a'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23888888' font-size='14' font-family='sans-serif'>No Image</text></svg>";
+                                        }}
+                                    />
+                                    <h4>{ctgr.nama || ctgr.name}</h4>
+                                </Link>
+                            </div>
+                        ))
+                    ) : (
+                        <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', width: '100%' }}>
+                            Belum ada kategori yang tersedia.
+                        </p>
+                    )}
                 </div>
             </div>
         </div>

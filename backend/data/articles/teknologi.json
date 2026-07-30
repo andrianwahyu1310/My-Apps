@@ -1,0 +1,119 @@
+[
+    {
+        "id": 1, 
+        "kategori": "teknologi", 
+        "judul": "Meta Luncurkan Seller, Aplikasi Khusus untuk Facebook Marketplace", 
+        "ringkasan": "Secara umum, Seller menghadirkan berbagai tools untuk mengelola bisnis, mulai dari pembuatan listing berbasis kecerdasan buatan (AI), hingga pengelolaan inventaris.", 
+        "gambar": "teknologi13.jpg", 
+        "tanggal": "27 Juli 2026",
+        "url": "https://tekno.kompas.com/read/2026/07/25/10400037/meta-luncurkan-seller-aplikasi-khusus-untuk-facebook-marketplace"
+    },
+    { 
+         "id": 2, 
+        "kategori": "teknologi", 
+        "judul": "OpenAI Luncurkan GPT-5.5 untuk Tantang Claude Opus 4.7 dari Anthropic", 
+        "ringkasan": "OpenAI merilis GPT-5.5 pada 23 April, dengan nama kode “Spud”, yang memperkenalkan model ini sebagai sistem paling andal untuk pekerjaan otonom yang membutuhkan banyak langkah.", 
+        "gambar": "teknologi2.jpeg", 
+        "tanggal": "24 April 2026",
+        "url": "https://id.beincrypto.com/openai-gpt-5-5-claude-opus/"
+    },
+    { 
+        "id": 3, 
+        "kategori": "teknologi", 
+        "judul": "Serangan siber terhadap American Water: Peringatan untuk infrastruktur penting", 
+        "ringkasan": "Seiring dengan berlanjutnya investigasi perusahaan, ada kekhawatiran yang semakin meningkat tentang kerentanan yang terus berlanjut di sektor air, yang semakin menjadi target serangan siber.", 
+        "gambar": "teknologi3.jpeg", 
+        "tanggal": "29 Desember 2025",
+        "url": "https://www.ibm.com/id-id/think/news/cyberattack-on-american-water-warning-critical-infrastructure"
+    },
+    {
+        "id": 4, 
+        "kategori": "teknologi", 
+        "judul": "HP Baru Januari 2026 Ramaikan Pasar: Baterai Jumbo 10.001 mAh hingga Teknologi Telepon Tanpa Sinyal", 
+        "ringkasan": "Berbagai merek besar kompak meluncurkan perangkat terbaru dengan inovasi yang langsung mencuri perhatian pasar.", 
+        "gambar": "teknologi4.jpeg", 
+        "tanggal": "1 Februari 2026",
+        "url": "https://www.gadgetdiva.id/gadget/baterai-jumbo-10-001-mah-hingga-teknologi"
+    },
+    {
+        "id": 5, 
+        "kategori": "teknologi", 
+        "judul": "Teknologi jaringan terbaru China wujudkan transmisi data yang efisien", 
+        "ringkasan": "Teknologi jaringan yang baru dikembangkan China berhasil mewujudkan transmisi data yang efisien, di mana data yang membutuhkan waktu 699 hari untuk dikirim melalui internet tradisional berhasil ditransfer hanya dalam waktu 1,6 jam.", 
+        "gambar": "teknologi5.jpeg", 
+        "tanggal": "18 Desember 2025",
+        "url": "https://www.google.com/amp/s/m.antaranews.com/amp/berita/5312269/teknologi-jaringan-terbaru-china-wujudkan-transmisi-data-yang-efisien"
+    },
+    {
+        "id": 6, 
+        "kategori": "teknologi", 
+        "judul": "Ada Kamera AirPods Generasi Terbaru, Terhubung dengan AI", 
+        "ringkasan": "Apple Inc. telah mencapai tahap akhir pengembangan untuk AirPods baru yang dilengkapi kamera, sebuah tonggak penting bagi apa yang kemungkinan besar akan menjadi perangkat wearable pertamanya", 
+        "gambar": "teknologi6.jpeg", 
+        "tanggal": "8 Mei 2025",
+        "url": "https://www.bloombergtechnoz.com/detail-news/108412/ada-kamera-airpods-generasi-terbaru-terhubung-dengan-ai"
+    },
+    {
+        "id": 7, 
+        "kategori": "teknologi", 
+        "judul": "Jepang Ciptakan 'Kulkas Manusia' untuk Redam Risiko Heatstroke", 
+        "ringkasan": "Produsen mesin penjual otomatis asal Jepang, SDRS, mengembangkan ruang pendingin berukuran manusia yang dijuluki 'human refrigerator' atau kulkas manusia sebagai solusi untuk membantu mengurangi risiko heatstroke di tengah musim panas yang kian ekstrem.", 
+        "gambar": "teknologi7.jpeg", 
+        "tanggal": "28 Juli 2026",
+        "url": "https://www.bloombergtechnoz.com/detail-news/116476/jepang-ciptakan-kulkas-manusia-untuk-redam-risiko-heatstroke"
+    },
+    {
+        "id": 8, 
+        "kategori": "teknologi", 
+        "judul": "China Kian Dekat Wujudkan Matahari Buatan, Apa Beda dengan PLTN?", 
+        "ringkasan": "China kembali menjadi sorotan dalam pengembangan teknologi nuklir setelah proyek reaktor fusi atau yang dijuluki 'artificial sun' (matahari buatan) mencatat kemajuan menuju target pembangkitan listrik pada 2030.", 
+        "gambar": "teknologi8.jpg", 
+        "tanggal": "28 Juli 2026",
+        "url": "https://www.bloombergtechnoz.com/detail-news/116455/china-kian-dekat-wujudkan-matahari-buatan-apa-beda-dengan-pltn"
+    },
+    {
+        "id": 9, 
+        "kategori": "teknologi", 
+        "judul": "Terus Bersaing dengan Nvidia, AMD Pamer Akselerator AI cs Canggih", 
+        "ringkasan": "AMD meluncurkan generasi baru mikroprosesor, akselerator AI yang diperbarui, dan desain server pada hari Kamis waktu setempat.", 
+        "gambar": "teknologi9.jpg", 
+        "tanggal": "24 Juli 2026",
+        "url": "https://www.bloombergtechnoz.com/detail-news/116164/terus-bersaing-dengan-nvidia-amd-pamer-akselerator-ai-cs-canggih"
+    },
+    {
+        "id": 10, 
+        "kategori": "teknologi", 
+        "judul": "Karena Ini DeepSeek Putuskan Tunda Gelar Aksi Galang Dana", 
+        "ringkasan": "DeepSeek telah memberi tahu calon investor dalam putaran penggalangan dana keduanya bahwa perusahaan menunda kesepakatan tersebut untuk saat ini, demikian menurut sumber yang mengetahui masalah ini, dilaporkan akhir pekan lalu.", 
+        "gambar": "teknologi10.jpg", 
+        "tanggal": "28 Juli 2026",
+        "url": "https://www.bloombergtechnoz.com/detail-news/116214/karena-ini-deepseek-putuskan-tunda-gelar-aksi-galang-dana"
+    },
+    {
+        "id": 11, 
+        "kategori": "teknologi", 
+        "judul": "Komitmen Pemerintah Melindungi Anak di Ruang Digital", 
+        "ringkasan": "Menurut Kementerian Kesehatan, pemakaian gawai dan internet pada anak-anak dapat mengakibatkan kecanduan dan memengaruhi kesehatan si kecil. Kecanduan gawai dapat mendorong berkurangnya waktu tidur, padahal tidur yang cukup sangat dibutuhkan untuk tumbuh kembang anak.", 
+        "gambar": "teknologi11.jpg", 
+        "tanggal": "27 Februari 2025",
+        "url": "https://www.komdigi.go.id/berita/artikel/detail/komitmen-pemerintah-melindungi-anak-di-ruang-digital"
+    },
+    {
+        "id": 12, 
+        "kategori": "teknologi", 
+        "judul": "Buka Kompetisi Robotik Perdana di NTT, Wakil Wali Kota Kupang Dorong Anak Muda Jadi Pencipta Teknologi", 
+        "ringkasan": "Pemerintah Kota Kupang, lanjut Serena, berkomitmen mendukung ruang-ruang kreatif dan pengembangan teknologi bagi generasi muda agar akses terhadap pendidikan teknologi semakin terbuka luas di NTT.", 
+        "gambar": "teknologi12.jpg", 
+        "tanggal": "21 Mei 2026",
+        "url": "https://prokopim.kupangkota.go.id/site-berita/read/438-buka-kompetisi-robotik-perdana-di-ntt-wakil-wali-kota-kupang-dorong-anak-muda-jadi-pencipta-teknologi"
+    },
+        { 
+        "id": 13, 
+        "kategori": "teknologi", 
+        "judul": "Vietnam Airlines meraih penghargaan ganda untuk transformasi digital.", 
+        "ringkasan": "VHO - Vietnam Airlines baru saja memenangkan dua penghargaan penting di ajang Vietnam I4 Impact Awards 2026.", 
+        "gambar": "teknologi1.webp", 
+        "tanggal": "30 Mei 2026",
+        "url": "https://www.vietnam.vn/id/vietnam-airlines-gianh-cu-dup-giai-thuong-ve-chuyen-doi-so"
+    }
+]

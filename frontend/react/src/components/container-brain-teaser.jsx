@@ -22,7 +22,7 @@ export default function MenuBrain({ title = "Utama", user, onLogout }) {
             {/* 🌟 PEMBUNGKUS UTAMA: Menggunakan tag <div> yang utuh untuk menahan jarak dari Navbar */}
             <div className="tools-page-wrapper" style={{ minHeight: '100vh', padding: '100px 20px 40px' }}>
                 
-                <Link to="/" className="btn-back" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <Link to="/" className="btn-back" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '80px', marginBottom: '0px' }}>
                     <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
                 </Link>
 

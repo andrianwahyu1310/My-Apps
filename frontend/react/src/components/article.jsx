@@ -1,66 +1,115 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import '../../main/article.css';
 import { apiFetch } from "../config/api";
 
 export default function ArsipKategoriBerita() {
-    // ⁡⁢⁣⁢𝗣𝗔𝗥𝗔𝗠𝗘𝗧𝗘𝗥 𝗤𝗨𝗘𝗥𝗬 𝗦𝗧𝗥𝗜𝗡𝗚 (?𝗰𝗮𝘁𝗲𝗴𝗼𝗿𝘆=𝗼𝗹𝗮𝗵𝗿𝗮𝗴𝗮)⁡
+    // PARAMETER QUERY STRING (?category=olahraga)
     const [searchParams] = useSearchParams();
     const idKategori = searchParams.get('category'); 
 
-    // ⁡⁢⁣⁣𝗠𝗔𝗡𝗔𝗚𝗘𝗠𝗘𝗡𝗧 𝗦𝗧𝗔𝗧𝗘 𝗖𝗢𝗠𝗣𝗢𝗡𝗘𝗡𝗧⁡
-    const [namaKategori, setNamaKategori] = useState('Berita'); 
-    const [articles, setArticles] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    // LIMIT BATCH PER PAGE
+    const LIMIT_PER_PAGE = 8;
 
-    // 💡 GAMBAR FALLBACK LOKAL (SVG Data URI) - Bebas dari Error Koneksi/ERR_CONNECTION_CLOSED
+    // MANAGEMENT STATE COMPONENT
+    const [namaKategori, setNamaKategori] = useState('Berita'); 
+    const [displayedArticles, setDisplayedArticles] = useState([]); // Artikel yang telah dimuat
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFetchingMore, setIsFetchingMore] = useState(false);
+
+    // Ref untuk elemen penanda scroll paling bawah (Sentinel)
+    const observerTarget = useRef(null);
+
+    // GAMBAR FALLBACK LOKAL (SVG Data URI)
     const FALLBACK_IMAGE = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='100%' height='100%' fill='%231e293b'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-size='16' font-family='sans-serif'>Gambar Tidak Tersedia</text></svg>";
 
-    // ⁡⁢⁣⁣𝗢𝗣𝗘𝗥𝗔𝗦𝗜 𝗣𝗘𝗡𝗔𝗥𝗜𝗞𝗔𝗡 𝗗𝗔𝗧𝗔 𝗞𝗔𝗧𝗘𝗚𝗢𝗥𝗜⁡
+    // 1. PENARIKAN DATA AWAL (Saat kategori berubah)
     useEffect(() => {
-        const selesaiMemuat = () => {
-            window.setTimeout(() => {
-                setIsLoading(false);
-            }, 0);
-        };
-
-        const ambilDataDariServer = async () => {
+        const fetchInitialArticles = async () => {
             try {
                 setIsLoading(true);
+                setPage(1);
+                setDisplayedArticles([]);
 
-                const { data } = await apiFetch(`/api/artikel/${idKategori}`);
+                // Request ke Express dengan parameter page=1 & limit=8
+                const { data } = await apiFetch(`/api/artikel/${idKategori}?page=1&limit=${LIMIT_PER_PAGE}`);
 
                 if (data.success && data.articles) {
-                    // ⁡⁢⁣⁣--- 𝗔𝗟𝗚𝗢𝗥𝗜𝗧𝗠𝗔 𝗦𝗛𝗨𝗙𝗙𝗟𝗘 𝗙𝗜𝗦𝗛𝗘𝗥-𝗬𝗔𝗧𝗘𝗦 ---⁡
-                    let dataAcak = [...data.articles];
-                    for (let i = dataAcak.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [dataAcak[i], dataAcak[j]] = [dataAcak[j], dataAcak[i]];
-                    }
-                    
                     setNamaKategori(data.namaKategori || idKategori);
-                    setArticles(dataAcak);
+                    setDisplayedArticles(data.articles);
+                    setHasMore(data.pagination ? data.pagination.hasMore : false);
                 } else {
-                    setArticles([]);
+                    setDisplayedArticles([]);
                     setNamaKategori(idKategori);
+                    setHasMore(false);
                 }
             } catch (error) {
                 console.error("Gagal terhubung ke server Express:", error);
-                setArticles([]);
+                setDisplayedArticles([]);
                 setNamaKategori(idKategori || 'Tidak Diketahui');
+                setHasMore(false);
             } finally {
-                selesaiMemuat();
+                setIsLoading(false);
             }
         };
 
         if (idKategori) {
-            ambilDataDariServer();
+            fetchInitialArticles();
         } else {
-            selesaiMemuat();
+            setIsLoading(false);
         }
     }, [idKategori]);
 
-    // ⁡⁢⁣⁣𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲 𝗧𝗿𝗮𝗻𝘀𝗶𝘀𝗶 𝗟𝗼𝗮𝗱𝗶𝗻𝗴 𝗦𝗽𝗶𝗻𝗻𝗲𝗿⁡
+    // 2. FUNGSI MEMUAT HALAMAN BERIKUTNYA DARI SERVER
+    const loadMoreArticles = useCallback(async () => {
+        if (isFetchingMore || !hasMore || isLoading) return;
+
+        setIsFetchingMore(true);
+        const nextPage = page + 1;
+
+        try {
+            // Ambil halaman berikutnya dari backend
+            const { data } = await apiFetch(`/api/artikel/${idKategori}?page=${nextPage}&limit=${LIMIT_PER_PAGE}`);
+
+            if (data.success && data.articles.length > 0) {
+                setDisplayedArticles(prev => [...prev, ...data.articles]);
+                setPage(nextPage);
+                setHasMore(data.pagination ? data.pagination.hasMore : false);
+            } else {
+                setHasMore(false);
+            }
+        } catch (error) {
+            console.error("Gagal memuat artikel tambahan:", error);
+            setHasMore(false);
+        } finally {
+            setIsFetchingMore(false);
+        }
+    }, [isFetchingMore, hasMore, isLoading, page, idKategori]);
+
+    // 3. OBSERVER SCROLL (IntersectionObserver)
+    useEffect(() => {
+        const target = observerTarget.current;
+        if (!target) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasMore && !isLoading && !isFetchingMore) {
+                    loadMoreArticles();
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        observer.observe(target);
+
+        return () => {
+            if (target) observer.unobserve(target);
+        };
+    }, [loadMoreArticles, hasMore, isLoading, isFetchingMore]);
+
+    // INTERFACE LOADING SPINNER UTAMA
     if (isLoading) {
         return (
             <div style={{ color: '#fff', textAlign: 'center', paddingTop: '100px' }}>
@@ -84,55 +133,77 @@ export default function ArsipKategoriBerita() {
     return (
         <>
             <div className='body-arc'>
-                {/* ⁡⁣⁣⁢𝗕𝗨𝗧𝗧𝗢𝗡 𝗕𝗔𝗖𝗞 𝗧𝗢 𝗗𝗔𝗦𝗛𝗕𝗢𝗔𝗥𝗗⁡ */}
+                {/* BUTTON BACK TO DASHBOARD */}
                 <Link to="/" className="btn-back">
-                    <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                    <i className="bi bi-arrow-left"></i> Kembali
                 </Link>
             </div>
 
-            {/* ⁡⁣⁣⁢HEADER KATEGORI⁡ */}
-            <h1 style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.1)', paddingBottom: '15px', color: '#fff', margin: '0 30px 30px 30px' }}>
+            {/* HEADER KATEGORI */}
+            <h1 style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.1)', paddingBottom: '15px', color: '#fff', margin: '0 30px 30px 30px', fontSize: '23px' }}>
                 Arsip Berita: <span style={{ color: '#00f5d4', textTransform: 'capitalize' }}>{namaKategori}</span>
             </h1>
 
-            {/* ⁡⁣⁣⁢𝗗𝗢𝗖𝗞𝗜𝗡𝗚 𝗞𝗔𝗥𝗧𝗨 𝗕𝗘𝗥𝗜𝗧𝗔⁡ */}
-            {articles.length > 0 ? (
-                <div className="news-grid" id="news-grids">
-                    {articles.map((art, index) => (
-                        <article className="news-card" key={art.id || index}>
-                            {/* ⁡⁢⁣⁢Gambar Artikel dengan pengaman SVG lokal (Bebas dari Error ERR_CONNECTION_CLOSED)⁡ */}
-                            <img 
-                                src={`./assets/images/news/${art.gambar}`}
-                                alt={art.judul || "Berita"} 
-                                className="news-img" 
-                                onError={(e) => { 
-                                    e.target.onerror = null; // Mencegah infinite loop
-                                    e.target.src = FALLBACK_IMAGE; 
-                                }}
-                            />
-                            
-                            {/* ⁡⁢⁣⁣𝗞𝗼𝗻𝘁𝗲𝗻 𝗨𝘁𝗮𝗺𝗮 𝗞𝗮𝗿𝘁𝘂 𝗕𝗲𝗿𝗶𝘁𝗮⁡ */}
-                            <div className="news-content">
-                                <div className="news-date">
-                                    <i className="bi bi-calendar3"></i> {art.tanggal}
-                                </div>
-                                <h2 className="news-title">{art.judul}</h2>
-                                <p className="news-desc">{art.ringkasan}</p>
+            {/* DOCKING KARTU BERITA */}
+            {displayedArticles.length > 0 ? (
+                <>
+                    <div className="news-grid" id="news-grids">
+                        {displayedArticles.map((art, index) => (
+                            <article className="news-card" key={art.id || index}>
+                                {/* Gambar Artikel dengan pengaman SVG lokal */}
+                                <img 
+                                    src={`./assets/images/news/${art.gambar}`}
+                                    alt={art.judul || "Berita"} 
+                                    className="news-img" 
+                                    onError={(e) => { 
+                                        e.target.onerror = null;
+                                        e.target.src = FALLBACK_IMAGE; 
+                                    }}
+                                />
                                 
-                                <a 
-                                    href={art.url} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    className="btn-read"
-                                >
-                                    Baca Selengkapnya <i className="bi bi-box-arrow-up-right" style={{ fontSize: '0.8rem', marginLeft: '4px' }}></i>
-                                </a>
+                                {/* Konten Utama Kartu Berita */}
+                                <div className="news-content">
+                                    <div className="news-date">
+                                        <i className="bi bi-calendar3"></i> {art.tanggal}
+                                    </div>
+                                    <h2 className="news-title">{art.judul}</h2>
+                                    <p className="news-desc">{art.ringkasan}</p>
+                                    
+                                    <a 
+                                        href={art.url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="btn-read"
+                                    >
+                                        Baca Selengkapnya <i className="bi bi-box-arrow-up-right" style={{ fontSize: '0.8rem', marginLeft: '4px' }}></i>
+                                    </a>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+
+                    {/* ELEMEN OBSERVER TARGET (Sinyal Auto Load saat Dilihat) */}
+                    <div ref={observerTarget} style={{ height: '50px', margin: '20px 0', textAlign: 'center' }}>
+                        {isFetchingMore && (
+                            <div style={{ color: '#00f5d4', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                                <div className="spinner-sm" style={{
+                                    border: '3px solid rgba(255,255,255,0.1)',
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    borderLeftColor: '#00f5d4',
+                                    animation: 'spin 1s linear infinite'
+                                }}></div>
+                                <span style={{ fontSize: '0.9rem', color: '#aaa' }}>Memuat berita lainnya...</span>
                             </div>
-                        </article>
-                    ))}
-                </div>
+                        )}
+                        {!hasMore && displayedArticles.length > 0 && (
+                            <p style={{ color: '#666', fontSize: '0.85rem' }}>Semua artikel telah ditampilkan.</p>
+                        )}
+                    </div>
+                </>
             ) : (
-                /*⁡⁣⁣⁢ 𝗘𝗠𝗣𝗧𝗬 𝗦𝗧𝗔𝗧𝗘 𝗝𝗜𝗞𝗔 𝗕𝗘𝗥𝗜𝗧𝗔 𝗞𝗢𝗦𝗢𝗡𝗚⁡ */
+                /* EMPTY STATE JIKA BERITA KOSONG */
                 <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px' }}>
                     <i className="bi bi-journal-x" style={{ fontSize: '3.5rem', color: '#ffc107', display: 'block', marginBottom: '15px' }}></i>
                     <h3 style={{ color: '#fff', marginBottom: '10px' }}>Belum Ada Berita Tersedia</h3>
