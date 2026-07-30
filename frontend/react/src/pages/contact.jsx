@@ -19,12 +19,13 @@ export default function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const NOMOR_WA = "6281585760151";
+    // 💡 Tautan URL ke GitHub yang ditambahkan
+    const GITHUB_URL = "https://github.com/andrianwahyu1310/My-Apps"; 
 
     useEffect(() => {
         if (loading) return;
 
         if (user) {
-            // 💡 Ambil string username secara eksplisit
             const namaUser = typeof user === 'object' ? user.username : user;
             setUsername(namaUser || "");
         } else {
@@ -32,6 +33,15 @@ export default function Contact() {
             navigate('/login', { replace: true });
         }
     }, [loading, user, navigate]);
+
+    // Membersihkan URL objek untuk mencegah kebocoran memori (memory leak)
+    useEffect(() => {
+        return () => {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+    }, [previewUrl]);
 
     // Handler ketika user memilih file gambar dari perangkat
     const handleFileChange = (e) => {
@@ -41,8 +51,11 @@ export default function Contact() {
                 showToast(setToast, "Ukuran gambar terlalu besar! Maksimal adalah 5MB.", "warning");
                 return;
             }
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
             setScreenshot(file);
-            setPreviewUrl(URL.createObjectURL(file)); // Membuat URL bayangan untuk preview visual
+            setPreviewUrl(URL.createObjectURL(file));
         }
     };
 
@@ -62,15 +75,12 @@ export default function Contact() {
         };
         const teksSubjek = mapSubjek[subject] || subject;
 
-        // =========================================================================
-        // JALUR 1: JIKA USER MEMILIH KIRIM VIA EMAIL
-        // =========================================================================
+        // JALUR 1: EMAIL
         if (sendVia === "email") {
             try {
                 setIsSubmitting(true);
                 showToast(setToast, "Sedang mengirimkan laporan ke email pengembang...", "info");
 
-                // Mengemas data menggunakan FormData karena mengandung berkas gambar (multipart/form-data)
                 const formData = new FormData();
                 formData.append('username', username);
                 formData.append('subject', subject);
@@ -83,12 +93,11 @@ export default function Contact() {
                 const { data: hasil } = await apiFetch('/api/contact/report', {
                     method: 'POST',
                     credentials: 'include',
-                    body: formData // Kirim paket form data langsung ke backend
+                    body: formData
                 });
 
                 if (hasil.success) {
                     showToast(setToast, hasil.message, "success", 5000);
-                    // Reset Form secara bersih setelah berhasil
                     setMessage("");
                     setSubject("");
                     setScreenshot(null);
@@ -103,9 +112,7 @@ export default function Contact() {
                 setIsSubmitting(false);
             }
         } 
-        // =========================================================================
-        // JALUR 2: JIKA USER MEMILIH KIRIM VIA WHATSAPP
-        // =========================================================================
+        // JALUR 2: WHATSAPP
         else {
             let infoGambarText = screenshot ? `\n🖼️ _[User melampirkan berkas gambar: ${screenshot.name}]_` : "";
             
@@ -138,7 +145,6 @@ export default function Contact() {
 
     return (
         <main className="contact-wrapper" style={{ padding: '40px 50px', boxSizing: 'border-box' }}>
-            {/* RENDER ELEMEN TOAST */}
             {toast.show && (
                 <div id="toast" className={`toast ${toast.type} toast-show`}>
                     {toast.message}
@@ -151,7 +157,23 @@ export default function Contact() {
                 
             <div className="card-contact" style={{ maxWidth: '600px', margin: '40px auto', padding: '30px', borderRadius: '12px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.2)', backdropFilter: 'blur(4px)' }}>
                 <h2 style={{ margin: '0 0 10px 0', fontSize: '1.8rem' }}>Hubungi Layanan Pengaduan</h2>
-                <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '20px' }}>Silakan kirimkan kritik, bug, atau saran secara nyata langsung ke hadapan pengembang.</p>
+                <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '15px' }}>
+                    Silakan kirimkan kritik, bug, atau saran secara nyata langsung ke hadapan pengembang.
+                </p>
+
+                {/* SEKSI TAMBAHAN: LINK KE GITHUB */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', fontSize: '0.9rem' }}>
+                    <i className="bi bi-github" style={{ fontSize: '1.2rem' }}></i>
+                    <a 
+                        href={GITHUB_URL} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={{ color: '#00f5d4', textDecoration: 'none', fontWeight: '500' }}
+                    >
+                        Lihat Repository GitHub &rarr;
+                    </a>
+                </div>
+
                 <hr style={{ opacity: 0.15, margin: '15px 0', border: 'none', height: '1px', backgroundColor: 'var(--text-color)' }} />
 
                 <form onSubmit={handleKirimPengaduan}>
@@ -214,7 +236,6 @@ export default function Contact() {
                         <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Lampiran Gambar Bukti Bug (Opsional)</label>
                         <input type="file" accept="image/*" onChange={handleFileChange} style={{ color: 'var(--text-color)', cursor: 'pointer' }} />
                         
-                        {/* TAMPILAN PREVIEW JIKA GAMBAR BERHASIL DIMUAT */}
                         {previewUrl && (
                             <div style={{ marginTop: '15px', border: '1px dashed var(--card-border)', padding: '10px', borderRadius: '6px', textAlign: 'center' }}>
                                 <p style={{ fontSize: '0.85rem', margin: '0 0 10px 0', opacity: 0.7 }}>Pratinjau Gambar:</p>
