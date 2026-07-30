@@ -22,8 +22,12 @@ export default function QuizFamily({ user, onLogout }) {
     const [waktuSisa, setWaktuSisa] = useState(0);
     const [isProcessing, setIsProcessing] = useState(false);
 
-    // Ref untuk mengontrol pembersihan Timer interval
+    // State Baru: Penyimpanan Pilihan Sementara (Sebelum Dikonfirmasi)
+    const [jawabanDipilih, setJawabanDipilih] = useState(null);
+
+    // Ref untuk Timer & Canvas Animasi
     const timerRef = useRef(null);
+    const canvasRef = useRef(null);
 
     const daftarMapel = [
         { id: 'matematika', nama: "📐 Matematika", desc: "Uji logika angka dan hitungan mutlak." },
@@ -54,7 +58,7 @@ export default function QuizFamily({ user, onLogout }) {
                 setWaktuSisa(prev => {
                     if (prev <= 1) {
                         clearInterval(timerRef.current);
-                        setFase(5); // Paksa pindah ke halaman skor karena waktu habis
+                        setFase(5);
                         showToast(setToast, "Waktu Anda telah habis!", "error");
                         return 0;
                     }
@@ -65,6 +69,79 @@ export default function QuizFamily({ user, onLogout }) {
 
         return () => clearInterval(timerRef.current);
     }, [fase, modeGame]);
+
+    // Efek Animasi Canvas di Fase 5 (Hasil Akhir)
+    useEffect(() => {
+        if (fase !== 5 || !canvasRef.current || kumpulanSoal.length === 0) return;
+
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        let animationFrameId;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const skorPersen = (jumlahBenar / kumpulanSoal.length) * 100;
+        const isLulus = skorPersen >= 70;
+
+        // Inisialisasi Partikel
+        const particles = [];
+        const count = isLulus ? 120 : 60;
+
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: isLulus ? Math.random() * canvas.height - canvas.height : Math.random() * canvas.height,
+                size: Math.random() * 8 + 4,
+                speedY: isLulus ? Math.random() * 3 + 2 : Math.random() * 1.5 + 0.5,
+                speedX: Math.random() * 2 - 1,
+                color: isLulus 
+                    ? ['#00f5d4', '#ffc107', '#2ecc71', '#e74c3c', '#9b59b6'][Math.floor(Math.random() * 5)]
+                    : ['#e74c3c', '#c0392b', '#7f8c8d'][Math.floor(Math.random() * 3)],
+                rotation: Math.random() * 360,
+                rotSpeed: Math.random() * 4 - 2
+            });
+        }
+
+        const render = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+
+                if (isLulus) {
+                    // Confetti (Kotak / Persegi Panjang)
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                } else {
+                    // Rain / Peringatan (Garis Vertikal Merah)
+                    ctx.fillRect(-1, -p.size, 2, p.size * 2);
+                }
+
+                ctx.restore();
+
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.rotation += p.rotSpeed;
+
+                // Loop Posisi
+                if (p.y > canvas.height) {
+                    p.y = -20;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+
+            animationFrameId = requestAnimationFrame(render);
+        };
+
+        render();
+
+        return () => {
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, [fase, jumlahBenar, kumpulanSoal.length]);
 
     // Handler Fase 1: Pilih Mapel
     const handlePilihMapel = (id) => {
@@ -79,7 +156,7 @@ export default function QuizFamily({ user, onLogout }) {
 
     // Handler Fase 3: Tembak API & Ambil Soal
     const handlePilihKesulitan = async (id) => {
-        setIsProcessing(true); // Kunci sistem sementara
+        setIsProcessing(true);
 
         try {
             const { data: hasil } = await apiFetch(
@@ -94,7 +171,6 @@ export default function QuizFamily({ user, onLogout }) {
             if (hasil.success) {
                 const soalDariServer = hasil.data;
 
-                // Alokasi waktu dinamis: 30 detik per soal
                 if (modeGame === 'kompetitif' || modeGame === 'eliminasi') {
                     setWaktuSisa(soalDariServer.length * 30);
                 }
@@ -102,8 +178,9 @@ export default function QuizFamily({ user, onLogout }) {
                 setKumpulanSoal(soalDariServer);
                 setIndeksSoal(0);
                 setJumlahBenar(0);
-                setNyawa(3); // Reset nyawa
-                setFase(4);  // Masuk arena pengerjaan
+                setNyawa(3);
+                setJawabanDipilih(null);
+                setFase(4);
             } else {
                 showToast(setToast, hasil.message || "Gagal mengambil soal dari server!", "error");
             }
@@ -116,17 +193,23 @@ export default function QuizFamily({ user, onLogout }) {
         }
     };
 
-    // Handler Fase 4: Eksekusi Jawaban
-    const handleJawabSoal = (opsiPilihan) => {
+    // Handler Pilih Opsi Sementara
+    const handlePilihOpsi = (opsi) => {
         if (isProcessing) return;
+        setJawabanDipilih(opsi);
+    };
+
+    // Handler Eksekusi Konfirmasi Jawaban
+    const handleKonfirmasiJawaban = () => {
+        if (!jawabanDipilih || isProcessing) return;
         setIsProcessing(true);
 
         const soalSaatIni = kumpulanSoal[indeksSoal];
         let nyawaSisaSaatIni = nyawa;
         
-        if (opsiPilihan === soalSaatIni.jawaban) {
+        if (jawabanDipilih === soalSaatIni.jawaban) {
             setJumlahBenar(prev => prev + 1);
-            showToast(setToast, "Jawaban Benar!.", "success");
+            showToast(setToast, "Jawaban Benar!", "success");
         } else {
             showToast(setToast, `Kurang Tepat! Jawaban benar: ${soalSaatIni.jawaban}`, "error");
             if (modeGame === 'eliminasi') {
@@ -135,28 +218,29 @@ export default function QuizFamily({ user, onLogout }) {
             }
         }
 
-        // Cek jika nyawa habis di mode eliminasi
+        // Cek eliminasi
         if (modeGame === 'eliminasi' && nyawaSisaSaatIni <= 0) {
             setTimeout(() => {
                 clearInterval(timerRef.current);
                 setFase(5);
                 showToast(setToast, "Eliminasi! Kesempatan Anda habis.", "error");
                 setIsProcessing(false);
-            }, 1000);
+            }, 800);
             return;
         }
 
-        // Transisi ke soal berikutnya / selesai
+        // Pindah Soal
         setTimeout(() => {
             if (indeksSoal + 1 < kumpulanSoal.length) {
                 setIndeksSoal(prev => prev + 1);
+                setJawabanDipilih(null);
                 setIsProcessing(false);
             } else {
                 clearInterval(timerRef.current);
                 setFase(5);
                 setIsProcessing(false);
             }
-        }, 1200);
+        }, 800);
     };
 
     // Format Waktu (Menit:Detik)
@@ -166,7 +250,6 @@ export default function QuizFamily({ user, onLogout }) {
         return `${menit}:${detik < 10 ? '0' : ''}${detik}`;
     };
 
-    // PERBAIKAN: Hapus setKesulitanTerpilih("") agar tidak menggelembungkan runtime error
     const handleResetGame = () => {
         clearInterval(timerRef.current);
         setFase(1);
@@ -176,21 +259,29 @@ export default function QuizFamily({ user, onLogout }) {
         setJumlahBenar(0);
         setWaktuSisa(0);
         setNyawa(3);
+        setJawabanDipilih(null);
     };
 
-    // Kalkulasi skor akhir
     const skorAkhir = kumpulanSoal.length > 0 ? (jumlahBenar / kumpulanSoal.length) * 100 : 0;
 
     return (
         <>
             <Navbar user={user} onLogout={onLogout} />
 
+            {/* Canvas overlay animasi saat fase 5 */}
+            {fase === 5 && (
+                <canvas 
+                    ref={canvasRef} 
+                    style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 999 }} 
+                />
+            )}
+
             <div className="quiz-page-wrapper" style={{ minHeight: '100vh', padding: '100px 20px 40px', boxSizing: 'border-box', color: 'var(--text-color)' }}>
                 <div style={{ maxWidth: '750px', margin: '0 auto' }}>
                     
                     {fase < 4 && (
                         <Link to="/container-brain-teaser" className="btn-back" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', marginBottom: '20px' }}>
-                            <i className="bi bi-arrow-left"></i> Kembali ke Pusat Permainan
+                            <i className="bi bi-arrow-left"></i> Kembali
                         </Link>
                     )}
 
@@ -228,6 +319,7 @@ export default function QuizFamily({ user, onLogout }) {
                             </div>
 
                             <div style={{ marginBottom: '35px' }}>
+                                <hr />
                                 <label style={{ display: 'block', fontWeight: '600', marginBottom: '12px' }}>🛡️ Pilih Mode Permainan:</label>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {daftarMode.map(mode => (
@@ -290,41 +382,71 @@ export default function QuizFamily({ user, onLogout }) {
                             </h2>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                {kumpulanSoal[indeksSoal].opsi.map((opsi, idx) => (
-                                    <button 
-                                        key={idx} 
-                                        onClick={() => handleJawabSoal(opsi)} 
+                                {kumpulanSoal[indeksSoal].opsi.map((opsi, idx) => {
+                                    const isSelected = jawabanDipilih === opsi;
+                                    return (
+                                        <button 
+                                            key={idx} 
+                                            onClick={() => handlePilihOpsi(opsi)} 
+                                            disabled={isProcessing}
+                                            className="opsi-jawaban-btn"
+                                            style={{
+                                                width: '100%', 
+                                                padding: '15px 20px', 
+                                                textAlign: 'left', 
+                                                fontSize: '1rem', 
+                                                background: isSelected ? 'rgba(0, 245, 212, 0.15)' : 'rgba(255, 255, 255, 0.05)', 
+                                                border: isSelected ? '2px solid #00f5d4' : '1px solid var(--card-border)', 
+                                                borderRadius: '8px', 
+                                                color: 'var(--text-color)',
+                                                opacity: isProcessing ? 0.6 : 1,
+                                                cursor: isProcessing ? 'not-allowed' : 'pointer',
+                                                transition: 'all 0.15s ease'
+                                            }}
+                                        >
+                                            <span style={{ fontWeight: '600', marginRight: '10px', color: isSelected ? '#00f5d4' : 'inherit' }}>
+                                                {String.fromCharCode(65 + idx)}.
+                                            </span> 
+                                            {opsi}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            {/* Tombol Konfirmasi Jawaban */}
+                            {jawabanDipilih && (
+                                <div style={{ marginTop: '25px', textAlign: 'right' }}>
+                                    <button
+                                        onClick={handleKonfirmasiJawaban}
                                         disabled={isProcessing}
-                                        className="opsi-jawaban-btn"
                                         style={{
-                                            width: '100%', 
-                                            padding: '15px 20px', 
-                                            textAlign: 'left', 
-                                            fontSize: '1rem', 
-                                            background: 'rgba(255, 255, 255, 0.05)', 
-                                            border: '1px solid var(--card-border)', 
-                                            borderRadius: '8px', 
-                                            color: 'var(--text-color)',
-                                            opacity: isProcessing ? 0.6 : 1,
+                                            padding: '12px 30px',
+                                            backgroundColor: '#00f5d4',
+                                            color: '#0f172a',
+                                            border: 'none',
+                                            borderRadius: '6px',
+                                            fontWeight: '700',
+                                            fontSize: '1rem',
                                             cursor: isProcessing ? 'not-allowed' : 'pointer',
-                                            transition: 'all 0.15s ease'
+                                            boxShadow: '0 0 15px rgba(0, 245, 212, 0.4)',
+                                            transition: 'all 0.2s ease'
                                         }}
                                     >
-                                        <span style={{ fontWeight: '600', marginRight: '10px', color: '#00f5d4' }}>
-                                            {String.fromCharCode(65 + idx)}.
-                                        </span> 
-                                        {opsi}
+                                        Yakin & Lanjutkan ➔
                                     </button>
-                                ))}
-                            </div>
+                                </div>
+                            )}
                         </section>
                     )}
 
                     {/* FASE 5: SKOR AKHIR */}
                     {fase === 5 && (
                         <section className="card-phase" style={{ textAlign: 'center', background: 'var(--card-bg)', border: '1px solid var(--card-border)', padding: '50px 30px', borderRadius: '12px' }}>
-                            <i className="bi bi-trophy" style={{ fontSize: '4.5rem', color: '#ffc107', display: 'block', marginBottom: '20px' }}></i>
-                            <h2>Hasil Evaluasi Sistem Berhasil Dihimpun</h2>
+                            <i 
+                                className={skorAkhir >= 70 ? "bi bi-trophy" : "bi bi-exclamation-triangle"} 
+                                style={{ fontSize: '4.5rem', color: skorAkhir >= 70 ? '#ffc107' : '#e74c3c', display: 'block', marginBottom: '20px' }}
+                            ></i>
+                            <h2>{skorAkhir >= 70 ? "Performa Luar Biasa!" : "Evaluasi Perlu Ditingkatkan"}</h2>
                             <p style={{ opacity: 0.6, margin: '5px 0 25px 0' }}>Ringkasan performa permainan Anda di bawah pengawasan regulasi `{modeGame}`:</p>
                             
                             <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', marginBottom: '40px', flexWrap: 'wrap' }}>
@@ -332,9 +454,9 @@ export default function QuizFamily({ user, onLogout }) {
                                     <span style={{ fontSize: '0.85rem', opacity: 0.6, display: 'block' }}>AKURASI JAWABAN</span>
                                     <span style={{ fontSize: '1.6rem', fontWeight: '700' }}>{jumlahBenar} / {kumpulanSoal.length} Benar</span>
                                 </div>
-                                <div style={{ padding: '15px 40px', background: 'rgba(0,0,0,0.15)', borderRadius: '10px', borderLeft: '4px solid #00f5d4' }}>
+                                <div style={{ padding: '15px 40px', background: 'rgba(0,0,0,0.15)', borderRadius: '10px', borderLeft: `4px solid ${skorAkhir >= 70 ? '#00f5d4' : '#e74c3c'}` }}>
                                     <span style={{ fontSize: '0.85rem', opacity: 0.6, display: 'block' }}>SKOR MATRIKS</span>
-                                    <span style={{ fontSize: '2.2rem', fontWeight: '700', color: '#00f5d4' }}>{Math.round(skorAkhir)}</span>
+                                    <span style={{ fontSize: '2.2rem', fontWeight: '700', color: skorAkhir >= 70 ? '#00f5d4' : '#e74c3c' }}>{Math.round(skorAkhir)}</span>
                                 </div>
                             </div>
 

@@ -21,7 +21,7 @@ export default function PengaturanTema({user, onLogout}) {
 
             <div className="settings-container-theme">
                 <Link to="/" className="btn-back" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '0px', marginBottom: '40px' }}>
-                    <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                    <i className="bi bi-arrow-left"></i> Kembali
                 </Link>
 
                 <h2>Pilih Tema Aplikasi</h2>

@@ -146,7 +146,7 @@ export default function Contact() {
             )}
 
             <Link to="/" className="btn-back" style={{ width: '20%' }}>
-                <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                <i className="bi bi-arrow-left"></i> Kembali
             </Link>
                 
             <div className="card-contact" style={{ maxWidth: '600px', margin: '40px auto', padding: '30px', borderRadius: '12px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.2)', backdropFilter: 'blur(4px)' }}>
@@ -180,13 +180,13 @@ export default function Contact() {
                     <div className="form-group" style={{ marginBottom: '20px' }}>
                         <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Saluran Pengiriman Pesan</label>
                         <div style={{ display: 'flex', gap: '20px' }}>
-                            <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <label className='label-message-dev' style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <input type="radio" name="via" value="whatsapp" checked={sendVia === "whatsapp"} onChange={() => setSendVia("whatsapp")} /> 
-                                WhatsApp (Instan)
+                                WhatsApp
                             </label>
-                            <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <label className='label-message-dev' style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <input type="radio" name="via" value="email" checked={sendVia === "email"} onChange={() => setSendVia("email")} /> 
-                                Email + Bukti Gambar (Rekomendasi Bug)
+                                Email
                             </label>
                         </div>
                     </div>

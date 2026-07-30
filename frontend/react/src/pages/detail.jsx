@@ -66,7 +66,7 @@ export default function DetailAkun() {
     return (
         <main className="detail-wrapper" style={{ padding: '50px 50px', boxSizing: 'border-box' }}>
             <Link to="/" className="btn-back" style={{ width: '20%' }}>
-                <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                <i className="bi bi-arrow-left"></i> Kembali
             </Link>
 
             <div 

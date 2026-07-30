@@ -39,7 +39,7 @@ export default function About() {
             }}
         >
             <Link to="/" className="btn-back" style={{width: '20%'}}>
-                <i className="bi bi-arrow-left"></i> Kembali ke Dashboard
+                <i className="bi bi-arrow-left"></i> Kembali
             </Link>
 
             <main 

@@ -385,6 +385,10 @@ body {
 }
 
 @media (max-width: 980px) {
+    .main-content {
+        margin-top: -30px !important;
+    }
+
     .dashboard-widgets {
         grid-template-columns: 1fr;
         grid-template-areas:

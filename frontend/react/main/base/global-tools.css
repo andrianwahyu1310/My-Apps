@@ -367,13 +367,28 @@ body {
         font-size: 23px !important;
     }
 
+    .label-message-dev input {
+        height: 50px !important;
+        width: 20px !important;
+        margin: auto !important;
+    }
+
     .tools-page-wrapper {
         padding-left:  15px !important;
         padding-right: 15px !important;
+        margin-top: 45px !important;
+    }
+
+    .about-page-wrapper {
+        margin-top: -20px !important;
+    }
+
+    .settings-container-theme {
+        margin-top: -35px !important;
     }
 
     .btn-back {
-        margin-top: 40px !important;
+        margin-top: 0px !important;
         font-size: 16px;
         width: 70% !important;
     }
@@ -386,8 +401,7 @@ body {
     }
 
     .detail-wrapper {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding: 30px 10px 20px 10px !important;
     }
 
     .contact-wrapper {
