@@ -33,7 +33,7 @@
     }
 
     .btn-back  {
-        margin-top: 20px;
+        margin-top: 40px !important;
+        background-color: red;
     }
-
 }

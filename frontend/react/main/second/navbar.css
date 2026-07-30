@@ -195,13 +195,14 @@
         display: none; /* Sembunyikan judul sambutan di HP jika terlalu sempit */
     }
 
-    .nav-bar .nav-bar-tengah {
+    .nav-bar .nav-bar-tengah p {
         width: auto;
+        font-size: 13px !important;
     }
 
     .dropdown-card {
         right: 0;
         top: 50px;
-        width: min(300px, calc(100vw - 32px));
+        width: min(300px, calc(100vw - 25px));
     }
 }
